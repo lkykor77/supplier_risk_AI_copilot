@@ -1,0 +1,5 @@
+[
+  {"id": "BUYER-01", "description": "The supplier identifies a security contact.", "question_id": "security_contact", "keyword": "security@"},
+  {"id": "BUYER-02", "description": "The supplier has a documented incident response plan.", "question_id": "incident_response", "keyword": "documented incident response plan"},
+  {"id": "BUYER-03", "description": "The supplier reviews user access at least annually.", "question_id": "access_review", "keyword": "annual access review"}
+]

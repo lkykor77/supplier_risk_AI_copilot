@@ -1,0 +1,67 @@
+[
+  {
+    "id": "fictional-a",
+    "answers": {
+      "security_contact": "Contact security@fictional-a.example for security questions.",
+      "incident_response": "We have a documented incident response plan approved by our security lead.",
+      "access_review": "We conduct an annual access review for all users."
+    },
+    "expected": {
+      "BUYER-01": "met",
+      "BUYER-02": "met",
+      "BUYER-03": "met"
+    }
+  },
+  {
+    "id": "fictional-b",
+    "answers": {
+      "security_contact": "",
+      "incident_response": "",
+      "access_review": ""
+    },
+    "expected": {
+      "BUYER-01": "unknown",
+      "BUYER-02": "unknown",
+      "BUYER-03": "unknown"
+    }
+  },
+  {
+    "id": "fictional-c",
+    "answers": {
+      "security_contact": "Contact security@fictional-c.example for security questions.",
+      "incident_response": "We do not have a documented incident response plan.",
+      "access_review": "No annual access review is conducted."
+    },
+    "expected": {
+      "BUYER-01": "met",
+      "BUYER-02": "missing",
+      "BUYER-03": "missing"
+    }
+  },
+  {
+    "id": "fictional-d",
+    "answers": {
+      "security_contact": "",
+      "incident_response": "",
+      "access_review": "We review access for every user once every two years."
+    },
+    "expected": {
+      "BUYER-01": "unknown",
+      "BUYER-02": "unknown",
+      "BUYER-03": "partly_met"
+    }
+  },
+  {
+    "id": "fictional-e",
+    "answers": {
+      "security_contact": "",
+      "incident_response": "",
+      "access_review": "We review access regularly."
+    },
+    "expected": {
+      "BUYER-01": "unknown",
+      "BUYER-02": "unknown",
+      "BUYER-03": "unknown"
+    }
+  }
+]
