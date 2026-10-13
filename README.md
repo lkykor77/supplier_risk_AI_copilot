@@ -55,7 +55,7 @@ python3 setup_key.py
 python3 ai_assessor.py
 ```
 
-The first run assesses one supplier; `python3 ai_assessor.py --all` compares all five. No live AI results have been verified yet. Run the evidence-validation and mocked integration tests without an API account or network access:
+The first run assesses one supplier; `python3 ai_assessor.py --all` compares all five. On October 13, 2026, one live run with `gemini-3.5-flash-lite` on `fictional-d` matched 5/5 expected labels, versus 2/5 for the keyword baseline. All evidence quotes passed the verbatim checks. This is a single development example used in prompt design, not a held-out accuracy estimate or the full 25-assessment comparison. Run the evidence-validation and mocked integration tests without an API account or network access:
 
 ```sh
 python3 -m unittest discover -s tests -v

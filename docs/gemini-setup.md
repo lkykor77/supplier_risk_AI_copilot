@@ -1,6 +1,6 @@
 # Connect Gemini locally
 
-This implementation uses Python's standard library and the Gemini REST API. No package installation is required. The default model is `gemini-2.5-flash-lite`; check its current availability and your project's quota in Google AI Studio. Google's pricing page currently lists free input/output tokens for this model on the Free Tier. A paid project may incur charges for the same request. The script cannot detect billing tier and does not change billing settings.
+This implementation uses Python's standard library and the Gemini REST API. No package installation is required. The default model is `gemini-3.5-flash-lite`; check its current availability and your project's quota in Google AI Studio. Google's pricing page currently lists free input/output tokens for this model on the Free Tier. A paid project may incur charges for the same request. The script cannot detect billing tier and does not change billing settings.
 
 ## 1. Save your API key
 
@@ -46,6 +46,8 @@ python3 -m unittest discover -s tests -v
 
 ## Troubleshooting
 
+The earlier default, `gemini-2.5-flash-lite`, returned HTTP 404 during initial setup. The default is now `gemini-3.5-flash-lite`, verified with one live supplier assessment. Google's [model guide](https://ai.google.dev/gemini-api/docs/models) says access to 2.5 models is restricted to users who previously used them and recommends newer models for new projects. A model appearing in the list does not guarantee that every request will succeed.
+
 - **No key found:** Run `python3 setup_key.py` in the project folder.
 - **HTTP 400 / 401 / 403:** Check the key, model, API access and project permissions. Error messages deliberately exclude the provider's response body.
 - **HTTP 404:** Check the current model list. Use `--model MODEL_ID` to select a compatible Gemini model with JSON-schema support and available free quota.
@@ -53,7 +55,7 @@ python3 -m unittest discover -s tests -v
 - **Network error:** Check your internet connection. Requests time out after 45 seconds and are not automatically retried.
 - **Invalid quote / truncated JSON:** No assessment from that supplier is accepted. Inspect the rubric and request, then retry only after understanding the failure.
 
-The report includes model ID, prompt/dataset hashes, token usage reported by Gemini, latency, quotes, reasons and comparison labels. It does not calculate dollar cost because pricing and billing tier are external configuration. No live accuracy result is claimed until the API has actually run.
+The report includes model ID, prompt/dataset hashes, token usage reported by Gemini, latency, quotes, reasons and comparison labels. It does not calculate dollar cost because pricing and billing tier are external configuration.
 
 ## Official references
 

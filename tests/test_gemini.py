@@ -45,7 +45,7 @@ class GeminiIntegrationTests(unittest.TestCase):
     def test_transport_uses_header_for_key_and_parses_response(self, mock_open):
         mock_open.return_value.__enter__.return_value = io.BytesIO(json.dumps(self.response).encode())
         result, usage, latency = call_gemini(build_request(self.requirements, self.supplier),
-                                           "dummy-test-key", "gemini-2.5-flash-lite")
+                                           "dummy-test-key", "gemini-3.5-flash-lite")
         request = mock_open.call_args.args[0]
         self.assertNotIn("dummy-test-key", request.full_url)
         self.assertNotIn("dummy-test-key", request.data.decode())
@@ -59,7 +59,7 @@ class GeminiIntegrationTests(unittest.TestCase):
         mock_open.side_effect = urllib.error.HTTPError(
             "https://example.invalid", 429, "dummy-test-secret", {}, io.BytesIO(b"dummy-test-secret"))
         with self.assertRaises(ValueError) as caught:
-            call_gemini({}, "dummy-test-secret", "gemini-2.5-flash-lite")
+            call_gemini({}, "dummy-test-secret", "gemini-3.5-flash-lite")
         self.assertIn("Quota", str(caught.exception))
         self.assertNotIn("dummy-test-secret", str(caught.exception))
         self.assertEqual(mock_open.call_count, 1)
