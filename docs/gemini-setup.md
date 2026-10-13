@@ -36,6 +36,14 @@ These suppliers were used to develop the prompt. Results on them are development
 
 ## Useful commands
 
+To assess new examples with the unchanged prompt, see the [frozen evaluation plan](evaluation-plan.md):
+
+```sh
+python3 ai_assessor.py --dataset evaluation --all
+```
+
+This uses a separate dataset and saves `results/latest-evaluation-run.json`.
+
 ```sh
 python3 ai_assessor.py --supplier fictional-c
 python3 ai_assessor.py --dry-run

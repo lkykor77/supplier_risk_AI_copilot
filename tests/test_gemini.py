@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import patch
 import urllib.error
 
-from ai_assessor import build_request, call_gemini, comparison, main, parse_response
+from ai_assessor import build_request, call_gemini, comparison, load_inputs, main, parse_response
 
 
 class GeminiIntegrationTests(unittest.TestCase):
@@ -76,6 +76,31 @@ class GeminiIntegrationTests(unittest.TestCase):
         with patch("sys.stdout", new_callable=io.StringIO) as stdout:
             self.assertEqual(main(["--dry-run"]), 0)
         self.assertIn("no network requests", stdout.getvalue())
+        mock_key.assert_not_called()
+        mock_open.assert_not_called()
+
+    def test_evaluation_excludes_expected_reasons_from_model_input(self):
+        requirements, suppliers = load_inputs("evaluation")
+        self.assertEqual(len(suppliers), 5)
+        for supplier in suppliers:
+            payload = build_request(requirements, supplier)
+            supplied = json.loads(payload["contents"][0]["parts"][0]["text"])
+            self.assertEqual(set(supplied), {"supplier_id", "requirements"})
+            for requirement in supplied["requirements"]:
+                self.assertEqual(set(requirement), {"id", "description", "answer"})
+
+    def test_evaluation_rejects_a_changed_prompt(self):
+        with patch("ai_assessor.PROMPT", "An altered prompt"):
+            with self.assertRaisesRegex(ValueError, "Frozen evaluation inputs changed"):
+                load_inputs("evaluation")
+
+    @patch("ai_assessor.load_key", side_effect=AssertionError("Must not read key"))
+    @patch("ai_assessor.urllib.request.urlopen", side_effect=AssertionError("Must not call API"))
+    def test_evaluation_dry_run_selects_separate_dataset(self, mock_open, mock_key):
+        with patch("sys.stdout", new_callable=io.StringIO) as stdout:
+            self.assertEqual(main(["--dataset", "evaluation", "--dry-run"]), 0)
+        self.assertIn("evaluation-f", stdout.getvalue())
+        self.assertNotIn("fictional-d", stdout.getvalue())
         mock_key.assert_not_called()
         mock_open.assert_not_called()
 

@@ -44,6 +44,12 @@ The five requirements are fictional buyer requirements, not official NIST or ISO
 
 Keep ISO mappings, MCP, website checks, NIS2 and CRA reporting for later.
 
+The [frozen evaluation plan](docs/evaluation-plan.md) adds 25 new synthetic assessments using the unchanged prompt. Run it separately from the development examples:
+
+```sh
+python3 ai_assessor.py --dataset evaluation --all
+```
+
 ## AI assessment preparation
 
 `assessment.py` prepares model input without expected labels or keyword rules. It validates that results cover each requirement exactly once and quote only the corresponding supplier answer. Blank answers must be `unknown`. Quote matching checks that evidence exists; a person must still check that it supports the conclusion.

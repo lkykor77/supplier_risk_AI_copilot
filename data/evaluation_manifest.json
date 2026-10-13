@@ -1,0 +1,8 @@
+{
+  "version": "evaluation-v1",
+  "created_on": "2026-10-13",
+  "prompt_sha256": "6c6b8ac64aa9df36fb3c380d95d0ee834c771a8b916bf152f122e2e67c6a7c43",
+  "dataset_sha256": "3594ca5c25a1711b66246c54edc3875630470639ca013c16d9a3332f4e3d9b0f",
+  "label_review": "AI-assisted draft; not independently validated by an analyst",
+  "purpose": "New cases frozen before the first Gemini evaluation run; no prompt tuning on these cases."
+}

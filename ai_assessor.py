@@ -135,10 +135,34 @@ def comparison(rows, requirements, supplier):
 def save_report(report):
     directory = ROOT / "results"
     directory.mkdir(exist_ok=True)
-    target = directory / "latest-ai-run.json"
-    temporary = directory / "latest-ai-run.json.tmp"
+    filename = "latest-evaluation-run.json" if report.get("dataset") == "evaluation" else "latest-ai-run.json"
+    target = directory / filename
+    temporary = directory / (filename + ".tmp")
     temporary.write_text(json.dumps(report, indent=2) + "\n")
     temporary.replace(target)
+
+
+def load_inputs(dataset):
+    requirements = json.loads((ROOT / "data/requirements.json").read_text())
+    filename = "evaluation_suppliers.json" if dataset == "evaluation" else "suppliers.json"
+    suppliers = json.loads((ROOT / "data" / filename).read_text())
+    ids = {r["id"] for r in requirements}
+    questions = {r["question_id"] for r in requirements}
+    if len(ids) != len(requirements) or len({s["id"] for s in suppliers}) != len(suppliers):
+        raise ValueError("Duplicate requirement or supplier IDs.")
+    for supplier in suppliers:
+        if set(supplier["answers"]) != questions or set(supplier["expected"]) != ids:
+            raise ValueError("Dataset must contain every answer and expected label.")
+        if not all(isinstance(v, str) for v in supplier["answers"].values()):
+            raise ValueError("Supplier answers must be strings.")
+        if not set(supplier["expected"].values()) <= STATUSES:
+            raise ValueError("Dataset contains an invalid expected label.")
+    if dataset == "evaluation":
+        manifest = json.loads((ROOT / "data/evaluation_manifest.json").read_text())
+        digest = hashlib.sha256(json.dumps([requirements, suppliers], sort_keys=True).encode()).hexdigest()
+        if digest != manifest["dataset_sha256"] or hashlib.sha256(PROMPT.encode()).hexdigest() != manifest["prompt_sha256"]:
+            raise ValueError("Frozen evaluation inputs changed. Keep the original prompt/data for this evaluation.")
+    return requirements, suppliers
 
 
 def main(argv=None):
@@ -148,10 +172,11 @@ def main(argv=None):
     selection.add_argument("--all", action="store_true", help="One API request per supplier")
     parser.add_argument("--dry-run", action="store_true", help="Inspect requests without a key or network")
     parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--dataset", choices=["development", "evaluation"], default="development")
     args = parser.parse_args(argv)
-    requirements = json.loads((ROOT / "data/requirements.json").read_text())
-    suppliers = json.loads((ROOT / "data/suppliers.json").read_text())
-    selected = suppliers if args.all else [s for s in suppliers if s["id"] == (args.supplier or "fictional-d")]
+    requirements, suppliers = load_inputs(args.dataset)
+    default_supplier = "evaluation-f" if args.dataset == "evaluation" else "fictional-d"
+    selected = suppliers if args.all else [s for s in suppliers if s["id"] == (args.supplier or default_supplier)]
     if not selected:
         parser.error("Unknown supplier ID.")
     if args.dry_run:
@@ -166,7 +191,9 @@ def main(argv=None):
         "created_at": datetime.now(timezone.utc).isoformat(), "model": args.model,
         "dataset_sha256": hashlib.sha256(json.dumps([requirements, suppliers], sort_keys=True).encode()).hexdigest(),
         "prompt_sha256": hashlib.sha256(PROMPT.encode()).hexdigest(),
-        "evaluation_type": "development examples; not held-out", "complete": False,
+        "dataset": args.dataset,
+        "evaluation_type": "frozen synthetic evaluation; no independent label review" if args.dataset == "evaluation" else "development examples; not held-out",
+        "complete": False,
         "requested_suppliers": [s["id"] for s in selected], "suppliers": [],
     }
     save_report(report)
@@ -198,8 +225,9 @@ def main(argv=None):
     }
     save_report(report)
     summary = report["summary"]
-    print(f"\nDevelopment comparison: AI {summary['ai_correct']}/{len(rows)}; baseline {summary['baseline_correct']}/{len(rows)}.")
-    print("Results saved locally to results/latest-ai-run.json. Review the reasons yourself.")
+    print(f"\n{args.dataset.capitalize()} comparison: AI {summary['ai_correct']}/{len(rows)}; baseline {summary['baseline_correct']}/{len(rows)}.")
+    filename = "latest-evaluation-run.json" if args.dataset == "evaluation" else "latest-ai-run.json"
+    print(f"Results saved locally to results/{filename}. Review the reasons yourself.")
     print("Verbatim quote checks passed; this does not prove that the quotes support the labels.")
     return 0
 
