@@ -4,7 +4,7 @@ An FDE portfolio project in progress: help a supplier-security analyst review qu
 
 ## First exercise
 
-This project uses Python's standard library only. It includes a keyword baseline and a Gemini AI assessor. All suppliers and answers are fictional.
+This project uses Python's standard library only. It includes a keyword baseline, a Gemini assessor, and a local model assessor with optional Obsidian context. All suppliers and answers are fictional.
 
 After cloning this repository, open a terminal in the project folder and run:
 
@@ -52,6 +52,20 @@ python3 ai_assessor.py --dataset evaluation --all
 
 ## AI assessment preparation
 
+### Local Qwen and Obsidian
+
+The [local setup guide](docs/local-setup.md) connects LM Studio with an optional allowlist of Obsidian rules, knowledge and project memory:
+
+```sh
+python3 local_assessor.py --check-server
+python3 local_assessor.py
+python3 local_assessor.py --with-vault --save-memory
+```
+
+The [verified local integration results](docs/local-integration-results.md) record a 5/5 vault-enhanced smoke test and a separate 24/25 frozen evaluation result (Gemini: 23/25; keyword baseline: 8/25). These small synthetic runs do not establish general accuracy.
+
+Use `python3 local_assessor.py --dataset evaluation --all` for the unchanged-prompt comparison. Vault-enhanced runs are separate experiments. Local inference has no cloud fallback. Personal notes and machine-specific config stay out of GitHub. Docker and oMLX are optional later choices, not required services.
+
 `assessment.py` prepares model input without expected labels or keyword rules. It validates that results cover each requirement exactly once and quote only the corresponding supplier answer. Blank answers must be `unknown`. Quote matching checks that evidence exists; a person must still check that it supports the conclusion.
 
 The Gemini connection is implemented in `ai_assessor.py`. Follow the [local Gemini setup guide](docs/gemini-setup.md):
@@ -75,6 +89,6 @@ python3 -m unittest discover -s tests -v
 - Architecture, engineering tradeoffs, and what changed after user feedback.
 - English README and demo; optionally a short Korean overview.
 
-This repository contains a keyword baseline, a Gemini assessor, and fictional data. ISO 27001 / NIST CSF mappings are planned; they are not implemented yet. Only running the AI assessor without `--dry-run` makes model API calls. Never commit credentials or confidential supplier data.
+This repository contains a keyword baseline, Gemini and local assessors, and fictional data. ISO 27001 / NIST CSF mappings are planned; they are not implemented yet. The Gemini assessor makes cloud API calls; the local assessor calls only a loopback model server. Dry runs make no inference requests. Never commit credentials or confidential supplier data.
 
 Reference: https://csrc.nist.gov/pubs/sp/1305/final
