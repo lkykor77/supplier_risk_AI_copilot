@@ -31,7 +31,7 @@ The current twenty-five-assessment keyword exercise is a learning example, not e
 
 ## Deferred work
 
-Multiple framework mappings, PDF ingestion, website checks, MCP, real supplier data, and regulatory reporting.
+Multiple framework mappings, a supplier-facing upload portal, website checks, MCP, real supplier evaluation, and regulatory reporting. Local PDF intake is now implemented with analyst-confirmed answer mapping; see [PDF intake](pdf-intake.md).
 
 ## Discovery questions
 

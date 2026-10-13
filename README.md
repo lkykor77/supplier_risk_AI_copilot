@@ -12,9 +12,13 @@ Open **http://127.0.0.1:8501**. The [analyst review guide](docs/analyst-review.m
 
 ![Analyst workspace — isolated automated QA example](docs/screenshots/analyst-review.jpg)
 
+## Upload supplier questionnaires as PDF
+
+The [PDF intake guide](docs/pdf-intake.md) covers local uploads of text, scanned, and mixed PDFs. Check the extracted text, map answers to the five requirements with page references, then assess with LM Studio and review the proposed decisions. Originals and intake records stay local. No Google API call is used for this flow.
+
 ## Run the keyword exercise
 
-This project uses Python's standard library only. It includes a keyword baseline, a Gemini assessor, and a local model assessor with optional Obsidian context. All suppliers and answers are fictional.
+The assessors and saved-report review use Python's standard library. PDF intake adds a macOS helper and a Node OCR dependency. It includes a keyword baseline, a Gemini assessor, and a local model assessor with optional Obsidian context. All suppliers and answers are fictional.
 
 After cloning this repository, open a terminal in the project folder and run:
 
@@ -33,12 +37,12 @@ Two additional suppliers test frequency: `fictional-d` reviews access every two 
 Next, read the [draft problem statement](docs/problem-statement.md) and [assessment guide](docs/assessment-guide.md). The guide explains the four statuses and includes your next exercise.
 
 - One user: a supplier-security analyst.
-- Input: structured questionnaire answers in JSON.
+- Input: structured answers in JSON, or locally uploaded PDFs with analyst-confirmed answer mapping.
 - Output: a proposed status, an exact supporting quote when available, and a reason.
 - Statuses: met, partly_met, missing, unknown.
 - `missing` means explicit evidence that a required practice is absent; an unanswered question means `unknown`.
 - Suggested statuses describe the supplied answers; they do not verify actual supplier practices or certify compliance.
-- Human review will be added before the app is considered complete.
+- Human decisions are saved separately from immutable model output, with an audit history.
 
 The five requirements are fictional buyer requirements, not official NIST or ISO controls. Next, document how these buyer requirements relate to NIST CSF 2.0 guidance, including the limits of each mapping. Some framework outcomes concern the buyer's own processes and cannot be assessed from supplier answers alone.
 
@@ -49,7 +53,7 @@ The five requirements are fictional buyer requirements, not official NIST or ISO
 3. Initial dataset complete: five buyer requirements and five fictional suppliers with rubric-based expected labels. Review these labels with a potential user before treating them as ground truth.
 4. Add an AI assessor with structured results and validated evidence quotes.
 5. Compare AI and keyword results on additional suppliers held out from prompt development. Track per-status errors, unsupported positive assessments, unknown handling, latency, and cost.
-6. Add a Streamlit review screen and persist reviewer corrections.
+6. Local analyst review and PDF intake implemented; persist reviewer corrections separately.
 7. Add reproducible setup, essential tests, GitHub CI, screenshots, user feedback, and a deployment guide.
 
 Keep ISO mappings, MCP, website checks, NIS2 and CRA reporting for later.

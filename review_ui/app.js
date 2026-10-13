@@ -34,6 +34,8 @@ function render() {
     button.setAttribute('aria-current',supplier.id===selectedSupplier?'true':'false'); $('suppliers').append(button);
   }
   const supplier=run.suppliers.find(s=>s.id===selectedSupplier);
+  $('showKey').disabled=run.meta.dataset==='pdf';if($('showKey').disabled)$('showKey').checked=false;
+  $('keyWarning').textContent=run.meta.dataset==='pdf'?'PDF assessments have no benchmark answer key':'Draft labels · not independently validated';
   $('supplierTitle').textContent=supplier.id;
   $('runMeta').textContent=`${run.meta.model} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Selected Obsidian context':'Original assessment prompt'}`;
   $('reviewProgress').textContent=`${run.reviewed_count} / ${run.meta.count} reviewed`;
@@ -64,7 +66,8 @@ function card(row) {
       node('p','',row.review.evidence_quote||'No evidence quote.'),node('p','',row.review.reason));
     if(row.review.comment)review.append(node('p','',`Review note: ${row.review.comment}`));article.append(review);
   }
-  if($('showKey').checked)article.append(node('div','answer-key',`Synthetic answer key: ${labels[row.expected]}. Treat this draft label as a learning reference, not verified ground truth.`));
+  if(row.pdf_source){const source=node('div','answer-key');source.append(node('span','',`PDF evidence · page(s) ${row.pdf_source.pages.join(', ')||'not found'}${row.pdf_source.ocr_corrected?' · OCR wording corrected by analyst':''} · `));const link=node('a','','Open source PDF');link.href='/api/pdf?id='+encodeURIComponent(row.pdf_source.document_id)+'#page='+(row.pdf_source.pages[0]||1);link.target='_blank';link.rel='noopener';source.append(link);article.append(source);}
+  if($('showKey').checked&&row.expected)article.append(node('div','answer-key',`Synthetic answer key: ${labels[row.expected]}. Treat this draft label as a learning reference, not verified ground truth.`));
   const actions=node('div','card-actions'), buttons=node('div');
   actions.append(node('span','review-state',row.review?`Reviewed by ${row.review.reviewer}`:'Awaiting your review'));
   if(!row.review) { const accept=node('button','primary','Accept AI suggestion'); accept.onclick=async()=>{accept.disabled=true;try{await save(row,row.ai,'');}finally{accept.disabled=false;}};buttons.append(accept); }
@@ -96,3 +99,48 @@ $('pendingOnly').onchange=render;$('showKey').onchange=render;
 $('reviewer').value=localStorage.getItem('reviewer')||'';
 $('reviewer').oninput=()=>localStorage.setItem('reviewer',$('reviewer').value);
 refresh();
+
+let pdfDocument=null;
+$('uploadPdf').onclick=()=>$('pdfFile').click();
+$('pdfFile').onchange=async()=>{
+  const file=$('pdfFile').files[0];if(!file)return;
+  if(file.size>10*1024*1024){notice('Choose a PDF no larger than 10 MB.',true);return;}
+  $('uploadPdf').disabled=true;notice('Extracting PDF text and on-device OCR. The first run may build the local helper…');
+  try{
+    const encoded=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.onerror=reject;reader.readAsDataURL(file);});
+    pdfDocument=await api('/api/pdf/upload',{filename:file.name,base64:encoded});
+    $('pdfSummary').textContent=`${pdfDocument.filename} · ${pdfDocument.pages.length} page(s) · ${pdfDocument.native_engine} + ${pdfDocument.ocr_engine}`;
+    $('pdfReviewer').value=$('reviewer').value;
+    $('originalPdf').href='/api/pdf?id='+encodeURIComponent(pdfDocument.id);$('pdfPage').replaceChildren();
+    for(const page of pdfDocument.pages){const option=node('option','',`Page ${page.page}`);option.value=page.page;$('pdfPage').append(option);}
+    $('pdfMappings').replaceChildren();
+    for(const requirement of pdfDocument.requirements){
+      const field=node('div','mapping');field.dataset.requirementId=requirement.id;field.dataset.modes='{}';
+      field.append(node('h3','',`${requirement.id} · ${requirement.description}`));
+      const answerLabel=node('label','','Supplier answer'),answer=node('textarea');answer.rows=3;answer.className='mapped-answer';answer.maxLength=16000;answerLabel.append(answer);field.append(answerLabel);
+      const copy=node('button','secondary','Copy selected answer');copy.type='button';copy.onclick=()=>{const box=$('pageText');const text=box.value.slice(box.selectionStart,box.selectionEnd);if(!text.trim()){ $('pdfError').textContent='Select answer text in the source-page box first.';return;}answer.value=text;field.querySelector('.mapped-pages').value=$('pdfPage').value;field.dataset.modes=JSON.stringify({[$('pdfPage').value]:$('pdfMode').value});$('pdfError').textContent='';};field.append(copy);
+      const pagesLabel=node('label','','Source pages (for example 1, 2)'),pages=node('input');pages.className='mapped-pages';pagesLabel.append(pages);field.append(pagesLabel);
+      const correctionLabel=node('label','','OCR correction note (only if you fix extracted wording)'),correction=node('input');correction.className='mapped-correction';correction.maxLength=2000;correctionLabel.append(correction);field.append(correctionLabel);$('pdfMappings').append(field);
+    }
+    $('confirmPdf').checked=false;$('pdfVault').checked=false;$('pdfError').textContent='';showPdfPage();$('pdfDialog').showModal();notice('PDF extracted. Check the source pages and confirm each mapped answer.');
+  }catch(error){notice(error.message,true);}finally{$('uploadPdf').disabled=false;$('pdfFile').value='';}
+};
+function showPdfPage(){const page=pdfDocument.pages.find(p=>p.page===Number($('pdfPage').value));$('pdfMode').value=page.mode;showPdfText();}
+function showPdfText(){const page=pdfDocument.pages.find(p=>p.page===Number($('pdfPage').value));page.mode=$('pdfMode').value;$('pageText').value=page[page.mode+'_text'];$('pageWarning').textContent=page.warning|| (page.mode==='ocr'?'OCR text can contain errors. Check it against the original page.':'PDF text order can differ from the visual layout. Check tables and embedded images; switch to OCR when needed.');}
+$('pdfPage').onchange=showPdfPage;$('pdfMode').onchange=showPdfText;
+$('closePdf').onclick=()=>$('pdfDialog').close();
+$('assessPdf').onclick=async()=>{
+  if(!$('pdfReviewer').value.trim()){$('pdfError').textContent='Enter your name or initials before confirming answers.';return;}
+  $('reviewer').value=$('pdfReviewer').value;localStorage.setItem('reviewer',$('reviewer').value);
+  if(!$('confirmPdf').checked){$('pdfError').textContent='Check the confirmation box after inspecting the answers against the PDF.';return;}
+  $('assessPdf').disabled=true;$('closePdf').disabled=true;$('pdfError').textContent='Saving the confirmed mapping, then running the local model. This may take a minute…';
+  try{
+    const modes=Object.fromEntries(pdfDocument.pages.map(p=>[String(p.page),p.mode]));
+    const mappings=[...$('pdfMappings').children].map(field=>({requirement_id:field.dataset.requirementId,
+      answer:field.querySelector('.mapped-answer').value,pages:field.querySelector('.mapped-pages').value.split(',').map(s=>s.trim()).filter(Boolean).map(Number),modes:{...modes,...JSON.parse(field.dataset.modes)},
+      correction_note:field.querySelector('.mapped-correction').value}));
+    const confirmed=await api('/api/pdf/confirm',{document_id:pdfDocument.id,confirmed:true,reviewer:$('reviewer').value,mappings});
+    const assessed=await api('/api/pdf/assess',{...confirmed,with_vault:$('pdfVault').checked});
+    $('pdfDialog').close();await refresh();$('runSelect').value=assessed.report_sha256;await loadRun();notice('PDF assessment ready. Inspect the page references and review every AI suggestion.');
+  }catch(error){$('pdfError').textContent=error.message;}finally{$('assessPdf').disabled=false;$('closePdf').disabled=false;}
+};

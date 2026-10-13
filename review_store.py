@@ -31,9 +31,13 @@ class ReviewStore:
     def _snapshot(self, path: Path) -> tuple[str, dict]:
         raw = path.read_bytes()
         report = json.loads(raw)
-        if report.get("complete") is not True or report.get("dataset") not in {"development", "evaluation"}:
-            raise ValueError("Only completed development or evaluation reports can be reviewed.")
-        requirements, suppliers = load_inputs(report["dataset"])
+        if report.get("complete") is not True or report.get("dataset") not in {"development", "evaluation", "pdf"}:
+            raise ValueError("Only completed development, evaluation or PDF reports can be reviewed.")
+        if report["dataset"] == "pdf":
+            requirements = report["source_data"]["requirements"]
+            suppliers = report["source_data"]["suppliers"]
+        else:
+            requirements, suppliers = load_inputs(report["dataset"])
         digest = hashlib.sha256(json.dumps([requirements, suppliers], sort_keys=True).encode()).hexdigest()
         if report.get("dataset_sha256") != digest:
             raise ValueError("Report does not match the current source dataset.")
@@ -59,7 +63,7 @@ class ReviewStore:
         """Discover completed saved runs; malformed and failed runs are excluded."""
         with self.lock:
             runs = {}
-            for pattern in ["results/latest*.json", "reports/*run*.json"]:
+            for pattern in ["results/latest*.json", "reports/*run*.json", "intake/*/assessment-run-*.json"]:
                 for path in sorted(self.root.glob(pattern)):
                     try:
                         run_id, snapshot = self._snapshot(path)
@@ -107,7 +111,10 @@ class ReviewStore:
                     rows.append({"requirement_id": requirement["id"], "description": requirement["description"],
                                  "answer": supplier["answers"].get(requirement["question_id"], ""),
                                  "ai": {k: original[k] for k in ["status", "evidence_quote", "reason"]},
-                                 "expected": supplier["expected"][requirement["id"]],
+                                 "expected": supplier.get("expected", {}).get(requirement["id"]),
+                                 "pdf_source": {"document_id": snapshot["report"]["source_document_id"],
+                                                **snapshot["report"]["source_mapping"]["provenance"][requirement["id"]]}
+                                                if snapshot["report"]["dataset"] == "pdf" else None,
                                  "review": state["decisions"].get(key)})
                 suppliers.append({"id": supplier["id"], "assessments": rows})
             return {"meta": self._metadata(run_id, snapshot), "revision": state["revision"],

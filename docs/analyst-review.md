@@ -44,4 +44,4 @@ Automated tests cover persistence, unchanged model outputs, fabricated quotes, r
 
 Time a manual review and an assisted review, including corrections. Ask a potential user to try the screen and record what they find useful or confusing. Keep measured feedback separate from simulated or automated tests.
 
-The implementation uses Python's standard library with a small HTML/CSS/JavaScript interface, keeping installation simple. Streamlit, Docker and hosted deployment are optional future choices.
+Saved-report review uses Python's standard library with a small HTML/CSS/JavaScript interface. The optional [PDF intake workflow](pdf-intake.md) adds local extraction and OCR dependencies and calls LM Studio only after answer confirmation. Streamlit, Docker and hosted deployment are optional future choices.

@@ -8,3 +8,6 @@ __pycache__/
 results/
 .local-config.json
 reviews/
+intake/
+.cache/
+node_modules/
