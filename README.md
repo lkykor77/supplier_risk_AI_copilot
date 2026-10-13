@@ -44,7 +44,7 @@ The five requirements are fictional buyer requirements, not official NIST or ISO
 
 Keep ISO mappings, MCP, website checks, NIS2 and CRA reporting for later.
 
-The [frozen evaluation plan](docs/evaluation-plan.md) adds 25 new synthetic assessments using the unchanged prompt. Run it separately from the development examples:
+The [frozen evaluation plan](docs/evaluation-plan.md) adds 25 new synthetic assessments using the unchanged prompt. The first run matched **23/25 AI labels versus 8/25 baseline labels**; see the [two errors and evaluation limits](docs/evaluation-results.md). Run it separately from the development examples:
 
 ```sh
 python3 ai_assessor.py --dataset evaluation --all

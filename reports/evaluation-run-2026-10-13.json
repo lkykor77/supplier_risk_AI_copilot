@@ -1,0 +1,313 @@
+{
+  "created_at": "2026-10-13T08:42:29.121328+00:00",
+  "model": "gemini-3.5-flash-lite",
+  "dataset_sha256": "3594ca5c25a1711b66246c54edc3875630470639ca013c16d9a3332f4e3d9b0f",
+  "prompt_sha256": "6c6b8ac64aa9df36fb3c380d95d0ee834c771a8b916bf152f122e2e67c6a7c43",
+  "dataset": "evaluation",
+  "evaluation_type": "frozen synthetic evaluation; no independent label review",
+  "complete": true,
+  "requested_suppliers": [
+    "evaluation-f",
+    "evaluation-g",
+    "evaluation-h",
+    "evaluation-i",
+    "evaluation-j"
+  ],
+  "suppliers": [
+    {
+      "supplier_id": "evaluation-f",
+      "latency_seconds": 1.439,
+      "usage": {
+        "promptTokenCount": 505,
+        "candidatesTokenCount": 383,
+        "totalTokenCount": 888,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 505
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "assessments": [
+        {
+          "requirement_id": "BUYER-01",
+          "status": "met",
+          "evidence_quote": "For security matters, contact our security lead Jae at jae@fictional-f.example.",
+          "reason": "The supplier names a security contact and provides an email address.",
+          "expected": "met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-02",
+          "status": "met",
+          "evidence_quote": "Our approved, written playbook explains how staff detect, contain, and respond to security incidents.",
+          "reason": "The supplier explicitly confirms having an approved, written incident response playbook.",
+          "expected": "met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-03",
+          "status": "met",
+          "evidence_quote": "Every three months, managers check and recertify access privileges for every user.",
+          "reason": "Reviewing access every three months satisfies the requirement to review at least annually.",
+          "expected": "met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-04",
+          "status": "met",
+          "evidence_quote": "Every administrator must enter a password and a one-time code from an authenticator app when signing in.",
+          "reason": "The supplier mandates multi-factor authentication for all administrator accounts.",
+          "expected": "met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-05",
+          "status": "met",
+          "evidence_quote": "Each quarter we restore a backup into an isolated environment and verify that the recovered application works.",
+          "reason": "Restoring backups quarterly satisfies the requirement to test restoration at least annually.",
+          "expected": "met",
+          "baseline_status": "unknown"
+        }
+      ]
+    },
+    {
+      "supplier_id": "evaluation-g",
+      "latency_seconds": 1.424,
+      "usage": {
+        "promptTokenCount": 492,
+        "candidatesTokenCount": 391,
+        "totalTokenCount": 883,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 492
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "assessments": [
+        {
+          "requirement_id": "BUYER-01",
+          "status": "missing",
+          "evidence_quote": "We have not appointed anyone to handle security questions, and there is no security contact channel.",
+          "reason": "The supplier explicitly states that no security contact or channel has been appointed.",
+          "expected": "missing",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-02",
+          "status": "partly_met",
+          "evidence_quote": "Our team follows an established incident response process, but none of the process is documented.",
+          "reason": "An incident response process explicitly lacking documentation is assessed as partly met.",
+          "expected": "partly_met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-03",
+          "status": "partly_met",
+          "evidence_quote": "We recertify access for administrators every year. We never review access for other users.",
+          "reason": "Access reviews are performed annually for administrators, but user access is not reviewed for other users.",
+          "expected": "partly_met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-04",
+          "status": "partly_met",
+          "evidence_quote": "Staff administrators must use MFA; contractor administrators are explicitly exempt and use passwords alone.",
+          "reason": "MFA covers only some administrator accounts since contractor administrators are exempt.",
+          "expected": "partly_met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-05",
+          "status": "missing",
+          "evidence_quote": "We restore a backup as a test once every eighteen months.",
+          "reason": "The restore test frequency is once every eighteen months, which fails the requirement for at least annual testing.",
+          "expected": "partly_met",
+          "baseline_status": "unknown"
+        }
+      ]
+    },
+    {
+      "supplier_id": "evaluation-h",
+      "latency_seconds": 1.511,
+      "usage": {
+        "promptTokenCount": 503,
+        "candidatesTokenCount": 375,
+        "totalTokenCount": 878,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 503
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "assessments": [
+        {
+          "requirement_id": "BUYER-01",
+          "status": "missing",
+          "evidence_quote": "We have not specified who handles security questions.",
+          "reason": "The supplier explicitly states they have not specified who handles security questions.",
+          "expected": "unknown",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-02",
+          "status": "unknown",
+          "evidence_quote": "Section A: We have an approved written incident response plan. Section B: We have no incident response plan or documentation.",
+          "reason": "The answer is contradictory because it simultaneously claims to have and not have an incident response plan.",
+          "expected": "unknown",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-03",
+          "status": "unknown",
+          "evidence_quote": "Our current answer says all user access is reviewed quarterly. Our current answer also says no user access reviews occur.",
+          "reason": "The answer is contradictory and insufficient to decide because it asserts conflicting statements without a resolution.",
+          "expected": "unknown",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-04",
+          "status": "unknown",
+          "evidence_quote": "Administrator logins use advanced security controls.",
+          "reason": "The answer is vague because advanced security controls do not explicitly specify multi-factor authentication for all administrator accounts.",
+          "expected": "unknown",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-05",
+          "status": "unknown",
+          "evidence_quote": "We make backups every night and retain them for ninety days.",
+          "reason": "Making backups alone does not establish restore testing.",
+          "expected": "unknown",
+          "baseline_status": "unknown"
+        }
+      ]
+    },
+    {
+      "supplier_id": "evaluation-i",
+      "latency_seconds": 1.234,
+      "usage": {
+        "promptTokenCount": 473,
+        "candidatesTokenCount": 352,
+        "totalTokenCount": 825,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 473
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "assessments": [
+        {
+          "requirement_id": "BUYER-01",
+          "status": "missing",
+          "evidence_quote": "Nobody is responsible for security enquiries and there is no mailbox for them.",
+          "reason": "The supplier explicitly states there is no security contact or mailbox.",
+          "expected": "missing",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-02",
+          "status": "missing",
+          "evidence_quote": "There is neither an incident-handling process nor a written plan.",
+          "reason": "The supplier explicitly states that neither an incident-handling process nor a written plan exists.",
+          "expected": "missing",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-03",
+          "status": "missing",
+          "evidence_quote": "Account permissions are never reviewed.",
+          "reason": "The supplier explicitly states that user access is never reviewed.",
+          "expected": "missing",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-04",
+          "status": "missing",
+          "evidence_quote": "Every administrator signs in with only a password; no second factor is used.",
+          "reason": "The supplier explicitly states that multi-factor authentication is not used for administrators.",
+          "expected": "missing",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-05",
+          "status": "missing",
+          "evidence_quote": "We have never attempted to recover data from any backup as a test.",
+          "reason": "The supplier explicitly states that backup restoration testing is never performed.",
+          "expected": "missing",
+          "baseline_status": "unknown"
+        }
+      ]
+    },
+    {
+      "supplier_id": "evaluation-j",
+      "latency_seconds": 1.49,
+      "usage": {
+        "promptTokenCount": 518,
+        "candidatesTokenCount": 380,
+        "totalTokenCount": 898,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 518
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "assessments": [
+        {
+          "requirement_id": "BUYER-01",
+          "status": "met",
+          "evidence_quote": "Our security lead Mina handles security questions at mina@fictional-j.example.",
+          "reason": "The supplier named a security contact with contact details.",
+          "expected": "met",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-02",
+          "status": "missing",
+          "evidence_quote": "Today we have neither a written plan nor an incident response process.",
+          "reason": "The supplier explicitly states that they do not have a written plan or incident response process.",
+          "expected": "missing",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-03",
+          "status": "unknown",
+          "evidence_quote": "All user access is reviewed, but we cannot provide the schedule or say when the latest review happened.",
+          "reason": "The answer is vague regarding the frequency of the reviews, so it cannot be determined if it occurs at least annually.",
+          "expected": "unknown",
+          "baseline_status": "unknown"
+        },
+        {
+          "requirement_id": "BUYER-04",
+          "status": "met",
+          "evidence_quote": "We require multi-factor authentication for every administrator account.",
+          "reason": "The supplier explicitly requires multi-factor authentication for all administrator accounts.",
+          "expected": "met",
+          "baseline_status": "met"
+        },
+        {
+          "requirement_id": "BUYER-05",
+          "status": "unknown",
+          "evidence_quote": "Recovery drills take place, but their frequency is unspecified.",
+          "reason": "The frequency of the recovery drills is unspecified, making it insufficient to decide if testing occurs at least annually.",
+          "expected": "unknown",
+          "baseline_status": "unknown"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 25,
+    "ai_correct": 23,
+    "baseline_correct": 8
+  }
+}
