@@ -12,22 +12,22 @@ The tool evaluates what the answer states. It does not verify the supplier's act
 
 ## First working version
 
-- Structured JSON input, initially using the three fictional buyer requirements in `data/requirements.json`.
+- Structured JSON input, using the five fictional buyer requirements in `data/requirements.json`.
 - Four possible statuses: `met`, `partly_met`, `missing`, `unknown`.
 - A keyword baseline and, later, an AI assessor using the same input and output structure.
 - Exact quotes for supported assessments; no invented evidence.
 - A simple review screen that stores analyst decisions.
-- Expand to 5–8 requirements and five fictional suppliers after the rubric is clear.
+- The initial dataset now contains five requirements and five fictional suppliers; validate the rubric and expected labels with a potential user.
 
 ## How we will measure usefulness
 
-- Compare predictions with manually assigned labels on held-out fictional suppliers.
+- Compare predictions with rubric-based expected labels reviewed by a person on held-out fictional suppliers.
 - Report mistakes for each status, particularly unsupported `met` results.
 - Check that each quote exists verbatim in the supplied answer and supports the result.
 - Compare manual review time with assisted review time, including time spent correcting mistakes.
 - Record AI latency and cost per supplier.
 
-The current fifteen-assessment keyword exercise is a learning example, not evidence of real-world performance. Performance targets will be set after the dataset and baseline are established.
+The current twenty-five-assessment keyword exercise is a learning example, not evidence of real-world performance. Performance targets will be set after the dataset and baseline are established.
 
 ## Deferred work
 

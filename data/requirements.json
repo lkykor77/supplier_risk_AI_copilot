@@ -1,5 +1,32 @@
 [
-  {"id": "BUYER-01", "description": "The supplier identifies a security contact.", "question_id": "security_contact", "keyword": "security@"},
-  {"id": "BUYER-02", "description": "The supplier has a documented incident response plan.", "question_id": "incident_response", "keyword": "documented incident response plan"},
-  {"id": "BUYER-03", "description": "The supplier reviews user access at least annually.", "question_id": "access_review", "keyword": "annual access review"}
+  {
+    "id": "BUYER-01",
+    "description": "The supplier identifies a security contact.",
+    "question_id": "security_contact",
+    "keyword": "security@"
+  },
+  {
+    "id": "BUYER-02",
+    "description": "The supplier has a documented incident response plan.",
+    "question_id": "incident_response",
+    "keyword": "documented incident response plan"
+  },
+  {
+    "id": "BUYER-03",
+    "description": "The supplier reviews user access at least annually.",
+    "question_id": "access_review",
+    "keyword": "annual access review"
+  },
+  {
+    "id": "BUYER-04",
+    "description": "The supplier requires multi-factor authentication for all administrator accounts.",
+    "question_id": "admin_mfa",
+    "keyword": "multi-factor authentication"
+  },
+  {
+    "id": "BUYER-05",
+    "description": "The supplier tests restoring backups at least annually.",
+    "question_id": "backup_restore",
+    "keyword": "annual backup restore test"
+  }
 ]
