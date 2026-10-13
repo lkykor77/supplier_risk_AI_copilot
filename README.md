@@ -4,7 +4,7 @@ An FDE portfolio project in progress: help a supplier-security analyst review qu
 
 ## First exercise
 
-This starter uses Python's standard library only. It has no AI integration yet. All suppliers and answers are fictional.
+This project uses Python's standard library only. It includes a keyword baseline and a Gemini AI assessor. All suppliers and answers are fictional.
 
 After cloning this repository, open a terminal in the project folder and run:
 
@@ -44,6 +44,23 @@ The five requirements are fictional buyer requirements, not official NIST or ISO
 
 Keep ISO mappings, MCP, website checks, NIS2 and CRA reporting for later.
 
+## AI assessment preparation
+
+`assessment.py` prepares model input without expected labels or keyword rules. It validates that results cover each requirement exactly once and quote only the corresponding supplier answer. Blank answers must be `unknown`. Quote matching checks that evidence exists; a person must still check that it supports the conclusion.
+
+The Gemini connection is implemented in `ai_assessor.py`. Follow the [local Gemini setup guide](docs/gemini-setup.md):
+
+```sh
+python3 setup_key.py
+python3 ai_assessor.py
+```
+
+The first run assesses one supplier; `python3 ai_assessor.py --all` compares all five. No live AI results have been verified yet. Run the evidence-validation and mocked integration tests without an API account or network access:
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
 ## Portfolio evidence to collect
 
 - Discovery notes without confidential information.
@@ -52,6 +69,6 @@ Keep ISO mappings, MCP, website checks, NIS2 and CRA reporting for later.
 - Architecture, engineering tradeoffs, and what changed after user feedback.
 - English README and demo; optionally a short Korean overview.
 
-This repository currently contains the local keyword baseline and fictional data. AI assessment and ISO 27001 / NIST CSF mappings are planned; they are not implemented yet. No model API calls are made. Never commit credentials or confidential supplier data.
+This repository contains a keyword baseline, a Gemini assessor, and fictional data. ISO 27001 / NIST CSF mappings are planned; they are not implemented yet. Only running the AI assessor without `--dry-run` makes model API calls. Never commit credentials or confidential supplier data.
 
 Reference: https://csrc.nist.gov/pubs/sp/1305/final

@@ -4,3 +4,5 @@ __pycache__/
 .env.*
 !.env.example
 .DS_Store
+.gemini-key
+results/

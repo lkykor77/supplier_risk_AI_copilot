@@ -33,8 +33,8 @@ These are fictional buyer requirements. Framework mappings will be added separat
 ## Your next exercise
 
 1. Run `python3 baseline.py` from the project folder.
-2. Inspect the two `MISMATCH` rows for `fictional-c`.
-3. Explain in your own words why both expected labels are `missing`.
+2. Inspect the four `MISMATCH` rows for `fictional-c`.
+3. Explain in your own words why their expected labels are `missing`.
 4. Read the four annual-review examples in the table above and explain the differences.
 
 Done when you can explain why "no answer" and "we do not do this" receive different labels. This understanding will guide the dataset and future AI prompt.
