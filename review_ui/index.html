@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Supplier Risk Copilot · Analyst review</title><link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script></head>
+<body>
+<header><div class="brand"><span class="mark">S</span><div>Supplier Risk Copilot<small>ANALYST WORKSPACE</small></div></div><span class="local">● Local review</span></header>
+<main>
+<section class="intro"><p class="eyebrow">FROM SUGGESTION TO DECISION</p><h1>Review the evidence.<br>Make the call.</h1><p>Inspect each supplier answer, then accept or correct the suggested assessment. Your decisions are saved separately from the AI output.</p></section>
+<section class="toolbar" aria-label="Review settings"><label>Assessment run<select id="runSelect"><option>Loading saved runs…</option></select></label><label>Your name or initials<input id="reviewer" placeholder="Required to save a decision" maxlength="100" autocomplete="name"></label><button id="refresh" class="secondary">Refresh</button></section>
+<div id="notice" role="status" aria-live="polite"></div>
+<div class="workspace"><aside><div class="aside-title">Suppliers <span id="supplierCount">0</span></div><nav id="suppliers" aria-label="Choose supplier"></nav><div class="rubric"><h3>The four statuses</h3><p><b>Met</b> · the full practice is stated.</p><p><b>Partly met</b> · a practice exists, with an explicit gap.</p><p><b>Missing</b> · the practice is explicitly absent.</p><p><b>Unknown</b> · evidence is insufficient or conflicting.</p></div></aside>
+<section class="review-panel"><div class="panel-heading"><div><p class="eyebrow">QUESTIONNAIRE REVIEW</p><h2 id="supplierTitle">Select a saved run</h2><p id="runMeta" class="muted"></p></div><div class="progress-box"><strong id="reviewProgress">0 / 0 reviewed</strong><progress id="progress" value="0" max="1"></progress></div></div>
+<div class="filters"><label><input id="pendingOnly" type="checkbox"> Pending only</label><label><input id="showKey" type="checkbox"> Show synthetic answer key</label><span id="keyWarning">Draft labels · not independently validated</span></div>
+<div id="cards" class="cards"><div class="empty">Loading assessments…</div></div>
+<details class="history"><summary>Review history <span id="historyCount">0</span></summary><div id="history"></div></details>
+</section></div>
+<footer>Fictional suppliers only · Assessment support, not verified compliance · No model calls are made from this screen</footer>
+</main>
+<dialog id="editor"><form id="editForm"><div class="dialog-heading"><div><p class="eyebrow">ANALYST DECISION</p><h2 id="editTitle">Correct assessment</h2></div><button type="button" id="closeEditor" class="icon" aria-label="Close editor">×</button></div><p id="editRequirement"></p><label>Status<select id="editStatus"><option value="met">Met</option><option value="partly_met">Partly met</option><option value="missing">Missing</option><option value="unknown">Unknown</option></select></label><label>Exact evidence quote<textarea id="editQuote" rows="4" maxlength="12000"></textarea></label><small>Copy wording from the supplier answer. Leave empty only when the answer is blank.</small><label>Assessment explanation<textarea id="editReason" rows="3" maxlength="4000" required></textarea></label><label>Review note<textarea id="editComment" rows="2" maxlength="4000" placeholder="Why did you change this assessment?"></textarea></label><p id="editError" role="alert"></p><div class="dialog-actions"><button type="button" id="resetDraft" class="secondary">Use original AI suggestion</button><button type="submit" class="primary">Save reviewed assessment</button></div></form></dialog>
+</body></html>

@@ -2,7 +2,17 @@
 
 An FDE portfolio project in progress: help a supplier-security analyst review questionnaire answers, see the evidence, and approve or correct each suggested assessment.
 
-## First exercise
+## Review assessments in your browser
+
+```sh
+python3 review_app.py
+```
+
+Open **http://127.0.0.1:8501**. The [analyst review guide](docs/analyst-review.md) explains how to accept or correct assessments, validate quotes, and save decisions separately from the AI output. It works from saved reports without running a model. Your review history stays local.
+
+![Analyst workspace — isolated automated QA example](docs/screenshots/analyst-review.jpg)
+
+## Run the keyword exercise
 
 This project uses Python's standard library only. It includes a keyword baseline, a Gemini assessor, and a local model assessor with optional Obsidian context. All suppliers and answers are fictional.
 
