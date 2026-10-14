@@ -30,8 +30,6 @@ python3 ai_assessor.py --dataset evaluation --dry-run
 
 ## Review policy
 
-Expected labels and reasons were drafted with AI assistance using the existing rubric. They were frozen before the Gemini run but have not been independently validated by a security analyst. Describe this as a frozen synthetic evaluation, not an independently verified real-world benchmark. Some concepts still overlap the development data because both sets assess the same requirements.
-
 Compare status matches, false `met` results, unknown handling, quote validity and interpretation. Review contradictions carefully: a single verbatim quote may omit conflicting evidence elsewhere in the answer. One embedded-instruction example cannot demonstrate comprehensive prompt-injection resistance.
 
 Do not tune the original prompt after seeing these results and report an improved score as fresh evaluation. If these cases become tuning data, create and freeze a new evaluation set. Record any label corrections transparently, with the original score and reason for changing the answer key.
