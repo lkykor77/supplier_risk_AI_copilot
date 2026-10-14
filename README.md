@@ -6,7 +6,7 @@ A **Deployment Strategist portfolio project** that addresses **pre-engagement in
 
 **[Try the public interactive demo](https://lkykor77.github.io/supplier_risk_AI_copilot/)** · [Watch the 90-second walkthrough](https://lkykor77.github.io/supplier_risk_AI_copilot/#walkthrough) · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
 
-Explore the customer decision, inspect how documents become usable data, and try the review workflow. The public demo uses fictional suppliers and saved AI results. The full application processes JSON, selectable-text PDFs and scanned PDFs locally, integrates an Open Weight AI model through **LM Studio**, and can use selected **Obsidian rules, knowledge and project memory**.
+The public demo uses fictional suppliers and saved AI results. The full application processes JSON, selectable-text PDFs and scanned PDFs locally, integrates an Open Weight AI model through **LM Studio**, and can use selected **Obsidian rules, knowledge and project memory**.
 
 **Why local AI? Supplier submissions can contain confidential security policies, infrastructure details and incident procedures. The local assessment workflow keeps documents, extracted answers, selected Obsidian context and review records on the user’s computer; it does not upload them to a cloud AI provider.** A lightweight **custom Python AI harness** manages the model requests and validation around LM Studio. [Privacy boundary and harness design](docs/local-privacy-and-ai-harness.md).
 
