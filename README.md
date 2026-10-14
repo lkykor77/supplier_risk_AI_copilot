@@ -2,11 +2,13 @@
 
 **A questionnaire answer is a claim. Make it reviewable.**
 
-A **Deployment Strategist portfolio project** that addresses **pre-engagement information security risk assessment of potential suppliers** into an operational data pipeline and a working review application. It connects customer workflow strategy with Python/JavaScript development, local inference through an **Open Weight AI model**, and human decisions supported by traceable evidence.
+A **Deployment Strategist portfolio project** that addresses **pre-engagement information security risk assessment of potential suppliers** through an operational data pipeline and a working review application. It connects customer workflow strategy with Python/JavaScript development, local inference through an **Open Weight AI model**, and human decisions supported by traceable evidence.
 
 **[Try the public interactive demo](https://lkykor77.github.io/supplier_risk_AI_copilot/)** · [Watch the 90-second walkthrough](https://lkykor77.github.io/supplier_risk_AI_copilot/#walkthrough) · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
 
 Explore the customer decision, inspect how documents become usable data, and try the review workflow. The public demo uses fictional suppliers and saved AI results. The full application processes JSON, selectable-text PDFs and scanned PDFs locally, integrates an Open Weight AI model through **LM Studio**, and can use selected **Obsidian rules, knowledge and project memory**.
+
+**Why local AI? Supplier submissions can contain confidential security policies, infrastructure details and incident procedures. The local assessment workflow keeps documents, extracted answers, selected Obsidian context and review records on the user’s computer; it does not upload them to a cloud AI provider.** A lightweight **custom Python AI harness** manages the model requests and validation around LM Studio. [Privacy boundary and harness design](docs/local-privacy-and-ai-harness.md).
 
 ## What this portfolio demonstrates
 
@@ -15,7 +17,8 @@ Explore the customer decision, inspect how documents become usable data, and try
 | Understand the business decision | Supplier information security risk problem statement, analyst pain points, stakeholder handoffs and a [proposed customer pilot](docs/customer-deployment-plan.md) |
 | Turn fragmented data into a pipeline | Document extraction/OCR → checked answers → requirements → structured assessments → human decisions → risk summary, with source references |
 | Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 47 automated tests |
-| Integrate practical AI tools | Open Weight AI model in LM Studio; schema-constrained output; allowlisted Obsidian rules and persistent project memory |
+| Build a local AI harness | Custom Python orchestration of prompts, allowlisted Obsidian context, loopback LM Studio requests, structured-output parsing and evidence validation |
+| Make a deployment choice for confidential evidence | On-device PDF/OCR and Open Weight AI model inference; local records; no document upload to a cloud AI service or cloud fallback in the local workflow |
 | Exercise product judgment | Explicit PDF confirmation, visible model errors, separate reviewer decisions, unknown-evidence handling and critical-supplier follow-up |
 | Communicate and support adoption | Interactive demo, local-app walkthrough, architecture diagrams, English/Korean overview and a proposed training/measurement plan |
 
@@ -55,6 +58,23 @@ The intended outcome is a more consistent, traceable review record: checked sour
 
 Today, the prototype implements **five fictional buyer requirements**, a working PDF-to-review workflow, synthetic evaluations, and human-reviewed gap scoring. **The demo now shows [illustrative ISO 27001/NIST topic references](docs/framework-references.md) for each question. Complete validated control mappings, regulatory assessment, direct Excel import, and real-supplier validation remain planned.** It does not certify compliance or verify that supplier claims are true.
 
+## Confidential evidence: why use a local Open Weight AI model?
+
+Confidential supplier documents should not be sent to an unapproved cloud AI service. Local inference was chosen to support that constraint, rather than requiring a reviewer to upload sensitive material to a model provider.
+
+- **Keep the evidence local:** PDF extraction/OCR, prompts, model inference and saved decisions are processed on the user’s computer. Selected Obsidian rules and memory go only to the local model endpoint.
+- **Control the inference environment:** choose the supported model, runtime and generation settings; retain prompt/data hashes and outputs for investigation and repeat evaluation. Model or runtime changes require validation.
+- **Reduce cloud-service dependency:** once the model, runtime and OCR dependencies are installed, the local workflow needs no cloud inference API, account quota or automatic cloud fallback. LM Studio documents [offline operation](https://lmstudio.ai/docs/app/offline).
+- **Avoid per-request cloud inference charges:** local requests use the user’s hardware. Compute, memory, electricity and setup still have costs; this is not a claim that local deployment is always cheaper or faster.
+
+**Privacy boundary:** these statements describe the implemented local application workflow, not a guarantee about every program on the computer. Model/package downloads and updates use network access. Separately configured Obsidian/iCloud sync, backups, remote access, extensions or deliberate exports can transmit files outside the app. For confidential use, keep evidence and any sensitive vault context in approved local storage and review those settings. The separate Gemini comparison script sends input to a cloud provider; use fictional data there. The public demo accepts no uploads and contains only fictional evidence. See [the documented boundary and code evidence](docs/local-privacy-and-ai-harness.md).
+
+## What the custom AI harness does
+
+The **AI harness** is the application code surrounding the model—not the model itself. Python prepares the buyer rubric and supplier answers, loads explicitly selected Obsidian context, calls LM Studio through a constrained loopback client, parses completed structured output and validates requirement coverage and exact quotes. The review application keeps saved AI suggestions separate from accountable human decisions and calculates the indicator only after complete review. This is a bounded assessment workflow, not an autonomous supplier-approval agent.
+
+The implementation is inspectable in [local_assessor.py](local_assessor.py), [assessment.py](assessment.py), [vault_context.py](vault_context.py), [pdf_intake.py](pdf_intake.py) and [review_store.py](review_store.py). LM Studio hosts the model; the custom Python harness manages its use.
+
 ## Realistic fictional assessment scenarios
 
 These contexts illustrate how a buyer could use the existing synthetic answers. They are not real customers, verified supplier evidence or additional AI evaluation runs.
@@ -72,7 +92,8 @@ The proposed document packs are scenario context; the public demo displays saved
 | Feature | Current behavior |
 | --- | --- |
 | PDF and scanned-PDF reading | Local PDFKit extraction and on-device OCR; selectable-text, scanned and mixed PDFs; analyst-confirmed mappings and source-page references |
-| Open Weight AI model | Local inference through LM Studio on a loopback endpoint; structured JSON and evidence-quote checks; no cloud fallback on the local path |
+| Confidential local inference | Open Weight AI model through LM Studio; supplier content stays within the local application workflow; no cloud AI upload or fallback |
+| Custom Python AI harness | Prompt/context preparation, loopback endpoint enforcement, proxy/redirect refusal, completed JSON parsing, coverage and verbatim-evidence checks |
 | Obsidian rules and memory | Optional allowlisted AI rules/knowledge and app-owned project memory; personal notes stay private; frozen evaluation excludes vault context |
 | Human review | Accept or correct labels, quotes and explanations; retain original AI output and decision history |
 | Weighted questionnaire risk | Fixed status factors and equal control weights; final human decisions only; unresolved evidence shown separately; normal/critical supplier classification and enhanced-review flags |
@@ -90,7 +111,7 @@ AI suggestions never replace the human assessment. Page references, original res
 
 ## System design
 
-A local-first deployment separates private evidence processing from the public portfolio demo. Components have specific responsibilities for extraction, inference, validation, review and scoring.
+A local-first deployment separates confidential evidence processing from the public portfolio demo. The custom Python AI harness sits around LM Studio, connecting bounded context, model execution and output checks. Components have specific responsibilities for extraction, inference, validation, review and scoring.
 
 ![System design separating the local Mac application and private evidence from the static public GitHub demo](docs/diagrams/system-design.png)
 

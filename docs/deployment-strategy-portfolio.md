@@ -14,7 +14,8 @@ The product question is: **how can a security analyst turn inconsistent supplier
 | Data preparation and pipelining | JSON/PDF intake, local OCR, checked answer mapping, source-page references, stable IDs and immutable source snapshots |
 | Application building | Python HTTP API and JavaScript review interface; structured suggestions, corrections, revision checks and deterministic scoring |
 | Code analysis and debugging | Evidence validation, frozen comparisons, diagnosis of empty final model output, failure examples and 47 automated tests |
-| Open Weight AI model integration | Local LM Studio inference with schema-constrained output and no cloud fallback on the local path |
+| Privacy-driven AI deployment | Confidential supplier evidence processed locally; Open Weight AI model through LM Studio; no cloud upload or fallback in the local workflow |
+| Custom AI harness engineering | Python prompt/context orchestration, constrained loopback execution, structured-output and evidence validation, with separate human review |
 | Rules and persistent memory | Explicitly selected Obsidian notes, provenance hashes, bounded context and app-owned project memory |
 | Product judgment | Human confirmation for ambiguous PDF extraction; separate unknown evidence; critical-supplier follow-up; simpler scoring after feedback |
 | Communication and adoption | Public interactive demo, captioned walkthrough, English/Korean overview, diagrams and a proposed reviewer-training sequence |
@@ -37,4 +38,4 @@ The narrative is tailored to those capabilities. This independent project uses P
 
 ## Two-sentence CV description
 
-Built a Python/JavaScript application for pre-engagement supplier information security risk assessment against buyer requirements mapped to illustrative ISO 27001 and NIST CSF topics and document-processing pipeline with PDF/OCR extraction, local Open Weight AI model inference through LM Studio, selected Obsidian rules/memory, and traceable human decisions. Defined the stakeholder workflow and a proposed customer pilot with discovery, reviewer training and outcome measures; published an interactive demo with architecture diagrams, code investigation, failure analysis and synthetic evaluation evidence.
+Built a Python/JavaScript application and document-processing pipeline for pre-engagement supplier information security assessment against buyer requirements linked to ISO 27001 and NIST CSF topics. Designed a custom Python AI harness integrating an Open Weight AI model through LM Studio, selected Obsidian rules/memory and structured-output validation to keep confidential evidence within a local workflow; published an interactive demo and defined a proposed customer pilot with stakeholder discovery, reviewer training and outcome measures.

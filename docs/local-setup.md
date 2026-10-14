@@ -1,5 +1,11 @@
 # Open Weight AI model and Obsidian integration
 
+## Confidential evidence and the AI harness
+
+Supplier documents may be confidential. The local workflow processes PDFs/OCR, model inputs, selected Obsidian context and saved records on the same computer, with no supplier-content upload to cloud AI and no automatic cloud fallback. The custom Python AI harness manages prompts/context, local requests and output validation around LM Studio.
+
+Keep the model service on loopback with network serving and remote integrations disabled for this workflow. Keep confidential evidence and sensitive vault context in approved local storage; review separate sync, backup, extension and export settings. Model/runtime/dependency downloads and updates still use network access. The separate Gemini script is a cloud comparison path for fictional data. Read the [privacy boundary and code evidence](local-privacy-and-ai-harness.md).
+
 ## Architecture
 
 The Python CLI calls a native LM Studio server through its OpenAI-compatible local API. Gemini remains a separate comparison provider. All local inference is sequential, with no automatic cloud fallback or retries. No Python dependencies are required.

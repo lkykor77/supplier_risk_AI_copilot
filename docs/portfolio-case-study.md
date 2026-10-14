@@ -29,7 +29,9 @@ The pipeline links **Supplier → Questionnaire/source document → Answer → B
 
 ## Decisions and tradeoffs
 
-**Open Weight AI model versus cloud.** Local inference avoids transmitting supplier answers to a model provider. On the small saved comparison it was substantially slower than the earlier Gemini run. This reflects the actual runtimes and settings, not a controlled model-speed experiment. The local path has no cloud fallback.
+**Confidential evidence and the custom AI harness.** Supplier submissions can reveal security policies, infrastructure and incident procedures. Local inference was chosen to keep documents, extracted answers, selected Obsidian context and assessment records within the local application workflow instead of uploading them to a cloud AI provider. The Python AI harness prepares prompts/context, constrains model requests to loopback, disables proxies, refuses redirects, and validates completed JSON and evidence. The review layer preserves human decisions separately. See the [privacy boundary and implementation map](local-privacy-and-ai-harness.md).
+
+**Open Weight AI model versus cloud.** Local inference avoids transmitting supplier answers to a model provider. It gives control over supported models/settings and avoids dependence on cloud inference quotas and per-request charges, while requiring local hardware and setup. Downloads and updates require connectivity; sync/backup/export settings are outside the application’s boundary. On the small saved comparison it was substantially slower than the earlier Gemini run. This reflects the actual runtimes and settings, not a controlled model-speed experiment. The local path has no cloud fallback.
 
 **Manual PDF mapping versus guessed extraction.** Tables, reading order, mixed text/images, and OCR errors can break question-answer alignment. Explicit confirmation adds analyst effort but keeps the meaning and page references inspectable. Arbitrary supplier formats and handwriting are not guaranteed.
 

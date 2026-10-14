@@ -28,3 +28,9 @@
 문서 추출·OCR, 확인된 답변 매핑, 구조화된 AI 평가, 사람의 수정 및 위험 요약을 연결합니다. Python/JavaScript 코드, LM Studio, 선택한 Obsidian 규칙과 프로젝트 메모리, 평가 및 테스트를 통해 기술 구현을 보여줍니다. 고객 파일럿 계획에는 이해관계자, 발견 질문, 교육 단계와 성과 측정 항목을 제시했으며 실제 고객 인터뷰나 사업 성과로 주장하지 않습니다.
 
 [고객 파일럿 계획](customer-deployment-plan.md) · [Deployment Strategist 포트폴리오 설명](deployment-strategy-portfolio.md)
+
+## 기밀 문서와 로컬 AI harness
+
+공급업체가 보내는 보안 정책과 운영 문서는 기밀일 수 있으므로 클라우드 AI에 업로드하지 않는 로컬 처리 경로를 선택했습니다. Python AI harness가 프롬프트와 선택한 Obsidian 문맥을 준비하고, LM Studio의 루프백 엔드포인트에 요청하며, 구조화된 출력과 근거를 검증합니다. 로컬 앱의 처리 경로에서 문서와 평가 기록은 사용자 컴퓨터에 남습니다. 모델·의존성 다운로드와 업데이트, 별도로 설정한 동기화·백업·외부 내보내기는 별도의 네트워크 동작입니다.
+
+[개인정보 처리 범위와 AI harness 설계](local-privacy-and-ai-harness.md)
