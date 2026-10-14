@@ -1,6 +1,6 @@
 # Customer deployment plan — supplier review pilot
 
-This is a proposed pilot plan for a hypothetical customer. It demonstrates how the working prototype could be evaluated with security and procurement users; it is not a record of a customer engagement.
+This is a proposed pilot plan for a hypothetical customer. It demonstrates how the working prototype could be evaluated with security and procurement users.
 
 ## Start with an operational decision
 
@@ -19,7 +19,6 @@ The pilot should test whether assisted review reduces total reviewer effort with
 | Risk owner | What makes a supplier critical? Which findings need escalation, and who accepts risk? | Agreed classification and decision boundaries |
 | Engineering/data owner | Which formats arrive, who owns them, and what privacy/setup constraints apply? | Data inventory, permissions and deployment requirements |
 
-Use fictional examples first. Do not collect customer documents or personal information until the customer has established an appropriate access and handling process.
 
 ## Proposed delivery sequence
 
