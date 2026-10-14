@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="960" viewBox="0 0 1600 960"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#527264"/></marker></defs><rect width="1600" height="960" fill="#f5f5ec"/>
+<text x="65" y="75" font-family="Arial,sans-serif" font-size="38" font-weight="bold" fill="#193d35">Data flow · supplier questionnaire to reviewed risk indicator</text>
+<text x="65" y="118" font-family="Arial,sans-serif" font-size="20" fill="#607068">Local workflow · original evidence preserved · AI suggests; people decide</text>
+<rect x="65" y="195" width="430" height="195" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="87" y="233" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">01 / Supplier submission</text>
+<text x="87" y="270" font-family="Arial,sans-serif" font-size="18" fill="#52665b">JSON, selectable-text PDF,</text>
+<text x="87" y="299" font-family="Arial,sans-serif" font-size="18" fill="#52665b">scanned PDF, or mixed PDF.</text>
+<text x="87" y="328" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Excel import is planned.</text>
+<rect x="585" y="195" width="430" height="195" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="607" y="233" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">02 / Extract &amp; check</text>
+<text x="607" y="270" font-family="Arial,sans-serif" font-size="18" fill="#52665b">PDFKit text + local OCR.</text>
+<text x="607" y="299" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Analyst checks reading order,</text>
+<text x="607" y="328" font-family="Arial,sans-serif" font-size="18" fill="#52665b">transcription, and question mapping.</text>
+<rect x="1105" y="195" width="430" height="195" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="1127" y="233" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">03 / Confirmed model input</text>
+<text x="1127" y="270" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Mapped answers + requirements.</text>
+<text x="1127" y="299" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Page references stored separately.</text>
+<text x="1127" y="328" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Expected labels excluded.</text>
+<path d="M495 292 L575 292" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1015 292 L1095 292" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1105" y="570" width="430" height="195" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="1127" y="608" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">04 / Local AI assessment</text>
+<text x="1127" y="645" font-family="Arial,sans-serif" font-size="18" fill="#52665b">LM Studio + open-weight Qwen.</text>
+<text x="1127" y="674" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Structured JSON; coverage checks;</text>
+<text x="1127" y="703" font-family="Arial,sans-serif" font-size="18" fill="#52665b">exact quote validation.</text>
+<rect x="585" y="570" width="430" height="195" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="607" y="608" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">05 / Human assessment</text>
+<text x="607" y="645" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Accept or correct each suggestion.</text>
+<text x="607" y="674" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Store decision and change note.</text>
+<text x="607" y="703" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Keep original AI output unchanged.</text>
+<rect x="65" y="570" width="430" height="195" rx="12" fill="#e5edda" stroke="#aebfaa" stroke-width="2"/>
+<text x="87" y="608" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">06 / Weighted gap indicator</text>
+<text x="87" y="645" font-family="Arial,sans-serif" font-size="18" fill="#52665b">After every human decision.</text>
+<text x="87" y="674" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Fixed status factors; equal weights.</text>
+<text x="87" y="703" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Unknown gaps + critical-supplier flag.</text>
+<path d="M1320 390 L1320 560" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1105 667 L1025 667" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M585 667 L505 667" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="585" y="425" width="430" height="100" rx="12" fill="#e9eddf" stroke="#aebfaa" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="607" y="463" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">Optional Obsidian context</text>
+<text x="607" y="500" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Allowlisted rules + project memory</text>
+<path d="M1015 475 L1100 550" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="65" y="852" font-family="Arial,sans-serif" font-size="21" font-weight="bold" fill="#193d35">The score describes weighted questionnaire gaps, not breach probability or verified compliance.</text>
+<text x="65" y="890" font-family="Arial,sans-serif" font-size="18" fill="#607068">The public interactive demo replays saved fictional results; it does not execute this local pipeline.</text></svg>

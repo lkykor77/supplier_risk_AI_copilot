@@ -1,9 +1,9 @@
 'use strict';
 const $=id=>document.getElementById(id), labels={met:'Met',partly_met:'Partly met',missing:'Missing',unknown:'Unknown'};
 const storageKey='supplier-risk-public-demo-v1';
-let data,selected,editing,decisions={},history=[];
+let data,selected,editing,decisions={},history=[],supplierClasses={};
 function node(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
-function persist(){try{sessionStorage.setItem(storageKey,JSON.stringify({decisions,history}));}catch{}}
+function persist(){try{sessionStorage.setItem(storageKey,JSON.stringify({decisions,history,supplierClasses}));}catch{}}
 function key(id){return selected+':'+id;}
 function render(){
  const supplier=data.suppliers.find(s=>s.id===selected);$('cards').replaceChildren();
@@ -19,6 +19,7 @@ function render(){
   if(!review){const accept=node('button','button primary','Accept suggestion');accept.onclick=()=>save(row,{status:row.status,evidence_quote:row.evidence_quote,reason:row.reason,comment:'',action:'accepted'});buttons.append(accept);}
   const edit=node('button','button outlined',review?'Edit decision':'Correct assessment');edit.onclick=()=>openEditor(row,req,review);buttons.append(edit);actions.append(buttons);card.append(actions);$('cards').append(card);
  }
+ const riskRows=supplier.assessments.map(row=>({...row,description:data.requirements.find(r=>r.id===row.requirement_id).description,review:decisions[key(row.requirement_id)]}));RiskView.render($('riskResult'),RiskView.calculate(riskRows,supplierClasses[selected]||'normal'));$('supplierClass').value=supplierClasses[selected]||'normal';
  $('progress').textContent=`${count} / 5 reviewed`;$('progressBar').value=count;$('historyCount').textContent=history.length;$('history').replaceChildren();
  for(const event of [...history].reverse()){const e=node('div','event');e.append(node('strong','',`${event.supplier} · ${event.requirement} · ${event.decision.action} → ${labels[event.decision.status]}`),node('p','',event.decision.comment||'Accepted the saved suggestion.'));$('history').append(e);}
 }
@@ -34,8 +35,10 @@ $('editForm').onsubmit=event=>{event.preventDefault();if(editing.supplier!==sele
  if(quote&&!answer.includes(quote)){$('editError').textContent='Copy a verbatim quote from this supplier answer, or leave the quote blank.';return;}
  save(editing.row,{status:$('editStatus').value,evidence_quote:quote,reason,comment,action:'corrected'});$('editor').close();
 };
-$('reset').onclick=()=>{decisions={};history=[];persist();if(data)render();$('notice').textContent='Demo decisions cleared. Saved AI results are unchanged.';};
-(async()=>{try{const response=await fetch('demo-data.json');if(!response.ok)throw Error('Unable to load examples.');data=await response.json();try{const saved=JSON.parse(sessionStorage.getItem(storageKey));if(saved&&typeof saved.decisions==='object'&&Array.isArray(saved.history)){decisions=saved.decisions;history=saved.history;}}catch{}
+$('reset').onclick=()=>{decisions={};history=[];supplierClasses={};persist();if(data)render();$('notice').textContent='Demo decisions cleared. Saved AI results are unchanged.';};
+(async()=>{try{const response=await fetch('demo-data.json');if(!response.ok)throw Error('Unable to load examples.');data=await response.json();try{const saved=JSON.parse(sessionStorage.getItem(storageKey));if(saved&&typeof saved.decisions==='object'&&Array.isArray(saved.history)){decisions=saved.decisions;history=saved.history;supplierClasses=saved.supplierClasses||{};}}catch{}
  const names={'evaluation-f':'F · Equivalent wording','evaluation-g':'G · Explicit gaps','evaluation-h':'H · Vague evidence / model error','evaluation-i':'I · Contradictory claims','evaluation-j':'J · Embedded instructions'};
  for(const supplier of data.suppliers){const option=node('option','',names[supplier.id]||supplier.id);option.value=supplier.id;$('supplier').append(option);}selected=data.suppliers[0].id;render();
  }catch(error){$('cards').replaceChildren(node('p','',error.message+' Open the GitHub repository for saved reports.'));}})();
+
+$('supplierClass').onchange=()=>{if(!data)return;supplierClasses[selected]=$('supplierClass').value;persist();render();$('notice').textContent='Demo supplier class saved in this browser session.';};

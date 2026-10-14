@@ -45,7 +45,7 @@ An earlier local request returned schema-shaped JSON in `reasoning_content` with
 
 ## Verified checks
 
-- 41 automated app tests passed on the development Mac, covering evidence validation, provider behavior, vault boundaries, intake mapping, review persistence, audit history, and concurrency conflicts.
+- 47 automated app tests passed on the development Mac, covering evidence validation, provider behavior, vault boundaries, intake mapping, review persistence, audit history, and concurrency conflicts.
 - A one-page selectable-text PDF and its image-only equivalent extracted successfully. A two-page mixed fixture selected native text and OCR per page; an encrypted fixture was rejected.
 - A live browser flow uploaded the fictional scan, confirmed the five mapped answers, and called Qwen. It returned the expected fixture statuses in 27.276 seconds. That is one end-to-end example, not an accuracy benchmark.
 - The public demo is tested separately for corrections, fabricated-quote rejection, session persistence, reset, and responsive layout.
@@ -61,3 +61,7 @@ Interview a security analyst using fictional examples; validate labels and the u
 Follow the [README](../README.md) and local setup guides. The public `showcase/` folder is a self-contained static demo published by `.github/workflows/pages.yml`. It includes a captioned walkthrough assembled from actual local app captures, not a continuous screen recording. Captures use fictional data in an isolated QA folder, with reviewer actions clearly marked as tests.
 
 Assisted development used Codex for implementation and verification. The repository exposes the code, tests, decisions and limitations so the work can be inspected and reproduced.
+
+## Human-reviewed risk summary
+
+The app calculates a fixed questionnaire-gap indicator only after all human decisions. Status factors are met 0, partly met 0.5, missing 1 and unknown 1, with equal requirement weights. Unknown penalties are shown separately from confirmed missing-control gaps. A normal/critical supplier selection changes the follow-up flag, preserving classification changes with reviewer identity and revision history. Critical suppliers receive enhanced-review flags for every non-met answer. The formula is a prototype design choice, not an ISO/NIST-prescribed score. See [methodology and limits](risk-scoring.md), [data flow](diagrams/data-flow.png), and [system design](diagrams/system-design.png).

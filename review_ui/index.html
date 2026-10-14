@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Supplier Risk Copilot · Analyst review</title><link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script></head>
+<title>Supplier Risk Copilot · Analyst review</title><link rel="stylesheet" href="/styles.css"><script src="/risk_ui.js" defer></script><script src="/app.js" defer></script></head>
 <body>
 <header><div class="brand"><span class="mark">S</span><div>Supplier Risk Copilot<small>ANALYST WORKSPACE</small></div></div><span class="local">● Local review</span></header>
 <main>
@@ -10,7 +10,7 @@
 <div class="workspace"><aside><div class="aside-title">Suppliers <span id="supplierCount">0</span></div><nav id="suppliers" aria-label="Choose supplier"></nav><div class="rubric"><h3>The four statuses</h3><p><b>Met</b> · the full practice is stated.</p><p><b>Partly met</b> · a practice exists, with an explicit gap.</p><p><b>Missing</b> · the practice is explicitly absent.</p><p><b>Unknown</b> · evidence is insufficient or conflicting.</p></div></aside>
 <section class="review-panel"><div class="panel-heading"><div><p class="eyebrow">QUESTIONNAIRE REVIEW</p><h2 id="supplierTitle">Select a saved run</h2><p id="runMeta" class="muted"></p></div><div class="progress-box"><strong id="reviewProgress">0 / 0 reviewed</strong><progress id="progress" value="0" max="1"></progress></div></div>
 <div class="filters"><label><input id="pendingOnly" type="checkbox"> Pending only</label><label><input id="showKey" type="checkbox"> Show synthetic answer key</label><span id="keyWarning">Draft labels · not independently validated</span></div>
-<div id="cards" class="cards"><div class="empty">Loading assessments…</div></div>
+<section id="riskResult" class="risk-result" aria-live="polite"></section><div class="risk-settings"><label>Supplier class<select id="supplierClass"><option value="normal">Normal supplier</option><option value="critical">Critical supplier</option></select></label><p>A critical supplier supports an important service, sensitive data, or privileged access where failure could cause substantial harm. Verify classification for the actual relationship.</p><p id="classNotice" role="status"></p></div><div id="cards" class="cards"><div class="empty">Loading assessments…</div></div>
 <details class="history"><summary>Review history <span id="historyCount">0</span></summary><div id="history"></div></details>
 </section></div>
 <footer>Use fictional data for this portfolio · Assessment support, not verified compliance · PDF assessment runs locally after answer confirmation</footer>

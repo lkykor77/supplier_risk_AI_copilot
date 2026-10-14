@@ -8,6 +8,61 @@ An FDE portfolio project that helps a supplier-security analyst turn questionnai
 
 The public website uses fictional supplier answers and saved Qwen results. Visitors can explore five example suppliers, inspect the evidence, and try corrections in their browser. The full application runs locally with LM Studio and handles selectable-text, scanned, and mixed PDFs; selected Obsidian notes are optional.
 
+## Why this project matters
+
+### Problem statement
+
+Before onboarding a supplier, information-security teams need evidence that its controls and policies meet the buyer’s security requirements. Those requirements may be informed by ISO/IEC 27001, NIST CSF, contracts, and regulations applicable to the organization and supplier relationship. NIST’s [supply-chain guide](https://csrc.nist.gov/pubs/sp/1305/final) describes defining and communicating supplier requirements; [ISO/IEC 27001](https://www.iso.org/standard/27001) provides a risk-based information-security management context.
+
+The proposed user is a security analyst who receives evidence in inconsistent formats: standard questionnaires, spreadsheets, PDFs, or scanned documents with supplier-defined layouts. The analyst must locate each answer, compare it with the buyer’s requirements, identify contradictions and missing evidence, and document the assessment for a human decision.
+
+### Pain points
+
+- **Inconsistent submissions:** different wording, layouts, tables and scans make relevant answers hard to locate.
+- **Repetitive interpretation:** analysts repeatedly compare similar claims with the same security expectations.
+- **Ambiguous evidence:** a vague answer is not proof that a control exists or that it is absent; keyword matching can miss that distinction.
+- **Weak traceability:** copying answers and decisions between documents makes source references and later corrections harder to follow.
+- **Unclear prioritization:** a count of unmet controls can hide an important failure or an unresolved evidence gap.
+
+Manual review time is a discovery question. There is **no verified “average X hours” or measured time-saving claim** for this project. The planned user study will measure minutes per questionnaire, corrections, evidence follow-ups and reviewer effort.
+
+### How the AI tool helps
+
+The app extracts PDF text and local OCR, lets an analyst confirm question-to-answer mappings and source pages, and asks a local open-weight model to propose structured assessments against the configured buyer requirements. Each suggestion includes a quote and reason. People then accept or correct the results, with original AI output preserved separately from their decisions.
+
+After every requirement has a human decision, the tool calculates a **weighted questionnaire risk indicator**. It separates confirmed gaps from unknown evidence and distinguishes normal suppliers from critical suppliers needing enhanced review. It supports prioritizing follow-up; it does not automatically approve suppliers.
+
+### Intended outcome and evidence today
+
+The intended outcome is a more consistent, traceable review record: checked source evidence, inspectable AI suggestions, human decisions, and a transparent summary of weighted gaps. Reducing repetitive review effort is a hypothesis to validate with users, not a proven result.
+
+Today, the prototype implements **five fictional buyer requirements**, a working PDF-to-review workflow, synthetic evaluations, and human-reviewed gap scoring. **Complete ISO 27001/NIST control mappings, regulatory assessment, direct Excel import, and real-supplier validation are planned.** It does not certify compliance or verify that supplier claims are true.
+
+## Features at a glance
+
+| Feature | Current behavior |
+| --- | --- |
+| PDF and scanned-PDF reading | Local PDFKit extraction and on-device OCR; selectable-text, scanned and mixed PDFs; analyst-confirmed mappings and source-page references |
+| Local open-weight AI | Qwen through LM Studio on a loopback endpoint; structured JSON and evidence-quote checks; no cloud fallback on the local path |
+| Obsidian rules and memory | Optional allowlisted AI rules/knowledge and app-owned project memory; personal notes stay private; frozen evaluation excludes vault context |
+| Human review | Accept or correct labels, quotes and explanations; retain original AI output and decision history |
+| Weighted questionnaire risk | Fixed status factors and equal control weights; final human decisions only; unresolved evidence shown separately; normal/critical supplier classification and enhanced-review flags |
+| Public interactive demo | Fictional answers and saved AI results; try corrections and scoring without a model server; no public document uploads |
+| Engineering evidence | Tests, frozen synthetic comparisons, failure analysis, setup guides, captioned walkthrough and English/Korean project overview |
+| Future scope | Validated framework/regulatory mappings, Excel import, richer supplier risk scenarios and measured user outcomes |
+
+## Data flow
+
+![Data flow from supplier evidence through checked extraction, local AI, human review, and weighted questionnaire risk](docs/diagrams/data-flow.png)
+
+AI suggestions never replace the human assessment. Page references, original results and reviewer corrections remain traceable. Optional Obsidian context is separate from the frozen evaluation.
+
+## System design
+
+![System design separating the local Mac application and private evidence from the static public GitHub demo](docs/diagrams/system-design.png)
+
+The Python API serves the local review app. Swift/Node helpers extract PDFs; LM Studio hosts Qwen; local storage keeps source snapshots, human decisions and supplier-classification history. GitHub Pages serves only the copied fictional demo assets. See the [engineering case study](docs/portfolio-case-study.md) and [risk methodology](docs/risk-scoring.md).
+
 ### Project preview
 
 **Explore a real saved model error.** The demo shows an unspecified security contact labeled `missing`, while the draft rubric expects `unknown`. Visitors can challenge the suggestion instead of seeing only successful examples.
@@ -28,7 +83,7 @@ The public website uses fictional supplier answers and saved Qwen results. Visit
 
 ![Separate reviewer decision alongside the original AI assessment in the local-app walkthrough](docs/screenshots/reviewer-decision-walkthrough.png)
 
-**Engineering evidence:** 41 app tests passed on the development Mac. In one frozen synthetic evaluation, local Qwen matched 24/25 draft labels, versus 23/25 for an earlier Gemini run and 8/25 for the keyword baseline. The small dataset and unvalidated draft labels do not establish real-world accuracy or general model superiority. See the [results and limitations](docs/local-integration-results.md).
+**Engineering evidence:** 47 app tests passed on the development Mac. In one frozen synthetic evaluation, local Qwen matched 24/25 draft labels, versus 23/25 for an earlier Gemini run and 8/25 for the keyword baseline. The small dataset and unvalidated draft labels do not establish real-world accuracy or general model superiority. See the [results and limitations](docs/local-integration-results.md).
 
 ## Review assessments in your browser
 

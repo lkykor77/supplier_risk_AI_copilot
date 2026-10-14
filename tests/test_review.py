@@ -52,6 +52,25 @@ class ReviewTests(unittest.TestCase):
         self.assertEqual(row["review"]["status"], "unknown")
         self.assertEqual(row["review"]["action"], "corrected")
 
+    def test_supplier_class_persists_and_is_revision_audited(self):
+        criteria = {"revision": 0, "supplier_id": "fictional", "reviewer": "TEST FIXTURE", "supplier_class": "critical"}
+        self.store.save_supplier_class(self.run_id, criteria)
+        with self.assertRaises(ReviewConflict):
+            self.store.save(self.run_id, self.payload)
+        self.payload["revision"] = 1
+        self.store.save(self.run_id, self.payload)
+        loaded = ReviewStore(self.root).read(self.run_id)
+        risk = loaded["suppliers"][0]["risk"]
+        self.assertTrue(risk["ready"])
+        self.assertEqual(risk["score"], 100)
+        self.assertTrue(risk["enhanced_review"])
+        self.assertEqual(self.source.read_bytes(), self.original)
+        criteria.update(revision=2, supplier_class="normal")
+        result = self.store.save_supplier_class(self.run_id, criteria)
+        self.assertEqual(len(result["classification_events"]), 2)
+        self.assertEqual(result["classification_events"][1]["before"], "critical")
+        self.assertFalse(result["suppliers"][0]["risk"]["enhanced_review"])
+
     def test_rejects_fabricated_quote_without_saving(self):
         self.payload["evidence_quote"] = "We review monthly."
         with self.assertRaises(ValueError):

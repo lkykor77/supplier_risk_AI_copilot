@@ -45,3 +45,7 @@ Automated tests cover persistence, unchanged model outputs, fabricated quotes, r
 Time a manual review and an assisted review, including corrections. Ask a potential user to try the screen and record what they find useful or confusing. Keep measured feedback separate from simulated or automated tests.
 
 Saved-report review uses Python's standard library with a small HTML/CSS/JavaScript interface. The optional [PDF intake workflow](pdf-intake.md) adds local extraction and OCR dependencies and calls LM Studio only after answer confirmation. Streamlit, Docker and hosted deployment are optional future choices.
+
+## Weighted questionnaire risk indicator
+
+Choose **Normal supplier** or **Critical supplier** for the selected relationship. The score appears once all its requirements have human decisions. Fixed factors are met 0, partly met 0.5, missing 1 and unknown 1, with equal control weights. The result separates confirmed gaps from unresolved evidence. Critical suppliers receive enhanced-review flags for non-met answers. It recalculates after corrections; classification changes retain revision history. See [the methodology](risk-scoring.md).

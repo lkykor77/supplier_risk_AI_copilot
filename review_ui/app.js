@@ -37,6 +37,9 @@ function render() {
   $('showKey').disabled=run.meta.dataset==='pdf';if($('showKey').disabled)$('showKey').checked=false;
   $('keyWarning').textContent=run.meta.dataset==='pdf'?'PDF assessments have no benchmark answer key':'Draft labels · not independently validated';
   $('supplierTitle').textContent=supplier.id;
+  const risk=supplier.risk||{ready:false,supplier_class:'normal',reviewed:supplier.assessments.filter(r=>r.review).length,total:supplier.assessments.length};
+  RiskView.render($('riskResult'),risk);$('supplierClass').value=risk.supplier_class;
+  $('classNotice').textContent=`Classification changes recorded: ${(run.classification_events||[]).filter(e=>e.supplier_id===supplier.id).length}.`;
   $('runMeta').textContent=`${run.meta.model} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Selected Obsidian context':'Original assessment prompt'}`;
   $('reviewProgress').textContent=`${run.reviewed_count} / ${run.meta.count} reviewed`;
   $('progress').max=run.meta.count; $('progress').value=run.reviewed_count;
@@ -144,3 +147,5 @@ $('assessPdf').onclick=async()=>{
     $('pdfDialog').close();await refresh();$('runSelect').value=assessed.report_sha256;await loadRun();notice('PDF assessment ready. Inspect the page references and review every AI suggestion.');
   }catch(error){$('pdfError').textContent=error.message;}finally{$('assessPdf').disabled=false;$('closePdf').disabled=false;}
 };
+
+$('supplierClass').onchange=async()=>{if(!run)return;const input=$('supplierClass');input.disabled=true;try{run=await api('/api/supplier-class',{run_id:run.meta.id,revision:run.revision,supplier_id:selectedSupplier,reviewer:$('reviewer').value,supplier_class:input.value});render();notice('Supplier class saved with revision history.');}catch(error){render();$('classNotice').textContent=error.message;}finally{input.disabled=false;}};

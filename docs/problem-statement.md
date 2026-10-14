@@ -1,45 +1,27 @@
 # Problem statement — draft to validate
 
-## User and problem
+A supplier-security analyst needs to evaluate prospective suppliers against the buyer's security requirements, which may draw on ISO/IEC 27001, NIST CSF, contractual terms, and applicable regulations. Supplier evidence arrives as standard questionnaires, spreadsheets, selectable-text PDFs, scans, and documents with inconsistent formats.
 
-A supplier-security analyst reviews questionnaire answers against a buyer's security requirements. Our hypothesis is that manually finding relevant evidence and recording consistent assessments takes time, especially when answers are incomplete or ambiguous. We have not validated this hypothesis with users yet.
+Finding relevant answers, interpreting vague or contradictory claims, tracking source references, and documenting decisions involves repetitive manual work. Baseline review time and assisted-review savings have not been measured. No universal “average hours” figure is claimed.
 
-## Proposed workflow
+The proposed tool extracts supported PDF evidence locally, requires analyst confirmation, suggests structured statuses with evidence quotes, and retains human decisions separately. After complete human review, a deterministic weighted control-gap indicator supports follow-up prioritization. Unknown evidence remains visible; critical suppliers receive enhanced-review flags for non-met answers.
 
-Load fictional questionnaire answers → propose one assessment per requirement → show the exact supporting quote and a short reason → let the analyst accept or correct the result → save the reviewed assessment.
+Current scope is five fictional buyer requirements, JSON/PDF input, local AI and optional Obsidian context, human review and questionnaire-gap scoring. Full framework mappings, Excel import, regulatory checks and real-supplier validation remain future work. The tool supports the assessment process; it does not certify compliance, verify supplier practices or make acceptance decisions.
 
-The tool evaluates what the answer states. It does not verify the supplier's actual practices.
+## Validation measures
 
-## First working version
-
-- Structured JSON input, using the five fictional buyer requirements in `data/requirements.json`.
-- Four possible statuses: `met`, `partly_met`, `missing`, `unknown`.
-- A keyword baseline and, later, an AI assessor using the same input and output structure.
-- Exact quotes for supported assessments; no invented evidence.
-- A simple review screen that stores analyst decisions.
-- The initial dataset now contains five requirements and five fictional suppliers; validate the rubric and expected labels with a potential user.
-
-## How we will measure usefulness
-
-- Compare predictions with rubric-based expected labels reviewed by a person on held-out fictional suppliers.
-- Report mistakes for each status, particularly unsupported `met` results.
-- Check that each quote exists verbatim in the supplied answer and supports the result.
-- Compare manual review time with assisted review time, including time spent correcting mistakes.
-- Record AI latency and cost per supplier.
-
-The current twenty-five-assessment keyword exercise is a learning example, not evidence of real-world performance. Performance targets will be set after the dataset and baseline are established.
-
-## Deferred work
-
-Multiple framework mappings, a supplier-facing upload portal, website checks, MCP, real supplier evaluation, and regulatory reporting. Local PDF intake is now implemented with analyst-confirmed answer mapping; see [PDF intake](pdf-intake.md).
+- Manual and assisted review time per questionnaire, including mapping and correction effort.
+- Corrections to labels and explanations; unsupported positive assessments.
+- Evidence retrieval errors, OCR corrections and source-reference accuracy.
+- Follow-up requests and analyst confidence in the review record.
+- Independent rubric validation and weighting-policy review.
 
 ## Discovery questions
 
-Ask a potential user these questions using fictional examples only. Record their answers; do not invent interview findings.
+1. Which formats and layouts arrive most often, and what takes the most time?
+2. Which buyer requirements are mandatory for each supplier/service context?
+3. How are access, data sensitivity, criticality, impact and risk acceptance assessed today?
+4. What evidence is needed to distinguish missing from unknown?
+5. Who approves the rubric, risk criteria and supplier decision?
 
-1. Which part of questionnaire review takes the most time?
-2. What evidence would you need before accepting a suggested assessment?
-3. How would you distinguish an absent practice from an unclear answer?
-4. Would this workflow fit your process? What would you change first?
-
-If no analyst is available yet, conduct a timed self-review and label it as a simulation rather than user research.
+Use fictional examples in initial interviews. Record actual findings; do not invent user feedback.

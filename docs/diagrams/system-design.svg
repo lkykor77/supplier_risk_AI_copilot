@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="960" viewBox="0 0 1600 960"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#527264"/></marker></defs><rect width="1600" height="960" fill="#f5f5ec"/>
+<text x="65" y="75" font-family="Arial,sans-serif" font-size="38" font-weight="bold" fill="#193d35">System design · local processing and public presentation</text>
+<text x="65" y="118" font-family="Arial,sans-serif" font-size="20" fill="#607068">Two separate environments · private supplier evidence never belongs in the public demo</text>
+<rect x="50" y="165" width="990" height="650" rx="15" fill="#e9eddf" stroke="#aebfaa" stroke-width="2"/><text x="75" y="204" font-family="Arial,sans-serif" font-size="20" font-weight="bold" fill="#193d35">LOCAL MAC · loopback endpoints and private files</text>
+<rect x="80" y="230" width="395" height="145" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="102" y="268" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">Analyst browser</text>
+<text x="102" y="305" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Local HTML / CSS / JavaScript</text>
+<text x="102" y="334" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Review, PDF mapping, supplier class</text>
+<rect x="560" y="230" width="450" height="145" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="582" y="268" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">Python HTTP API · port 8501</text>
+<text x="582" y="305" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Input validation + review revisions</text>
+<text x="582" y="334" font-family="Arial,sans-serif" font-size="18" fill="#52665b">No directory-wide file serving</text>
+<path d="M475 300 L550 300" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="80" y="435" width="395" height="150" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="102" y="473" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">PDF extraction</text>
+<text x="102" y="510" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Swift PDFKit + Apple Vision</text>
+<text x="102" y="539" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Node Tesseract.js fallback</text>
+<text x="102" y="568" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Rendered pages stay local</text>
+<rect x="560" y="435" width="450" height="150" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="582" y="473" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">Assessment + scoring</text>
+<text x="582" y="510" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Loopback model client + quote checks</text>
+<text x="582" y="539" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Risk scoring uses human decisions</text>
+<text x="582" y="568" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Fixed scoring + class revision history</text>
+<path d="M785 375 L785 425" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M560 500 L485 500" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="80" y="635" width="395" height="150" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="102" y="673" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">Private files + Obsidian</text>
+<text x="102" y="710" font-family="Arial,sans-serif" font-size="18" fill="#52665b">intake/ · reviews/ · .cache/</text>
+<text x="102" y="739" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Allowlisted notes + project memory</text>
+<text x="102" y="768" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Source snapshots + decision history</text>
+<rect x="560" y="635" width="450" height="150" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="582" y="673" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">LM Studio · port 1234</text>
+<text x="582" y="710" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Local open-weight Qwen model</text>
+<text x="582" y="739" font-family="Arial,sans-serif" font-size="18" fill="#52665b">No cloud fallback in local path</text>
+<path d="M785 585 L785 625" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M277 585 L277 625" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1100" y="165" width="450" height="185" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="1122" y="203" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">PUBLIC · GitHub Pages</text>
+<text x="1122" y="240" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Static website + fictional JSON</text>
+<text x="1122" y="269" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Saved AI outputs; browser-only</text>
+<text x="1122" y="298" font-family="Arial,sans-serif" font-size="18" fill="#52665b">demo corrections and supplier class.</text>
+<rect x="1100" y="405" width="450" height="185" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
+<text x="1122" y="443" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">PUBLIC · GitHub repository</text>
+<text x="1122" y="480" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Source, tests, diagrams, case study,</text>
+<text x="1122" y="509" font-family="Arial,sans-serif" font-size="18" fill="#52665b">synthetic reports and walkthrough.</text>
+<text x="1122" y="538" font-family="Arial,sans-serif" font-size="18" fill="#52665b">No uploaded PDFs or personal notes.</text>
+<path d="M1325 405 L1325 360" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1335.0" y="372.5" font-family="Arial,sans-serif" font-size="15" fill="#527264">static deploy</text>
+<rect x="1100" y="650" width="450" height="135" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="1122" y="688" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">Public demo isolation</text>
+<text x="1122" y="725" font-family="Arial,sans-serif" font-size="18" fill="#52665b">No connection to local model or vault.</text>
+<text x="1122" y="754" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Only fictional files are published.</text>
+<path d="M475 680 L550 560" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="522.5" y="610.0" font-family="Arial,sans-serif" font-size="15" fill="#527264">optional notes</text>
+<text x="65" y="860" font-family="Arial,sans-serif" font-size="19" fill="#193d35">Obsidian context is optional; personal rules and project memory are separate. Frozen evaluations exclude vault context.</text>
+<text x="65" y="905" font-family="Arial,sans-serif" font-size="18" fill="#607068">Gemini is an optional JSON assessment experiment. PDF assessment uses the local model; Docker and oMLX are not required.</text></svg>

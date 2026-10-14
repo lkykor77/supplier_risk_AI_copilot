@@ -9,6 +9,7 @@ import threading
 
 from ai_assessor import load_inputs
 from assessment import validate_assessment
+from risk_scoring import summarize_risk
 
 
 class ReviewConflict(ValueError):
@@ -116,10 +117,12 @@ class ReviewStore:
                                                 **snapshot["report"]["source_mapping"]["provenance"][requirement["id"]]}
                                                 if snapshot["report"]["dataset"] == "pdf" else None,
                                  "review": state["decisions"].get(key)})
-                suppliers.append({"id": supplier["id"], "assessments": rows})
+                supplier_class = state.get("supplier_classes", {}).get(supplier["id"], "normal")
+                suppliers.append({"id": supplier["id"], "assessments": rows,
+                                  "risk": summarize_risk(rows, supplier_class)})
             return {"meta": self._metadata(run_id, snapshot), "revision": state["revision"],
                     "suppliers": suppliers, "reviewed_count": len(state["decisions"]),
-                    "events": state["events"]}
+                    "events": state["events"], "classification_events": state.get("classification_events", [])}
 
     def _state(self, folder: Path) -> dict:
         path = folder / "review.json"
@@ -158,6 +161,33 @@ class ReviewStore:
             state["events"].append({"supplier_id": supplier_id, "requirement_id": requirement_id,
                                     "before": state["decisions"].get(key), "after": decision})
             state["decisions"][key] = decision
+            state["revision"] += 1
+            temp = folder / "review.json.tmp"
+            temp.write_text(json.dumps(state, indent=2) + "\n")
+            temp.replace(folder / "review.json")
+            return self.read(run_id)
+
+    def save_supplier_class(self, run_id: str, payload: dict) -> dict:
+        """Record supplier classification with identity and revision history."""
+        with self.lock:
+            current = self.read(run_id)
+            if type(payload.get("revision")) is not int or payload["revision"] != current["revision"]:
+                raise ReviewConflict("This run changed in another tab. Refresh before changing supplier class.")
+            supplier_id = payload.get("supplier_id")
+            if not any(s["id"] == supplier_id for s in current["suppliers"]):
+                raise ValueError("Unknown supplier.")
+            reviewer, classification = payload.get("reviewer"), payload.get("supplier_class")
+            if not isinstance(reviewer, str) or not reviewer.strip() or len(reviewer) > 100:
+                raise ValueError("Enter your name or initials before changing supplier class.")
+            if classification not in {"normal", "critical"}:
+                raise ValueError("Choose normal or critical supplier.")
+            folder = self._folder(run_id)
+            state = self._state(folder)
+            classes = state.setdefault("supplier_classes", {})
+            state.setdefault("classification_events", []).append({"supplier_id": supplier_id,
+                "before": classes.get(supplier_id, "normal"), "after": classification,
+                "reviewer": reviewer.strip(), "updated_at": datetime.now(timezone.utc).isoformat()})
+            classes[supplier_id] = classification
             state["revision"] += 1
             temp = folder / "review.json.tmp"
             temp.write_text(json.dumps(state, indent=2) + "\n")

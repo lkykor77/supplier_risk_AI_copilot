@@ -44,7 +44,9 @@ def make_handler(store: ReviewStore):
             try:
                 assets = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
                           "/styles.css": ("styles.css", "text/css")}
-                if route.path in assets:
+                if route.path == "/risk_ui.js":
+                    self.send((ROOT / "risk_ui.js").read_bytes(), mime="text/javascript")
+                elif route.path in assets:
                     filename, mime = assets[route.path]
                     self.send((ROOT / "review_ui" / filename).read_bytes(), mime=mime)
                 elif route.path == "/api/runs":
@@ -66,7 +68,7 @@ def make_handler(store: ReviewStore):
             if not self.valid_host() or origin != expected or self.headers.get("X-Review-App") != "1":
                 self.reply({"error": "Same-origin review request required."}, 403)
                 return
-            if self.path not in {"/api/review", "/api/pdf/upload", "/api/pdf/confirm", "/api/pdf/assess"} or self.headers.get("Content-Type") != "application/json":
+            if self.path not in {"/api/review", "/api/supplier-class", "/api/pdf/upload", "/api/pdf/confirm", "/api/pdf/assess"} or self.headers.get("Content-Type") != "application/json":
                 self.reply({"error": "Invalid review request."}, 400)
                 return
             try:
@@ -79,6 +81,8 @@ def make_handler(store: ReviewStore):
                     raise ValueError("Invalid review object.")
                 if self.path == "/api/review":
                     self.reply(store.save(payload.get("run_id", ""), payload))
+                elif self.path == "/api/supplier-class":
+                    self.reply(store.save_supplier_class(payload.get("run_id", ""), payload))
                 elif self.path == "/api/pdf/upload":
                     self.reply(intake.upload(payload.get("filename"), payload.get("base64")))
                 elif self.path == "/api/pdf/confirm":
