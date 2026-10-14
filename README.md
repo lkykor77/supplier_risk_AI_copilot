@@ -24,7 +24,7 @@ The proposed user is a security analyst who receives evidence in inconsistent fo
 - **Weak traceability:** copying answers and decisions between documents makes source references and later corrections harder to follow.
 - **Unclear prioritization:** a count of unmet controls can hide an important failure or an unresolved evidence gap.
 
-Manual review time is a discovery question. There is **no verified “average X hours” or measured time-saving claim** for this project. The planned user study will measure minutes per questionnaire, corrections, evidence follow-ups and reviewer effort.
+Manual review time is a discovery question. The planned user study will measure minutes per questionnaire, corrections, evidence follow-ups and reviewer effort.
 
 ### How the AI tool helps
 
