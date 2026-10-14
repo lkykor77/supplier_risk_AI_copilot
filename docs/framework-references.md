@@ -1,6 +1,6 @@
 # Supplier questionnaires and framework topic references
 
-Each selected supplier has one questionnaire containing five answers. `BUYER-01` through `BUYER-05` are internal buyer-requirement IDs, not supplier IDs. The interface now presents **Fictional Supplier F · Question 1 of 5**, a natural-language question, that supplier's answer, a buyer-requirement result, and related framework references.
+Each selected supplier has one questionnaire containing five answers. `Question-01` through `Question-05` are internal security requirement IDs. The interface now presents **Fictional Supplier F · Question 1 of 5**, a natural-language question, that supplier's answer, a security-requirement result, and related framework references.
 
 ## Interpretation
 
