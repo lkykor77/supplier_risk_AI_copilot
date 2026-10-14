@@ -46,7 +46,7 @@ Do not treat lower latency or a high synthetic label score as proof of customer 
 ## Training and adoption walkthrough
 
 1. Select one fictional supplier and explain that its five cards are one questionnaire.
-2. Inspect the answer, buyer requirement and related ISO/NIST topic; distinguish evidence from verified practice.
+2. Inspect the answer, security requirement and related ISO/NIST topic; distinguish evidence from verified practice.
 3. Correct the saved unknown-versus-missing error and explain the change.
 4. Complete all human decisions; inspect confirmed gaps versus unresolved-evidence points.
 5. Classify the relationship as normal or critical, and discuss proportionate follow-up.
