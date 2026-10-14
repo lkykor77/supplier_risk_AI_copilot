@@ -1,11 +1,34 @@
 # Supplier Risk AI Copilot
 
-An FDE portfolio project in progress: help a supplier-security analyst review questionnaire answers, see the evidence, and approve or correct each suggested assessment.
+**A questionnaire answer is a claim. Make it reviewable.**
 
+An FDE portfolio project that helps a supplier-security analyst turn questionnaire answers into evidence-backed suggestions. Inspect the supplier's answer and supporting quote, check the source page, then accept or correct the assessment. The original AI result and the reviewer’s decision remain separate.
 
-**[Try the public interactive demo](https://lkykor77.github.io/supplier_risk_AI_copilot/)** · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
+**[Try the public interactive demo](https://lkykor77.github.io/supplier_risk_AI_copilot/)** · [Watch the 90-second walkthrough](https://lkykor77.github.io/supplier_risk_AI_copilot/#walkthrough) · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
 
-The public demo uses saved AI results and fictional data. Try correcting the real saved model error, watch the captioned local-app walkthrough, and inspect the evaluation limits. The full application runs locally with LM Studio.
+The public website uses fictional supplier answers and saved Qwen results. Visitors can explore five example suppliers, inspect the evidence, and try corrections in their browser. The full application runs locally with LM Studio and handles selectable-text, scanned, and mixed PDFs; selected Obsidian notes are optional.
+
+### Project preview
+
+**Explore a real saved model error.** The demo shows an unspecified security contact labeled `missing`, while the draft rubric expects `unknown`. Visitors can challenge the suggestion instead of seeing only successful examples.
+
+<a href="https://lkykor77.github.io/supplier_risk_AI_copilot/">
+  <img src="docs/screenshots/portfolio-home.jpg" alt="Public portfolio homepage introducing the evidence-review workflow and a saved model error" width="420">
+</a>
+
+**Inspect and correct the suggestion.** The public demo’s correction form lets visitors change the status, evidence quote, explanation, and change note. Demo decisions stay in the browser session; the website makes no live inference requests or document uploads.
+
+<img src="docs/screenshots/public-demo-correction.jpg" alt="Public demo correction form with the saved Missing suggestion, source quote, explanation, and change-note field" width="650">
+
+**Trace PDF evidence back to its source.** In the local app, the analyst checks extracted answers and page mappings before Qwen assesses them. These captures from the website’s walkthrough show fictional scan results with supporting quotes and source-page links.
+
+![Local PDF review showing supplier answers, model explanations, and page references](docs/screenshots/pdf-evidence-walkthrough.png)
+
+**Preserve the analyst’s decision.** A clearly marked automated QA example narrows an explanation to what the supplied answer supports. The revised decision appears alongside the unchanged AI output, with a review note and source reference.
+
+![Separate reviewer decision alongside the original AI assessment in the local-app walkthrough](docs/screenshots/reviewer-decision-walkthrough.png)
+
+**Engineering evidence:** 41 app tests passed on the development Mac. In one frozen synthetic evaluation, local Qwen matched 24/25 draft labels, versus 23/25 for an earlier Gemini run and 8/25 for the keyword baseline. The small dataset and unvalidated draft labels do not establish real-world accuracy or general model superiority. See the [results and limitations](docs/local-integration-results.md).
 
 ## Review assessments in your browser
 
