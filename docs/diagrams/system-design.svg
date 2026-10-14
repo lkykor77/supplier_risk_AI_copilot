@@ -30,7 +30,7 @@
 <text x="102" y="768" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Source snapshots + decision history</text>
 <rect x="560" y="635" width="450" height="150" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
 <text x="582" y="673" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">LM Studio · port 1234</text>
-<text x="582" y="710" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Local open-weight Qwen model</text>
+<text x="582" y="710" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Local Open Weight AI model</text>
 <text x="582" y="739" font-family="Arial,sans-serif" font-size="18" fill="#52665b">No cloud fallback in local path</text>
 <path d="M785 585 L785 625" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
 <path d="M277 585 L277 625" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>

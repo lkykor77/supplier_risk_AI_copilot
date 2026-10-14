@@ -5,7 +5,7 @@ Date: October 13, 2026.
 ## Working configuration
 
 - Native LM Studio loopback server on port 1234.
-- Model: Qwen3.8 27B, MLX 4-bit; loaded context: 8,192 tokens.
+- Model: Open Weight AI model (27B), MLX 4-bit; loaded context: 8,192 tokens.
 - Explicit `reasoning_effort: none`, temperature 0.7, top-p 0.8, top-k 20, presence penalty 1.5. Settings are stored in the report. Loaded server supported four parallel predictions, but this client made only one request at a time.
 - Python standard-library client, JSON schema, and exact quote validation.
 - Selected Obsidian rule notes and a dedicated project-memory note are read at run time. Personal rule files are not copied into GitHub or changed by the app.
@@ -20,7 +20,7 @@ A separate run on all five frozen evaluation suppliers used the original assessm
 
 | Provider | Labels matched | Median request latency |
 | --- | --- | --- |
-| Local Qwen3.8 27B MLX 4-bit | **24/25 (96%)** | **26.086 s** |
+| Local Open Weight AI model (27B) MLX 4-bit | **24/25 (96%)** | **26.086 s** |
 | Gemini 3.5 Flash-Lite, earlier run | 23/25 (92%) | 1.439 s |
 | Keyword baseline | 8/25 (32%) | Not measured |
 
@@ -36,6 +36,6 @@ The initial local request produced schema-shaped JSON in `reasoning_content` and
 
 ## Interpretation
 
-The local result is one additional matching label on 25 synthetic cases. It is not sufficient evidence that Qwen is generally superior to Gemini. Expected labels were drafted with AI assistance and have not been independently validated by an analyst. Generation settings and provider runtimes differ; latency reflects these specific runs, not a controlled hardware benchmark. Prompt and dataset hashes match the original frozen evaluation inputs.
+The local result is one additional matching label on 25 synthetic cases. It is not sufficient evidence that this Open Weight AI model is generally superior to Gemini. Expected labels were drafted with AI assistance and have not been independently validated by an analyst. Generation settings and provider runtimes differ; latency reflects these specific runs, not a controlled hardware benchmark. Prompt and dataset hashes match the original frozen evaluation inputs.
 
-The next product milestone is the analyst review screen. Keep raw model decisions separate from reviewer corrections and measure the time needed to review them.
+The analyst review screen now keeps raw model decisions separate from reviewer corrections. Measuring total reviewer effort with an independent analyst remains a customer-validation milestone.

@@ -4,7 +4,7 @@ Upload a selectable-text, scanned, or mixed PDF in the local analyst screen. Che
 
 ## Start on this Mac
 
-The PDF helper, English/Korean OCR language files and Node OCR runtime are configured on the development Mac. Keep LM Studio's local server running with the configured Qwen model loaded. If the review screen is already running, stop it with Control-C and restart from the project folder:
+The PDF helper, English/Korean OCR language files and Node OCR runtime are configured on the development Mac. Keep LM Studio's local server running with the configured Open Weight AI model model loaded. If the review screen is already running, stop it with Control-C and restart from the project folder:
 
 ```sh
 python3 review_app.py
@@ -49,4 +49,4 @@ Automated checks cover native extraction, scanned extraction, required confirmat
 
 The live scanned-PDF browser test returned the five expected fixture statuses (`met`, `partly_met`, `met`, `met`, `unknown`) and valid quotes. This verifies one synthetic end-to-end example, not general supplier assessment accuracy. All 41 tests passed on the development Mac.
 
-![Scanned PDF assessed with local Qwen — isolated automated QA](screenshots/pdf-intake.jpg)
+![Scanned PDF assessed with local Open Weight AI model — isolated automated QA](screenshots/pdf-intake.jpg)

@@ -10,7 +10,7 @@ Open **http://127.0.0.1:8501** in your browser. Press Control-C in Terminal to s
 
 ## Your first review
 
-1. Choose the local Qwen evaluation run with 25 assessments.
+1. Choose the local Open Weight AI model evaluation run with 25 assessments.
 2. Enter your name or initials. No assessment is automatically approved.
 3. Choose `evaluation-h` and inspect `BUYER-01`.
 4. Compare the complete supplier answer with the AI quote and explanation.

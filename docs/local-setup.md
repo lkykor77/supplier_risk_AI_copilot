@@ -1,4 +1,4 @@
-# Local Qwen and Obsidian integration
+# Open Weight AI model and Obsidian integration
 
 ## Architecture
 
@@ -8,7 +8,7 @@ Docker is not necessary for this workflow. oMLX is an optional alternative local
 
 ## Start LM Studio
 
-Load Qwen in LM Studio and start the Developer server on localhost, usually port 1234. Use the model ID returned by:
+Load the Open Weight AI model in LM Studio and start the Developer server on localhost, usually port 1234. Use the model ID returned by:
 
 ```sh
 python3 local_assessor.py --check-server
@@ -16,7 +16,7 @@ python3 local_assessor.py --check-server
 
 The project's default is `qwen/qwen3.8-27b`. Save private configuration in `.local-config.json`, based on `local-config.example.json`. The actual config is Git-ignored. If server authentication is enabled, set `LOCAL_MODEL_API_KEY` locally; do not place secrets in the example config.
 
-The assessor sends `reasoning_effort: none`, verified on this Qwen MLX model. In the initial live test, schema-constrained JSON appeared in `reasoning_content` while the final answer was empty. Explicit non-thinking mode returned valid JSON in the final answer. The app never uses hidden reasoning as an assessment. A new model or runtime may support different reasoning controls; verify the setting before switching.
+The assessor sends `reasoning_effort: none`, verified on the Open Weight AI model in the MLX runtime. In the initial live test, schema-constrained JSON appeared in `reasoning_content` while the final answer was empty. Explicit non-thinking mode returned valid JSON in the final answer. The app never uses hidden reasoning as an assessment. A new model or runtime may support different reasoning controls; verify the setting before switching.
 
 ## First comparison: unchanged prompt
 

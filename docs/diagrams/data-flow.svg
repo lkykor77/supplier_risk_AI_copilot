@@ -20,7 +20,7 @@
 <path d="M1015 292 L1095 292" fill="none" stroke="#527264" stroke-width="3" marker-end="url(#arrow)"/>
 <rect x="1105" y="570" width="430" height="195" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
 <text x="1127" y="608" font-family="Arial,sans-serif" font-size="23" font-weight="bold" fill="#193d35">04 / Local AI assessment</text>
-<text x="1127" y="645" font-family="Arial,sans-serif" font-size="18" fill="#52665b">LM Studio + open-weight Qwen.</text>
+<text x="1127" y="645" font-family="Arial,sans-serif" font-size="18" fill="#52665b">LM Studio + Open Weight AI model.</text>
 <text x="1127" y="674" font-family="Arial,sans-serif" font-size="18" fill="#52665b">Structured JSON; coverage checks;</text>
 <text x="1127" y="703" font-family="Arial,sans-serif" font-size="18" fill="#52665b">exact quote validation.</text>
 <rect x="585" y="570" width="430" height="195" rx="12" fill="#fff" stroke="#aebfaa" stroke-width="2"/>
