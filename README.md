@@ -2,6 +2,11 @@
 
 An FDE portfolio project in progress: help a supplier-security analyst review questionnaire answers, see the evidence, and approve or correct each suggested assessment.
 
+
+**[Try the public interactive demo](https://lkykor77.github.io/supplier_risk_AI_copilot/)** · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
+
+The public demo uses saved AI results and fictional data. Try correcting the real saved model error, watch the captioned local-app walkthrough, and inspect the evaluation limits. The full application runs locally with LM Studio.
+
 ## Review assessments in your browser
 
 ```sh
