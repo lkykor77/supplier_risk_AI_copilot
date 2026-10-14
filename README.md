@@ -28,7 +28,7 @@ This is an independent prototype with verified technical evidence and a proposed
 
 ### Problem statement
 
-Before working with a potential supplier—sharing information, granting system access, or depending on its services—a company needs to assess the information security risks that relationship could introduce. This project supports that pre-engagement assessment for companies operating in the **U.S., Europe and Korea**. 
+Before working with a potential supplier—sharing information, granting system access, or depending on its services—a company needs to assess the information security risks that relationship could introduce. This project supports that pre-engagement supplier risk assessment for companies operating in the **U.S., Europe and Korea**. 
 
 The security team reviews whether the supplier’s stated controls and policies meet the buyer’s security requirements, and which gaps require evidence, remediation or escalation. Those requirements may be informed by ISO/IEC 27001, NIST CSF, contracts, and regulations applicable to the organization and supplier relationship. NIST’s [supply-chain guide](https://csrc.nist.gov/pubs/sp/1305/final) describes defining and communicating supplier requirements; [ISO/IEC 27001](https://www.iso.org/standard/27001) provides a risk-based information-security management context.
 
