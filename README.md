@@ -2,7 +2,7 @@
 
 **A questionnaire answer is a claim. Make it reviewable.**
 
-A **Deployment Strategist portfolio project** that translates a supplier-onboarding problem into an operational data pipeline and a working review application. It connects customer workflow strategy with Python/JavaScript development, local inference through an **Open Weight AI model**, and human decisions supported by traceable evidence.
+A **Deployment Strategist portfolio project** that addresses **pre-engagement information security risk assessment of potential suppliers** into an operational data pipeline and a working review application. It connects customer workflow strategy with Python/JavaScript development, local inference through an **Open Weight AI model**, and human decisions supported by traceable evidence.
 
 **[Try the public interactive demo](https://lkykor77.github.io/supplier_risk_AI_copilot/)** · [Watch the 90-second walkthrough](https://lkykor77.github.io/supplier_risk_AI_copilot/#walkthrough) · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
 
@@ -12,7 +12,7 @@ Explore the customer decision, inspect how documents become usable data, and try
 
 | Deployment capability | Concrete project evidence |
 | --- | --- |
-| Understand the business decision | Supplier-onboarding problem statement, analyst pain points, stakeholder handoffs and a [proposed customer pilot](docs/customer-deployment-plan.md) |
+| Understand the business decision | Supplier information security risk problem statement, analyst pain points, stakeholder handoffs and a [proposed customer pilot](docs/customer-deployment-plan.md) |
 | Turn fragmented data into a pipeline | Document extraction/OCR → checked answers → requirements → structured assessments → human decisions → risk summary, with source references |
 | Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 47 automated tests |
 | Integrate practical AI tools | Open Weight AI model in LM Studio; schema-constrained output; allowlisted Obsidian rules and persistent project memory |
@@ -25,9 +25,9 @@ This is an independent prototype with verified technical evidence and a proposed
 
 ### Problem statement
 
-Before onboarding a supplier, information-security teams need evidence that its controls and policies meet the buyer’s security requirements. Those requirements may be informed by ISO/IEC 27001, NIST CSF, contracts, and regulations applicable to the organization and supplier relationship. NIST’s [supply-chain guide](https://csrc.nist.gov/pubs/sp/1305/final) describes defining and communicating supplier requirements; [ISO/IEC 27001](https://www.iso.org/standard/27001) provides a risk-based information-security management context.
+Before working with a potential supplier—sharing information, granting system access, or depending on its services—a company needs to assess the information security risks that relationship could introduce. This project supports that pre-engagement assessment for companies operating in the **U.S., Europe and Korea**. The security team reviews whether the supplier’s stated controls and policies meet the buyer’s security requirements, and which gaps require evidence, remediation or escalation. Those requirements may be informed by ISO/IEC 27001, NIST CSF, contracts, and regulations applicable to the organization and supplier relationship. NIST’s [supply-chain guide](https://csrc.nist.gov/pubs/sp/1305/final) describes defining and communicating supplier requirements; [ISO/IEC 27001](https://www.iso.org/standard/27001) provides a risk-based information-security management context.
 
-The operational question is **which supplier evidence supports the next due-diligence decision, and which gaps need follow-up?** Security analysts, procurement teams and risk owners need a shared, explainable review record. The proposed analyst receives evidence in inconsistent formats: standard questionnaires, spreadsheets, PDFs, or scanned documents with supplier-defined layouts. The analyst must locate each answer, compare it with the buyer’s requirements, identify contradictions and missing evidence, and document the assessment for a human decision.
+The operational question is **what information security risk would this supplier relationship introduce, what evidence supports the assessment, and what must be resolved before proceeding?** The buyer’s risk owner decides whether to proceed, require remediation, accept an exception or decline the relationship. Geography alone does not determine risk or criticality; assessment depth depends on data sensitivity, access, service dependency and applicable obligations. Security analysts, procurement teams and risk owners need a shared, explainable review record. The proposed analyst receives evidence in inconsistent formats: standard questionnaires, spreadsheets, PDFs, or scanned documents with supplier-defined layouts. The analyst must locate each answer, compare it with the buyer’s requirements, identify contradictions and missing evidence, and document the assessment for a human decision.
 
 ### Pain points
 
@@ -50,6 +50,18 @@ After every requirement has a human decision, the tool calculates a **weighted q
 The intended outcome is a more consistent, traceable review record: checked source evidence, inspectable AI suggestions, human decisions, and a transparent summary of weighted gaps. Reducing repetitive review effort is a hypothesis to validate with users, not a proven result.
 
 Today, the prototype implements **five fictional buyer requirements**, a working PDF-to-review workflow, synthetic evaluations, and human-reviewed gap scoring. **The demo now shows [illustrative ISO 27001/NIST topic references](docs/framework-references.md) for each question. Complete validated control mappings, regulatory assessment, direct Excel import, and real-supplier validation remain planned.** It does not certify compliance or verify that supplier claims are true.
+
+## Realistic fictional assessment scenarios
+
+These contexts illustrate how a buyer could use the existing synthetic answers. They are not real customers, verified supplier evidence or additional AI evaluation runs.
+
+| Potential supplier relationship | Exposure and evidence | Assessment and next action |
+| --- | --- | --- |
+| **U.S. company → customer-support SaaS (Supplier F)** | Customer contact records and support tickets; text questionnaire and requested supporting policy/test records | All five saved suggestions are met. Request the current incident plan, access-review record, administrator MFA evidence and latest restore-test report before relying on the claims. Five met answers do not establish acceptable overall risk. |
+| **European company → managed IT provider (Supplier G)** | Privileged production access; questionnaire and requested scanned procedures | Contractor administrators are exempt from MFA; non-admin access is never reviewed; the incident process is undocumented. Request MFA enforcement, broader access reviews and a written plan; escalate unresolved gaps before privileged access is granted. |
+| **Korean manufacturer → logistics platform (Supplier H)** | Shipment/customer contact data and dispatch dependency; mixed PDF with conflicting answers | Incident-plan and access-review claims contradict each other; nightly backups do not demonstrate restore testing. Request reconciled, dated evidence and restore-test records; correct the saved contact-label error to Unknown. |
+
+The proposed document packs are scenario context; the public demo displays saved questionnaire answers and has no document upload. Direct spreadsheet import, broader privacy/regulatory checks and overall residual-risk assessment remain outside the implemented five-question rubric. Read the [scenario walkthroughs](docs/supplier-assessment-scenarios.md) or [try them in the demo](https://lkykor77.github.io/supplier_risk_AI_copilot/#scenarios).
 
 ## Features at a glance
 
@@ -198,7 +210,7 @@ python3 -m unittest discover -s tests -v
 
 ## Customer strategy and next deployment milestone
 
-The [proposed pilot plan](docs/customer-deployment-plan.md) identifies analyst, procurement, risk-owner and engineering stakeholders; discovery questions; delivery stages; reviewer training; and success measures. The next milestone is to validate the workflow with an independent analyst and compare total manual versus assisted review effort, corrections and evidence follow-ups. Pilot timing and acceptance thresholds should be agreed after discovery.
+The [proposed pilot plan](docs/customer-deployment-plan.md) identifies analyst, procurement, risk-owner and engineering stakeholders; discovery questions; delivery stages; reviewer training; and success measures. The next milestone is to walk through the realistic supplier-security scenarios with an independent analyst and validate the workflow and compare total manual versus assisted review effort, corrections and evidence follow-ups. Pilot timing and acceptance thresholds should be agreed after discovery.
 
 Product changes already implemented from portfolio-development feedback include PDF/OCR intake, simpler fixed scoring, supplier-level questionnaire grouping and clearer framework references. These show iteration on the application; they are not presented as customer interview findings.
 

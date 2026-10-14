@@ -1,5 +1,7 @@
 # Problem statement — draft to validate
 
+Before a company works with a potential supplier, its security team needs to assess risks to information confidentiality, integrity and availability from data sharing, system access and service dependency. This workflow applies to the project’s fictional U.S., European and Korean buyer contexts; scope and applicable obligations depend on each relationship.
+
 A supplier-security analyst needs to evaluate prospective suppliers against the buyer's security requirements, which may draw on ISO/IEC 27001, NIST CSF, contractual terms, and applicable regulations. Supplier evidence arrives as standard questionnaires, spreadsheets, selectable-text PDFs, scans, and documents with inconsistent formats.
 
 Finding relevant answers, interpreting vague or contradictory claims, tracking source references, and documenting decisions involves repetitive manual work. Baseline review time and assisted-review savings have not been measured. No universal “average hours” figure is claimed.

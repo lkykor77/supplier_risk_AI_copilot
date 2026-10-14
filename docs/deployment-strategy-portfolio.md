@@ -2,7 +2,7 @@
 
 ## From business ambiguity to an inspectable application
 
-Supplier Risk AI Copilot is an independent portfolio prototype for a supplier-onboarding problem. It combines operational problem framing, a document-to-decision data pipeline, hands-on coding, and a review workflow that keeps a person accountable for the decision.
+Supplier Risk AI Copilot is an independent portfolio prototype for a pre-engagement supplier information security risk assessment problem. It combines operational problem framing, a document-to-decision data pipeline, hands-on coding, and a review workflow that keeps a person accountable for the decision.
 
 The product question is: **how can a security analyst turn inconsistent supplier evidence into a traceable assessment and identify the next due-diligence action?** The response is a bounded working application, evaluated with fictional data, and a proposed customer pilot for validating its value.
 
@@ -22,7 +22,7 @@ The product question is: **how can a security analyst turn inconsistent supplier
 
 ## Suggested interview walkthrough
 
-1. Explain the supplier-onboarding decision and whose workflow the app supports.
+1. Explain the pre-engagement supplier information security decision and whose workflow the app supports.
 2. Show how raw documents become linked evidence, answers, requirements, suggestions and human decisions.
 3. Correct the saved model error and explain why quote matching alone is insufficient.
 4. Show the final risk indicator and critical-supplier follow-up boundary.
@@ -37,4 +37,4 @@ The narrative is tailored to those capabilities. This independent project uses P
 
 ## Two-sentence CV description
 
-Built a Python/JavaScript supplier-review application and document-processing pipeline with PDF/OCR extraction, local Open Weight AI model inference through LM Studio, selected Obsidian rules/memory, and traceable human decisions. Defined the stakeholder workflow and a proposed customer pilot with discovery, reviewer training and outcome measures; published an interactive demo with architecture diagrams, code investigation, failure analysis and synthetic evaluation evidence.
+Built a Python/JavaScript application for pre-engagement supplier information security risk assessment against buyer requirements mapped to illustrative ISO 27001 and NIST CSF topics and document-processing pipeline with PDF/OCR extraction, local Open Weight AI model inference through LM Studio, selected Obsidian rules/memory, and traceable human decisions. Defined the stakeholder workflow and a proposed customer pilot with discovery, reviewer training and outcome measures; published an interactive demo with architecture diagrams, code investigation, failure analysis and synthetic evaluation evidence.

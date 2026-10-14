@@ -69,3 +69,7 @@ These changes followed feedback during portfolio development, not security-custo
 - Added related framework topics with explicit limits, preserving frozen evaluation inputs.
 
 An independent analyst interview and real-world pilot remain next steps.
+
+## Scenario-based next session
+
+Use the [fictional SaaS, managed IT and logistics scenarios](supplier-assessment-scenarios.md) to validate pre-engagement supplier information security decisions with an independent analyst. Identify exposure, required supporting records, remediation owners and who can accept unresolved risk before access or data sharing. Keep regional obligations as discovery questions, not assumptions encoded into the five-control score.

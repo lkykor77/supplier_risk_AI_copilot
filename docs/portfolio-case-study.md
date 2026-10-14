@@ -1,6 +1,6 @@
 # Supplier Risk AI Copilot — deployment strategy and engineering case study
 
-A working prototype that connects an operational supplier-onboarding problem to a document-processing pipeline, an analyst application, and a proposed customer pilot. Python/JavaScript implementation, local Open Weight AI model inference in LM Studio, and selected Obsidian rules/memory support an evidence-led review workflow.
+A working prototype that connects an operational pre-engagement supplier information security risk assessment problem to a document-processing pipeline, an analyst application, and a proposed customer pilot. Python/JavaScript implementation, local Open Weight AI model inference in LM Studio, and selected Obsidian rules/memory support an evidence-led review workflow.
 
 ## Problem and scope
 
