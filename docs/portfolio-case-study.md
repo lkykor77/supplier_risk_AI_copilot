@@ -16,7 +16,7 @@ The [pilot plan](customer-deployment-plan.md) sequences discovery, data preparat
 
 ## Data model and pipeline
 
-The pipeline links **Supplier → Questionnaire/source document → Answer → Buyer requirement → AI assessment → Human decision**. Source-page references and stable IDs preserve provenance; model suggestions and corrections remain separate; scoring derives from completed human decisions. The structured records provide a basis for later customer-specific integration without changing the frozen evaluation inputs.
+The pipeline links **Supplier → Questionnaire/source document → Answer → Security requirement → AI assessment → Human decision**. Source-page references and stable IDs preserve provenance; model suggestions and corrections remain separate; scoring derives from completed human decisions. The structured records provide a basis for later customer-specific integration without changing the frozen evaluation inputs.
 
 ## Implementation
 
