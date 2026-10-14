@@ -85,4 +85,4 @@ The app calculates a fixed questionnaire-gap indicator only after all human deci
 
 ## Portfolio positioning
 
-See the [Deployment Strategist narrative](deployment-strategy-portfolio.md) for the capability-to-evidence map and role research. Runtime configuration and raw reports preserve model identifiers; the public narrative focuses on the Open Weight AI model integration and the operational decision it supports.
+See the [Deployment Strategist narrative](deployment-strategy-portfolio.md) for the capability-to-evidence map. Runtime configuration and raw reports preserve model identifiers; the public narrative focuses on the Open Weight AI model integration and the operational decision it supports.
