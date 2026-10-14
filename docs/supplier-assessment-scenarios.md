@@ -2,9 +2,9 @@
 
 These business contexts make the pre-engagement security decision concrete. They are attached to unchanged frozen synthetic questionnaire answers and saved AI results, not real companies, customer research or new model evaluations. Proposed document packs have not been uploaded or verified.
 
-The buyer assesses exposure before sharing data, granting access or relying on a service. Security analysts document findings; procurement coordinates follow-up; an accountable risk owner decides whether to proceed, require remediation, accept an exception or decline. U.S., European and Korean locations illustrate business contexts, not universal legal mandates or geographic risk rankings.
+The buyer assesses exposure before sharing data, granting access or relying on a service. Security analysts document findings; procurement coordinates follow-up; an accountable risk owner decides whether to proceed, require remediation, accept an exception or decline.
 
-ISO 27001 and NIST CSF references in this prototype are topic associations for five buyer requirements. The questionnaire gap score is not an overall residual-risk estimate, compliance certification or approval threshold. The broader assessment must consider data sensitivity, access, service dependency, contractual needs and applicable obligations.
+ISO 27001 and NIST CSF references in this prototype are topic associations for five security requirements. The questionnaire gap score is not an overall residual-risk estimate, compliance certification or approval threshold. The broader assessment must consider data sensitivity, access, service dependency, contractual needs and applicable obligations.
 
 ## Supplier F — Customer-support SaaS (U.S. buyer)
 
