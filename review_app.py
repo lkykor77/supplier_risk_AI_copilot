@@ -44,8 +44,8 @@ def make_handler(store: ReviewStore):
             try:
                 assets = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
                           "/styles.css": ("styles.css", "text/css")}
-                if route.path == "/risk_ui.js":
-                    self.send((ROOT / "risk_ui.js").read_bytes(), mime="text/javascript")
+                if route.path in {"/risk_ui.js", "/framework_view.js"}:
+                    self.send((ROOT / route.path.lstrip("/")).read_bytes(), mime="text/javascript")
                 elif route.path in assets:
                     filename, mime = assets[route.path]
                     self.send((ROOT / "review_ui" / filename).read_bytes(), mime=mime)

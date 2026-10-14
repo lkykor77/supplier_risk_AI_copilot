@@ -36,7 +36,7 @@ After every requirement has a human decision, the tool calculates a **weighted q
 
 The intended outcome is a more consistent, traceable review record: checked source evidence, inspectable AI suggestions, human decisions, and a transparent summary of weighted gaps. Reducing repetitive review effort is a hypothesis to validate with users, not a proven result.
 
-Today, the prototype implements **five fictional buyer requirements**, a working PDF-to-review workflow, synthetic evaluations, and human-reviewed gap scoring. **Complete ISO 27001/NIST control mappings, regulatory assessment, direct Excel import, and real-supplier validation are planned.** It does not certify compliance or verify that supplier claims are true.
+Today, the prototype implements **five fictional buyer requirements**, a working PDF-to-review workflow, synthetic evaluations, and human-reviewed gap scoring. **The demo now shows [illustrative ISO 27001/NIST topic references](docs/framework-references.md) for each question. Complete validated control mappings, regulatory assessment, direct Excel import, and real-supplier validation remain planned.** It does not certify compliance or verify that supplier claims are true.
 
 ## Features at a glance
 
@@ -127,7 +127,7 @@ Next, read the [draft problem statement](docs/problem-statement.md) and [assessm
 - Suggested statuses describe the supplied answers; they do not verify actual supplier practices or certify compliance.
 - Human decisions are saved separately from immutable model output, with an audit history.
 
-The five requirements are fictional buyer requirements, not official NIST or ISO controls. Next, document how these buyer requirements relate to NIST CSF 2.0 guidance, including the limits of each mapping. Some framework outcomes concern the buyer's own processes and cannot be assessed from supplier answers alone.
+The five assessed criteria are fictional buyer requirements. Related framework references are displayed separately as topic alignments, with explicit limits. Next, document how these buyer requirements relate to NIST CSF 2.0 guidance, including the limits of each mapping. Some framework outcomes concern the buyer's own processes and cannot be assessed from supplier answers alone.
 
 ## Build milestones
 
@@ -186,6 +186,6 @@ python3 -m unittest discover -s tests -v
 - Architecture, engineering tradeoffs, and what changed after user feedback.
 - English README and demo; optionally a short Korean overview.
 
-This repository contains a keyword baseline, Gemini and local assessors, and fictional data. ISO 27001 / NIST CSF mappings are planned; they are not implemented yet. The Gemini assessor makes cloud API calls; the local assessor calls only a loopback model server. Dry runs make no inference requests. Never commit credentials or confidential supplier data.
+This repository contains a keyword baseline, Gemini and local assessors, and fictional data. Illustrative ISO 27001 / NIST CSF topic references are displayed; full validated mappings are not implemented. The Gemini assessor makes cloud API calls; the local assessor calls only a loopback model server. Dry runs make no inference requests. Never commit credentials or confidential supplier data.
 
 Reference: https://csrc.nist.gov/pubs/sp/1305/final

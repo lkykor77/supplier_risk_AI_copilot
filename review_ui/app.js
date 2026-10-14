@@ -29,14 +29,14 @@ function render() {
   for(const supplier of run.suppliers) {
     const reviewed=supplier.assessments.filter(r=>r.review).length;
     const button=node('button','supplier'+(supplier.id===selectedSupplier?' active':''));
-    button.append(node('strong','',supplier.id),node('small','',`${reviewed} / ${supplier.assessments.length} reviewed`));
+    button.append(node('strong','',FrameworkView.supplierName(supplier.id)),node('small','',`${reviewed} / ${supplier.assessments.length} reviewed`));
     button.onclick=()=>{selectedSupplier=supplier.id;render();};
     button.setAttribute('aria-current',supplier.id===selectedSupplier?'true':'false'); $('suppliers').append(button);
   }
   const supplier=run.suppliers.find(s=>s.id===selectedSupplier);
   $('showKey').disabled=run.meta.dataset==='pdf';if($('showKey').disabled)$('showKey').checked=false;
   $('keyWarning').textContent=run.meta.dataset==='pdf'?'PDF assessments have no benchmark answer key':'Draft labels · not independently validated';
-  $('supplierTitle').textContent=supplier.id;
+  $('supplierTitle').textContent=FrameworkView.supplierName(supplier.id)+' · questionnaire';
   const risk=supplier.risk||{ready:false,supplier_class:'normal',reviewed:supplier.assessments.filter(r=>r.review).length,total:supplier.assessments.length};
   RiskView.render($('riskResult'),risk);$('supplierClass').value=risk.supplier_class;
   $('classNotice').textContent=`Classification changes recorded: ${(run.classification_events||[]).filter(e=>e.supplier_id===supplier.id).length}.`;
@@ -50,19 +50,20 @@ function render() {
   $('historyCount').textContent=run.events.length; $('history').replaceChildren();
   for(const event of [...run.events].reverse()) {
     const entry=node('div','event');
-    entry.append(node('strong','',`${event.supplier_id} · ${event.requirement_id} · ${event.after.action}`),
+    entry.append(node('strong','',`${FrameworkView.supplierName(event.supplier_id)} · ${FrameworkView.label(event.requirement_id)} · ${event.after.action}`),
       node('div','',`${event.after.reviewer} · ${new Date(event.after.updated_at).toLocaleString()} · ${labels[event.after.status]}`));
     if(event.after.comment)entry.append(node('div','',event.after.comment)); $('history').append(entry);
   }
 }
 function card(row) {
   const article=node('article','card'), top=node('div','card-top'), title=node('div');
-  title.append(node('div','requirement-id',row.requirement_id),node('h3','',row.description));
-  top.append(title,node('span','pill '+row.ai.status,'AI · '+labels[row.ai.status])); article.append(top);
+  const supplier=run.suppliers.find(s=>s.id===selectedSupplier);const q=FrameworkView.questions[row.requirement_id];
+  title.append(node('div','requirement-id',FrameworkView.supplierName(selectedSupplier)+' · '+FrameworkView.label(row.requirement_id)+' of '+supplier.assessments.length),node('h3','',q?.question||row.description));
+  top.append(title,node('span','pill '+row.ai.status,'Buyer requirement · '+labels[row.ai.status])); article.append(top,node('p','buyer-criterion','Buyer requirement: '+row.description));
   const columns=node('div','columns'), answer=node('div'), suggestion=node('div');
   answer.append(node('p','field-title','Supplier answer'),node('p','answer',row.answer||'No answer supplied.'));
   suggestion.append(node('p','field-title','AI evidence & explanation'),node('p','quote',row.ai.evidence_quote||'No evidence quote.'),node('p','reason',row.ai.reason));
-  columns.append(answer,suggestion);article.append(columns);
+  columns.append(answer,suggestion);article.append(columns);FrameworkView.render(article,row.requirement_id);
   if(row.review) {
     const review=node('div','decision');
     review.append(node('strong','',`Your decision · ${labels[row.review.status]} · ${row.review.action}`),
@@ -78,7 +79,7 @@ function card(row) {
   actions.append(buttons);article.append(actions);return article;
 }
 function openEditor(row) {
-  editing=row; $('editTitle').textContent=row.requirement_id+' · Review assessment';$('editRequirement').textContent=row.description;
+  editing=row; $('editTitle').textContent=FrameworkView.supplierName(selectedSupplier)+' · '+FrameworkView.label(row.requirement_id);$('editRequirement').textContent=row.description;
   fillDraft(row.review||row.ai);$('editComment').value=row.review?.comment||'';$('editError').textContent='';$('editor').showModal();
 }
 function fillDraft(source){$('editStatus').value=source.status;$('editQuote').value=source.evidence_quote;$('editReason').value=source.reason;}
@@ -119,7 +120,7 @@ $('pdfFile').onchange=async()=>{
     $('pdfMappings').replaceChildren();
     for(const requirement of pdfDocument.requirements){
       const field=node('div','mapping');field.dataset.requirementId=requirement.id;field.dataset.modes='{}';
-      field.append(node('h3','',`${requirement.id} · ${requirement.description}`));
+      field.append(node('h3','',`${FrameworkView.label(requirement.id)} · ${requirement.description}`));
       const answerLabel=node('label','','Supplier answer'),answer=node('textarea');answer.rows=3;answer.className='mapped-answer';answer.maxLength=16000;answerLabel.append(answer);field.append(answerLabel);
       const copy=node('button','secondary','Copy selected answer');copy.type='button';copy.onclick=()=>{const box=$('pageText');const text=box.value.slice(box.selectionStart,box.selectionEnd);if(!text.trim()){ $('pdfError').textContent='Select answer text in the source-page box first.';return;}answer.value=text;field.querySelector('.mapped-pages').value=$('pdfPage').value;field.dataset.modes=JSON.stringify({[$('pdfPage').value]:$('pdfMode').value});$('pdfError').textContent='';};field.append(copy);
       const pagesLabel=node('label','','Source pages (for example 1, 2)'),pages=node('input');pages.className='mapped-pages';pagesLabel.append(pages);field.append(pagesLabel);
