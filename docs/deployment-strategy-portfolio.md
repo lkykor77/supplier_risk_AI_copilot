@@ -30,12 +30,3 @@ The product question is: **how can a security analyst turn inconsistent supplier
 5. Inspect the Python/JavaScript implementation and a meaningful test or failure.
 6. Explain what to validate with users before expanding the deployment.
 
-## Role research informing the presentation
-
-The supplied [London](https://jobs.lever.co/palantir/79c3f906-622b-4261-8fc6-8af0028caa27), [New York](https://jobs.lever.co/palantir/e0ab8226-b928-4e3a-bf87-08fe7b1ea595) and [Seoul](https://jobs.lever.co/palantir/2e193bdf-e668-49c1-ba32-66cc1aa131a4) postings emphasize customer workflows, relevant data, applications, collaboration with engineers, training, demos and communication. Palantir's [day-in-the-life article](https://blog.palantir.com/a-day-in-the-life-of-a-palantir-deployment-strategist-951cb59a5a96) describes a mix of product, technical implementation and customer iteration. Sources reviewed October 14, 2026.
-
-The narrative is tailored to those capabilities. This independent project uses Python, JavaScript, Swift/Node PDF helpers, LM Studio and Obsidian. It does not use Palantir Foundry or AIP and does not imply Palantir affiliation, a completed customer deployment, or measured business impact. Raw evaluation reports and runtime configuration retain exact model identifiers for reproducibility; portfolio copy uses the term **Open Weight AI model**.
-
-## Two-sentence CV description
-
-Built a Python/JavaScript application and document-processing pipeline for pre-engagement supplier information security assessment against buyer requirements linked to ISO 27001 and NIST CSF topics. Designed a custom Python AI harness integrating an Open Weight AI model through LM Studio, selected Obsidian rules/memory and structured-output validation to keep confidential evidence within a local workflow; published an interactive demo and defined a proposed customer pilot with stakeholder discovery, reviewer training and outcome measures.
