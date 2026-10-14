@@ -37,11 +37,10 @@ The pipeline links **Supplier → Questionnaire/source document → Answer → S
 
 **Small native stack versus more infrastructure.** Python's standard library and a buildless review interface keep setup understandable. Swift and Node are added only for local PDF extraction/OCR. Docker and oMLX were not required. This choice suits a single local analyst; authentication, multi-user access, and hosted inference would need additional work.
 
-**Quotes versus conclusions.** A valid quote only proves the words occur in the answer. It does not prove the claim is true, that OCR matches the page, or that the quote supports the label. Human review is essential to this workflow.
 
 ## Evaluation and failures
 
-The frozen synthetic evaluation contains five suppliers × five requirements. Original prompt and dataset hashes were checked; Obsidian context was excluded. On October 13, 2026:
+The frozen synthetic evaluation contains five suppliers × five requirements. Original prompt and dataset hashes were checked; Obsidian context was excluded. 
 
 | Assessor | Labels matched | Median request latency |
 | --- | --- | --- |
