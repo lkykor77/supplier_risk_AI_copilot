@@ -1,4 +1,4 @@
-# Problem statement — draft to validate
+# Problem statement
 
 Before a company works with a potential supplier, its security team needs to assess risks to information confidentiality, integrity and availability from data sharing, system access and service dependency. This workflow applies to the project’s fictional U.S., European and Korean buyer contexts; scope and applicable obligations depend on each relationship.
 
