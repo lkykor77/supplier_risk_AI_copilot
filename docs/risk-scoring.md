@@ -41,9 +41,3 @@ These factors and flags are explicit project choices. They have not been validat
 The fixed factors, equal weights and enhanced-review flag are **not mandated or endorsed numerical values from ISO or NIST**. The design follows the general idea of transparent assessment and proportionate attention to critical suppliers, while keeping the portfolio workflow simple.
 
 A comprehensive supplier risk assessment needs validated framework mappings, threat scenarios, business impact, likelihood, actual control effectiveness, evidence confidence, compensating controls and the organization's risk acceptance criteria. Those are future work. This prototype does not impose low/medium/high thresholds or automatically approve a supplier.
-
-## Verified example
-
-The public browser QA corrected the saved contact error to unknown, recorded all five human decisions, and showed 100/100 entirely from unresolved evidence. The isolated local-app QA recorded the fictional supplier `evaluation-g` and showed 60/100 (one missing and four partly met decisions), with a critical-supplier follow-up flag. These are automated test records, not real analyst approvals. All 47 app tests passed on the development Mac.
-
-![Public scoring example with unknown evidence separated from confirmed gaps](screenshots/weighted-risk-demo.jpg)
