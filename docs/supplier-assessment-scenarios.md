@@ -66,8 +66,5 @@ ISO 27001 and NIST CSF references in this prototype are topic associations for f
 
 **Criticality discussion:** Critical candidate if production administrator access is granted.
 
-## Next validation step
-
-Walk through F, G and H with an independent security analyst. Ask which supporting records are necessary, which gaps block access, who can accept an exception, and how a normal versus critical relationship changes follow-up. Record actual findings and revise the rubric before measuring manual versus assisted effort.
 
 Sources: [NIST supply-chain guide](https://csrc.nist.gov/pubs/sp/1305/final) supports defining and communicating supplier requirements; [ISO/IEC 27001](https://www.iso.org/standard/27001) provides the information security management context. These sources do not prescribe this prototype’s five-question scoring formula.
