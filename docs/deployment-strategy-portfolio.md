@@ -21,12 +21,3 @@ The product question is: **how can a security analyst turn inconsistent supplier
 | Communication and adoption | Public interactive demo, captioned walkthrough, English/Korean overview, diagrams and a proposed reviewer-training sequence |
 | Impact measurement | Defined manual/assisted timing and error measures; synthetic technical evidence reported separately from unmeasured customer outcomes |
 
-## Suggested interview walkthrough
-
-1. Explain the pre-engagement supplier information security decision and whose workflow the app supports.
-2. Show how raw documents become linked evidence, answers, requirements, suggestions and human decisions.
-3. Correct the saved model error and explain why quote matching alone is insufficient.
-4. Show the final risk indicator and critical-supplier follow-up boundary.
-5. Inspect the Python/JavaScript implementation and a meaningful test or failure.
-6. Explain what to validate with users before expanding the deployment.
-
