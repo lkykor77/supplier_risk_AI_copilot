@@ -12,8 +12,9 @@ async function api(url, payload) {
 async function refresh() {
   try {
     const catalog=await api('/api/runs'), previous=$('runSelect').value;
+    catalog.sort((a,b)=>Number(b.context_mode==='selected-vault-notes')-Number(a.context_mode==='selected-vault-notes'));
     $('runSelect').replaceChildren();
-    for(const item of catalog) { const option=node('option','',`${modelName(item.model)} · ${item.dataset} · ${item.count} assessments${item.context_mode==='selected-vault-notes'?' · vault rules':''}`); option.value=item.id; $('runSelect').append(option); }
+    for(const item of catalog) { const option=node('option','',`${modelName(item.model)}${item.context_mode==='selected-vault-notes'?' · Obsidian rules & memory':''} · ${item.dataset} · ${item.count} assessments`); option.value=item.id; $('runSelect').append(option); }
     if(!catalog.length){run=null; $('cards').replaceChildren(node('div','empty','No completed reports yet. Run an assessor, then refresh.')); return;}
     if(catalog.some(item=>item.id===previous))$('runSelect').value=previous;
     await loadRun();
@@ -41,7 +42,7 @@ function render() {
   const risk=supplier.risk||{ready:false,supplier_class:'normal',reviewed:supplier.assessments.filter(r=>r.review).length,total:supplier.assessments.length};
   RiskView.render($('riskResult'),risk);$('supplierClass').value=risk.supplier_class;
   $('classNotice').textContent=`Classification changes recorded: ${(run.classification_events||[]).filter(e=>e.supplier_id===supplier.id).length}.`;
-  $('runMeta').textContent=`${modelName(run.meta.model)} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Selected Obsidian context':'Original assessment prompt'}`;
+  $('runMeta').textContent=`${modelName(run.meta.model)} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Obsidian rules & memory used when generated':'Original assessment prompt · no Obsidian context'}`;
   $('reviewProgress').textContent=`${run.reviewed_count} / ${run.meta.count} reviewed`;
   $('progress').max=run.meta.count; $('progress').value=run.reviewed_count;
   $('cards').replaceChildren();
