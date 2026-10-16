@@ -122,20 +122,20 @@ The Python API serves the local review app. Swift/Node helpers extract PDFs; LM 
 **Explore a real saved model error.** The demo shows an unspecified security contact labeled `missing`, while the draft rubric expects `unknown`. Visitors can challenge the suggestion instead of seeing only successful examples.
 
 <a href="https://lkykor77.github.io/supplier_risk_AI_copilot/">
-  <img src="docs/screenshots/portfolio-home.jpg" alt="Public portfolio homepage introducing the evidence-review workflow and a saved model error" width="900">
+  <img src="docs/screenshots/portfolio-home-questions.png" alt="Public portfolio homepage introducing the evidence-review workflow and a saved model error" width="900">
 </a>
 
 **Inspect and correct the suggestion.** The public demo’s correction form lets visitors change the status, evidence quote, explanation, and change note. Demo decisions stay in the browser session; the website makes no live inference requests or document uploads.
 
-<img src="docs/screenshots/public-demo-correction.jpg" alt="Public demo correction form with the saved Missing suggestion, source quote, explanation, and change-note field" width="650">
+<img src="docs/screenshots/public-demo-correction-questions.png" alt="Public demo correction form with the saved Missing suggestion, source quote, explanation, and change-note field" width="650">
 
-**Trace PDF evidence back to its source.** In the local app, the analyst checks extracted answers and page mappings before the Open Weight AI model assesses them. These captures from the website’s walkthrough show fictional scan results with supporting quotes and source-page links.
+**Trace PDF evidence back to its source.** In the local app, the analyst checks extracted answers and page mappings before the Open Weight AI model assesses them. These refreshed app captures show a saved fictional scan assessment with supporting quotes, source-page links and Question-01 / Question-02 labels.
 
-![Local PDF review showing supplier answers, model explanations, and page references](docs/screenshots/pdf-evidence-walkthrough.png)
+![Local PDF review showing supplier answers, model explanations, and page references](docs/screenshots/pdf-evidence-questions.png)
 
 **Preserve the analyst’s decision.** A clearly marked automated QA example narrows an explanation to what the supplied answer supports. The revised decision appears alongside the unchanged AI output, with a review note and source reference.
 
-![Separate reviewer decision alongside the original AI assessment in the local-app walkthrough](docs/screenshots/reviewer-decision-walkthrough.png)
+![Separate reviewer decision alongside the original AI assessment in the local-app walkthrough](docs/screenshots/reviewer-decision-questions.png)
 
 **Engineering evidence:** 54 app tests passed on the development Mac. In one frozen synthetic evaluation, the Open Weight AI model matched 24/25 draft labels, versus 23/25 for an earlier Gemini run and 8/25 for the keyword baseline. The small dataset and unvalidated draft labels do not establish real-world accuracy or general model superiority. See the [results and limitations](docs/local-integration-results.md).
 
@@ -147,7 +147,7 @@ python3 review_app.py
 
 Open **http://127.0.0.1:8501**. The [analyst review guide](docs/analyst-review.md) explains how to accept or correct assessments, validate quotes, and save decisions separately from the AI output. Saved-report review works without running a model. To assess a PDF, keep LM Studio running, choose **Upload questionnaire PDF**, review the 20 automatically proposed answers and page references, enter your initials and approve the mapping. Leave both answer and page blank when evidence is not found. Accept or correct every assessment before viewing the risk indicator. Your review history stays local. Restart the Python server after code updates, then reload the browser.
 
-![Analyst workspace — isolated automated QA example](docs/screenshots/analyst-review.jpg)
+![Analyst workspace — isolated automated QA example](docs/screenshots/analyst-review-questions.png)
 
 ## Upload supplier questionnaires as PDF
 
