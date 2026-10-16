@@ -49,3 +49,13 @@ Saved-report review uses Python's standard library with a small HTML/CSS/JavaScr
 ## Weighted questionnaire risk indicator
 
 Choose **Normal supplier** or **Critical supplier** for the selected relationship. The score appears once all its requirements have human decisions. Fixed factors are met 0, partly met 0.5, missing 1 and unknown 1, with equal control weights. The result separates confirmed gaps from unresolved evidence. Critical suppliers receive enhanced-review flags for non-met answers. It recalculates after corrections; classification changes retain revision history. See [the methodology](risk-scoring.md).
+
+## Combined Obsidian development run
+
+To generate the default local development run for fictional suppliers D, F, G, H, I and J, use:
+
+```sh
+python3 local_assessor.py --combined-development --with-vault
+```
+
+This makes six fresh local model requests using the same selected Obsidian rules and memory, producing 30 assessments across five questions per supplier. It is a development experiment using existing fictional answers, not a new held-out benchmark. Raw note contents and local results remain ignored by Git. A complete combined run replaces the previous local development/evaluation choices in the selector; immutable source snapshots and earlier human review records are preserved. New suggestions require fresh human decisions. The selector prioritizes runs generated with Obsidian context.

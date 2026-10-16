@@ -101,6 +101,34 @@ class ReviewTests(unittest.TestCase):
         self.assertEqual(self.store.catalog()[0]["id"], self.run_id)
         self.assertEqual(self.store.read(self.run_id)["suppliers"][0]["assessments"][0]["answer"], "We review access regularly.")
 
+    def test_combined_run_replaces_choices_but_preserves_old_history(self):
+        suppliers = self.suppliers + [{**self.suppliers[0], 'id':'fictional-2'}]
+        combined = {**self.report, 'run_scope':'combined-fictional-development',
+                    'context_mode':'selected-vault-notes', 'replaces_runs':[self.run_id],
+                    'created_at':'2026-10-16T00:00:00+00:00',
+                    'dataset_sha256':hashlib.sha256(json.dumps([self.requirements,suppliers],sort_keys=True).encode()).hexdigest(),
+                    'suppliers':self.report['suppliers'] + [{**self.report['suppliers'][0],'supplier_id':'fictional-2'}]}
+        path = self.root / 'results/latest-combined.json'
+        path.write_text(json.dumps(combined))
+        with patch('review_store.combined_development_inputs',return_value=(self.requirements,suppliers)):
+            catalog = self.store.catalog()
+            self.assertEqual(len(catalog),1)
+            self.assertEqual(catalog[0]['count'],2)
+            self.assertNotEqual(catalog[0]['id'],self.run_id)
+            self.assertEqual(self.store.read(self.run_id)['meta']['id'],self.run_id)
+            combined['complete']=False
+            path.write_text(json.dumps(combined))
+            # The immutable completed combined snapshot remains available.
+            self.assertEqual(self.store.catalog()[0]['id'],catalog[0]['id'])
+
+    def test_partial_combined_run_does_not_hide_previous_run(self):
+        combined = {**self.report, 'run_scope':'combined-fictional-development',
+                    'replaces_runs':[self.run_id]}
+        (self.root / 'results/latest-combined.json').write_text(json.dumps(combined))
+        suppliers = self.suppliers + [{**self.suppliers[0],'id':'fictional-2'}]
+        with patch('review_store.combined_development_inputs',return_value=(self.requirements,suppliers)):
+            self.assertEqual([r['id'] for r in self.store.catalog()],[self.run_id])
+
     def test_invalid_run_path_rejected(self):
         with self.assertRaises(ValueError):
             self.store.read("../.gemini-key")

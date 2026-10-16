@@ -165,6 +165,18 @@ def load_inputs(dataset):
     return requirements, suppliers
 
 
+def combined_development_inputs():
+    """Six existing fictional suppliers for a new development experiment, not a frozen evaluation."""
+    requirements, development = load_inputs('development')
+    evaluation_requirements, evaluation = load_inputs('evaluation')
+    if requirements != evaluation_requirements:
+        raise ValueError('Combined development requires the same five questions.')
+    suppliers = [s for s in development if s['id']=='fictional-d'] + evaluation
+    if len(suppliers)!=6:
+        raise ValueError('Expected fictional suppliers D, F, G, H, I and J.')
+    return requirements, suppliers
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     selection = parser.add_mutually_exclusive_group()

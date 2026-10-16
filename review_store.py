@@ -7,7 +7,7 @@ from pathlib import Path
 import re
 import threading
 
-from ai_assessor import load_inputs
+from ai_assessor import load_inputs, combined_development_inputs
 from assessment import validate_assessment
 from risk_scoring import summarize_risk
 
@@ -34,7 +34,13 @@ class ReviewStore:
         report = json.loads(raw)
         if report.get("complete") is not True or report.get("dataset") not in {"development", "evaluation", "pdf"}:
             raise ValueError("Only completed development, evaluation or PDF reports can be reviewed.")
-        if report["dataset"] == "pdf":
+        if report.get('run_scope') == 'combined-fictional-development':
+            if report['dataset'] != 'development':
+                raise ValueError('Combined supplier runs must be development experiments.')
+            requirements, suppliers = combined_development_inputs()
+            if {s['supplier_id'] for s in report['suppliers']} != {s['id'] for s in suppliers}:
+                raise ValueError('Combined development must include every selected supplier.')
+        elif report["dataset"] == "pdf":
             requirements = report["source_data"]["requirements"]
             suppliers = report["source_data"]["suppliers"]
         else:
@@ -64,12 +70,14 @@ class ReviewStore:
         """Discover completed saved runs; malformed and failed runs are excluded."""
         with self.lock:
             runs = {}
+            replaced = set()
             for pattern in ["results/latest*.json", "reports/*run*.json", "intake/*/assessment-run-*.json"]:
                 for path in sorted(self.root.glob(pattern)):
                     try:
                         run_id, snapshot = self._snapshot(path)
                     except (ValueError, KeyError, TypeError, OSError):
                         continue
+                    replaced.update(snapshot['report'].get('replaces_runs', []))
                     folder = self._folder(run_id)
                     folder.mkdir(parents=True, exist_ok=True)
                     target = folder / "source.json"
@@ -82,8 +90,9 @@ class ReviewStore:
                 for path in self.directory.glob("*/source.json"):
                     if path.parent.name not in runs:
                         snapshot = json.loads(path.read_text())
+                        replaced.update(snapshot['report'].get('replaces_runs', []))
                         runs[path.parent.name] = self._metadata(path.parent.name, snapshot)
-            return sorted(runs.values(), key=lambda item: item["created_at"], reverse=True)
+            return sorted((r for rid,r in runs.items() if rid not in replaced), key=lambda item: item["created_at"], reverse=True)
 
     def _metadata(self, run_id: str, snapshot: dict) -> dict:
         report = snapshot["report"]

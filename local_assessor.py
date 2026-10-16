@@ -12,7 +12,7 @@ import urllib.parse
 import urllib.request
 import uuid
 
-from ai_assessor import PROMPT, build_request, comparison, load_inputs
+from ai_assessor import PROMPT, build_request, comparison, load_inputs, combined_development_inputs
 from assessment import validate_assessment
 from vault_context import load_context, save_memory
 
@@ -127,6 +127,7 @@ def main(argv: list | None = None) -> int:
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument("--all", action="store_true")
     selection.add_argument("--supplier")
+    parser.add_argument("--combined-development", action="store_true", help="Assess fictional D, F, G, H, I and J in one development run")
     parser.add_argument("--with-vault", action="store_true")
     parser.add_argument("--save-memory", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
@@ -134,6 +135,8 @@ def main(argv: list | None = None) -> int:
     parser.add_argument("--model")
     parser.add_argument("--base-url")
     args = parser.parse_args(argv)
+    if args.combined_development and (args.dataset != "development" or args.supplier):
+        parser.error("Combined suppliers are a development experiment; omit --supplier and use development.")
     config = read_config()
     if args.model:
         config["model"] = args.model
@@ -150,9 +153,9 @@ def main(argv: list | None = None) -> int:
         parser.error("Frozen evaluation uses the original prompt. Use development for vault-enhanced experiments.")
     if args.save_memory and not config.get("vault_path"):
         parser.error("Configure the vault before saving memory.")
-    requirements, suppliers = load_inputs(args.dataset)
+    requirements, suppliers = combined_development_inputs() if args.combined_development else load_inputs(args.dataset)
     default = "evaluation-f" if args.dataset == "evaluation" else "fictional-d"
-    selected = suppliers if args.all else [s for s in suppliers if s["id"] == (args.supplier or default)]
+    selected = suppliers if args.all or args.combined_development else [s for s in suppliers if s["id"] == (args.supplier or default)]
     if not selected:
         parser.error("Unknown supplier ID.")
     context, sources = load_context(config) if args.with_vault else (None, [])
@@ -172,15 +175,28 @@ def main(argv: list | None = None) -> int:
               "settings": {k: config[k] for k in ["max_tokens", "temperature", "top_p", "top_k", "presence_penalty", "reasoning_effort"]},
               "runtime_note": "Record quantization, runtime version, context size and thinking mode separately in LM Studio.",
               "complete": False, "requested_suppliers": [s["id"] for s in selected], "suppliers": []}
+    if args.combined_development:
+        from review_store import ReviewStore
+        report['run_scope'] = 'combined-fictional-development'
+        report['replaces_runs'] = [r['id'] for r in ReviewStore(ROOT).catalog()
+                                  if r['model']==config['model'] and r['dataset'] in {'development','evaluation'}
+                                  and r['count'] in {5,25,30}]
     path = write_report(report)
     print(f"Local model: {config['model']}; {len(selected)} request(s), sequentially; no cloud fallback.")
     for supplier in selected:
         print(f"Assessing {supplier['id']}...", flush=True)
-        payload, _ = local_payload(requirements, supplier, config, context)
+        requested = ([r for r in requirements if supplier['answers'].get(r['question_id'], '').strip()]
+                     if args.combined_development else requirements)
+        payload, _ = local_payload(requested, supplier, config, context)
         started = time.monotonic()
         try:
             response = request_json(config["base_url"], "/chat/completions", payload, config["timeout_seconds"])
-            rows = validate_assessment(parse_local(response), requirements, supplier)
+            rows = validate_assessment(parse_local(response), requested, supplier)
+            if args.combined_development:
+                by_id = {r['requirement_id']:r for r in rows}
+                rows = [by_id.get(r['id'], dict(requirement_id=r['id'],status='unknown',evidence_quote='',
+                            reason='No supplier answer was supplied. Obsidian context is not supplier evidence.')) for r in requirements]
+                validate_assessment({'assessments':rows},requirements,supplier)
         except ValueError as error:
             report["error"] = str(error)
             write_report(report)

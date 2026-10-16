@@ -147,6 +147,8 @@ python3 review_app.py
 
 Open **http://127.0.0.1:8501**. The [analyst review guide](docs/analyst-review.md) explains how to accept or correct assessments, validate quotes, and save decisions separately from the AI output. Saved-report review works without running a model. To assess a PDF, keep LM Studio running, choose **Upload questionnaire PDF**, review the 20 automatically proposed answers and page references, enter your initials and approve the mapping. Leave both answer and page blank when evidence is not found. Accept or correct every assessment before viewing the risk indicator. Your review history stays local. Restart the Python server after code updates, then reload the browser.
 
+The default local development run can combine fictional suppliers **D, F, G, H, I and J** under **Open-weight LLM · Obsidian rules & memory · development · 30 assessments**. Generate it using `python3 local_assessor.py --combined-development --with-vault`. This reassesses all six suppliers with the selected Obsidian context; it does not relabel the frozen evaluation as an Obsidian run. Earlier saved results and human decisions are retained separately.
+
 ![Analyst workspace — isolated automated QA example](docs/screenshots/analyst-review-questions.png)
 
 ## Upload supplier questionnaires as PDF
