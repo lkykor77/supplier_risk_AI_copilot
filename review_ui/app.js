@@ -1,6 +1,7 @@
 const $ = id => document.getElementById(id);
 const labels = {met:'Met', partly_met:'Partly met', missing:'Missing', unknown:'Unknown'};
 let run = null, selectedSupplier = null, editing = null;
+function modelName(model) { return /^qwen\//i.test(model) ? 'Open-weight LLM' : model; }
 function node(tag, cls, text) { const e=document.createElement(tag); if(cls)e.className=cls; if(text!==undefined)e.textContent=text; return e; }
 function notice(text, error=false) { $('notice').textContent=text; $('notice').className=error?'error':''; }
 async function api(url, payload) {
@@ -12,7 +13,7 @@ async function refresh() {
   try {
     const catalog=await api('/api/runs'), previous=$('runSelect').value;
     $('runSelect').replaceChildren();
-    for(const item of catalog) { const option=node('option','',`${item.model} · ${item.dataset} · ${item.count} assessments${item.context_mode==='selected-vault-notes'?' · vault rules':''}`); option.value=item.id; $('runSelect').append(option); }
+    for(const item of catalog) { const option=node('option','',`${modelName(item.model)} · ${item.dataset} · ${item.count} assessments${item.context_mode==='selected-vault-notes'?' · vault rules':''}`); option.value=item.id; $('runSelect').append(option); }
     if(!catalog.length){run=null; $('cards').replaceChildren(node('div','empty','No completed reports yet. Run an assessor, then refresh.')); return;}
     if(catalog.some(item=>item.id===previous))$('runSelect').value=previous;
     await loadRun();
@@ -40,7 +41,7 @@ function render() {
   const risk=supplier.risk||{ready:false,supplier_class:'normal',reviewed:supplier.assessments.filter(r=>r.review).length,total:supplier.assessments.length};
   RiskView.render($('riskResult'),risk);$('supplierClass').value=risk.supplier_class;
   $('classNotice').textContent=`Classification changes recorded: ${(run.classification_events||[]).filter(e=>e.supplier_id===supplier.id).length}.`;
-  $('runMeta').textContent=`${run.meta.model} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Selected Obsidian context':'Original assessment prompt'}`;
+  $('runMeta').textContent=`${modelName(run.meta.model)} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Selected Obsidian context':'Original assessment prompt'}`;
   $('reviewProgress').textContent=`${run.reviewed_count} / ${run.meta.count} reviewed`;
   $('progress').max=run.meta.count; $('progress').value=run.reviewed_count;
   $('cards').replaceChildren();
