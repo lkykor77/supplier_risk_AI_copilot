@@ -5,27 +5,137 @@
     {
       "id": "BUYER-01",
       "description": "The supplier identifies a security contact.",
-      "question_id": "security_contact"
+      "question_id": "security_contact",
+      "keyword": "security@"
     },
     {
       "id": "BUYER-02",
       "description": "The supplier has a documented incident response plan.",
-      "question_id": "incident_response"
+      "question_id": "incident_response",
+      "keyword": "documented incident response plan"
     },
     {
       "id": "BUYER-03",
       "description": "The supplier reviews user access at least annually.",
-      "question_id": "access_review"
+      "question_id": "access_review",
+      "keyword": "annual access review"
     },
     {
       "id": "BUYER-04",
       "description": "The supplier requires multi-factor authentication for all administrator accounts.",
-      "question_id": "admin_mfa"
+      "question_id": "admin_mfa",
+      "keyword": "multi-factor authentication"
     },
     {
       "id": "BUYER-05",
       "description": "The supplier tests restoring backups at least annually.",
-      "question_id": "backup_restore"
+      "question_id": "backup_restore",
+      "keyword": "annual backup restore test"
+    },
+    {
+      "id": "BUYER-06",
+      "description": "The supplier has a documented information security policy.",
+      "question_id": "security_policy",
+      "keyword": "security policy",
+      "hecvat_reference": "HLPP-03"
+    },
+    {
+      "id": "BUYER-07",
+      "description": "The supplier applies role-based or equivalent structured access controls to staff accounts.",
+      "question_id": "staff_rbac",
+      "keyword": "staff rbac",
+      "hecvat_reference": "HLAP-02"
+    },
+    {
+      "id": "BUYER-08",
+      "description": "The supplier has documented and implemented safeguards for remote employee workstations.",
+      "question_id": "remote_work",
+      "keyword": "remote work",
+      "hecvat_reference": "HLAP-03"
+    },
+    {
+      "id": "BUYER-09",
+      "description": "The supplier has implemented procedures for managing software dependencies and repositories.",
+      "question_id": "software_supply_chain",
+      "keyword": "software supply chain",
+      "hecvat_reference": "HLAP-06"
+    },
+    {
+      "id": "BUYER-10",
+      "description": "The service supports single sign-on for users and administrators.",
+      "question_id": "sso",
+      "keyword": "sso",
+      "hecvat_reference": "HLAA-01"
+    },
+    {
+      "id": "BUYER-11",
+      "description": "The service makes audit logs available covering login, logout, actions, timestamps and source IP addresses.",
+      "question_id": "audit_logs",
+      "keyword": "audit logs",
+      "hecvat_reference": "HLAA-07"
+    },
+    {
+      "id": "BUYER-12",
+      "description": "The service automatically locks or ends inactive sessions.",
+      "question_id": "session_timeout",
+      "keyword": "session timeout",
+      "hecvat_reference": "HLAA-09"
+    },
+    {
+      "id": "BUYER-13",
+      "description": "The supplier maintains a systems configuration management strategy.",
+      "question_id": "configuration",
+      "keyword": "configuration",
+      "hecvat_reference": "HLSY-01"
+    },
+    {
+      "id": "BUYER-14",
+      "description": "The supplier scans systems and applications for vulnerabilities and remediates findings before releases.",
+      "question_id": "vulnerability_scanning",
+      "keyword": "vulnerability scanning",
+      "hecvat_reference": "HLSY-03"
+    },
+    {
+      "id": "BUYER-15",
+      "description": "The supplier has implemented procedures to mitigate security risks while patches are pending.",
+      "question_id": "patch_mitigation",
+      "keyword": "patch mitigation",
+      "hecvat_reference": "HLSY-05"
+    },
+    {
+      "id": "BUYER-16",
+      "description": "The supplier separates customer data using documented technical access controls.",
+      "question_id": "tenant_isolation",
+      "keyword": "tenant isolation",
+      "hecvat_reference": "HLDA-01"
+    },
+    {
+      "id": "BUYER-17",
+      "description": "The supplier encrypts sensitive data in transit using secure protocols.",
+      "question_id": "transit_encryption",
+      "keyword": "transit encryption",
+      "hecvat_reference": "HLDA-02"
+    },
+    {
+      "id": "BUYER-18",
+      "description": "The supplier encrypts sensitive data at rest.",
+      "question_id": "rest_encryption",
+      "keyword": "rest encryption",
+      "hecvat_reference": "HLDA-03"
+    },
+    {
+      "id": "BUYER-19",
+      "description": "The supplier segments trusted and untrusted networks.",
+      "question_id": "network_segmentation",
+      "keyword": "network segmentation",
+      "hecvat_reference": "HLNT-01"
+    },
+    {
+      "id": "BUYER-20",
+      "description": "The supplier assesses the security of third parties that host or receive customer data.",
+      "question_id": "third_party_assessment",
+      "keyword": "third party assessment",
+      "hecvat_reference": "HLTP-02"
     }
   ],
   "suppliers": [
@@ -286,6 +396,252 @@
           "reason": "The supplier confirms recovery drills occur but does not specify the frequency, so it cannot be determined if the 'at least annually' requirement is met.",
           "expected": "unknown",
           "baseline_status": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "illustrative-k",
+      "example_kind": "authored",
+      "answers": {
+        "security_contact": "Security questions go to our information security lead at security@northbridge.example.",
+        "incident_response": "We maintain an approved incident response plan and review it annually.",
+        "access_review": "",
+        "admin_mfa": "MFA is enforced for employees with administrator accounts, but contractor administrators are exempt.",
+        "backup_restore": "We run daily backups. We have not tested restoring a backup.",
+        "security_policy": "Our information security policy is approved by management and published internally.",
+        "staff_rbac": "Staff permissions are assigned through role-based access groups.",
+        "remote_work": "Our documented remote-work standard requires managed devices, encryption and endpoint protection.",
+        "software_supply_chain": "Dependencies are inventoried and scanned; code changes require repository review.",
+        "sso": "SAML single sign-on is available for users and administrators.",
+        "audit_logs": "Customer logs include login and logout timestamps. Actions and source IP addresses are not included.",
+        "session_timeout": "Inactive sessions are terminated after 20 minutes.",
+        "configuration": "Configuration baselines are documented, versioned and checked during deployment.",
+        "vulnerability_scanning": "We scan releases but sometimes deploy before high-risk findings are remediated.",
+        "patch_mitigation": "We have no documented process for mitigating vulnerabilities while patches are pending.",
+        "tenant_isolation": "Tenant identifiers and authorization checks separate each customer\u2019s data. The architecture is documented.",
+        "transit_encryption": "Sensitive data in transit uses TLS 1.2 or later.",
+        "rest_encryption": "Customer databases and backup storage are encrypted at rest.",
+        "network_segmentation": "Production workloads run in private segments with restricted connections to public services.",
+        "third_party_assessment": "Third parties hosting customer data are reviewed before use and reassessed annually."
+      },
+      "assessments": [
+        {
+          "requirement_id": "BUYER-01",
+          "status": "met",
+          "evidence_quote": "Security questions go to our information security lead at security@northbridge.example.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            1
+          ]
+        },
+        {
+          "requirement_id": "BUYER-02",
+          "status": "met",
+          "evidence_quote": "We maintain an approved incident response plan and review it annually.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            1
+          ]
+        },
+        {
+          "requirement_id": "BUYER-03",
+          "status": "unknown",
+          "evidence_quote": "",
+          "reason": "No relevant answer was located. Request evidence; no source page is required for this unanswered question.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": []
+        },
+        {
+          "requirement_id": "BUYER-04",
+          "status": "partly_met",
+          "evidence_quote": "MFA is enforced for employees with administrator accounts, but contractor administrators are exempt.",
+          "reason": "The response states a practice and an explicit scope or coverage gap. Request remediation and supporting evidence.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            1
+          ]
+        },
+        {
+          "requirement_id": "BUYER-05",
+          "status": "missing",
+          "evidence_quote": "We run daily backups. We have not tested restoring a backup.",
+          "reason": "The response explicitly states that the requested practice is absent.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            1
+          ]
+        },
+        {
+          "requirement_id": "BUYER-06",
+          "status": "met",
+          "evidence_quote": "Our information security policy is approved by management and published internally.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            2
+          ]
+        },
+        {
+          "requirement_id": "BUYER-07",
+          "status": "met",
+          "evidence_quote": "Staff permissions are assigned through role-based access groups.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            2
+          ]
+        },
+        {
+          "requirement_id": "BUYER-08",
+          "status": "met",
+          "evidence_quote": "Our documented remote-work standard requires managed devices, encryption and endpoint protection.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            2
+          ]
+        },
+        {
+          "requirement_id": "BUYER-09",
+          "status": "met",
+          "evidence_quote": "Dependencies are inventoried and scanned; code changes require repository review.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            2
+          ]
+        },
+        {
+          "requirement_id": "BUYER-10",
+          "status": "met",
+          "evidence_quote": "SAML single sign-on is available for users and administrators.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            2
+          ]
+        },
+        {
+          "requirement_id": "BUYER-11",
+          "status": "partly_met",
+          "evidence_quote": "Customer logs include login and logout timestamps. Actions and source IP addresses are not included.",
+          "reason": "The response states a practice and an explicit scope or coverage gap. Request remediation and supporting evidence.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            3
+          ]
+        },
+        {
+          "requirement_id": "BUYER-12",
+          "status": "met",
+          "evidence_quote": "Inactive sessions are terminated after 20 minutes.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            3
+          ]
+        },
+        {
+          "requirement_id": "BUYER-13",
+          "status": "met",
+          "evidence_quote": "Configuration baselines are documented, versioned and checked during deployment.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            3
+          ]
+        },
+        {
+          "requirement_id": "BUYER-14",
+          "status": "partly_met",
+          "evidence_quote": "We scan releases but sometimes deploy before high-risk findings are remediated.",
+          "reason": "The response states a practice and an explicit scope or coverage gap. Request remediation and supporting evidence.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            3
+          ]
+        },
+        {
+          "requirement_id": "BUYER-15",
+          "status": "missing",
+          "evidence_quote": "We have no documented process for mitigating vulnerabilities while patches are pending.",
+          "reason": "The response explicitly states that the requested practice is absent.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            3
+          ]
+        },
+        {
+          "requirement_id": "BUYER-16",
+          "status": "met",
+          "evidence_quote": "Tenant identifiers and authorization checks separate each customer\u2019s data. The architecture is documented.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            4
+          ]
+        },
+        {
+          "requirement_id": "BUYER-17",
+          "status": "met",
+          "evidence_quote": "Sensitive data in transit uses TLS 1.2 or later.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            4
+          ]
+        },
+        {
+          "requirement_id": "BUYER-18",
+          "status": "met",
+          "evidence_quote": "Customer databases and backup storage are encrypted at rest.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            4
+          ]
+        },
+        {
+          "requirement_id": "BUYER-19",
+          "status": "met",
+          "evidence_quote": "Production workloads run in private segments with restricted connections to public services.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            4
+          ]
+        },
+        {
+          "requirement_id": "BUYER-20",
+          "status": "met",
+          "evidence_quote": "Third parties hosting customer data are reviewed before use and reassessed annually.",
+          "reason": "The fictional response states the requested practice; supporting records still require verification.",
+          "expected": null,
+          "baseline_status": null,
+          "source_pages": [
+            4
+          ]
         }
       ]
     }

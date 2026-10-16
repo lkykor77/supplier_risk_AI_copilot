@@ -68,12 +68,12 @@ def make_handler(store: ReviewStore):
             if not self.valid_host() or origin != expected or self.headers.get("X-Review-App") != "1":
                 self.reply({"error": "Same-origin review request required."}, 403)
                 return
-            if self.path not in {"/api/review", "/api/supplier-class", "/api/pdf/upload", "/api/pdf/confirm", "/api/pdf/assess"} or self.headers.get("Content-Type") != "application/json":
+            if self.path not in {"/api/review", "/api/supplier-class", "/api/pdf/upload", "/api/pdf/suggest", "/api/pdf/confirm", "/api/pdf/assess"} or self.headers.get("Content-Type") != "application/json":
                 self.reply({"error": "Invalid review request."}, 400)
                 return
             try:
                 length = int(self.headers.get("Content-Length", "0"))
-                maximum = 15000000 if self.path == "/api/pdf/upload" else 65536
+                maximum = 15000000 if self.path == "/api/pdf/upload" else 500000 if self.path == "/api/pdf/confirm" else 65536
                 if not 0 < length <= maximum:
                     raise ValueError("Invalid review size.")
                 payload = json.loads(self.rfile.read(length))
@@ -85,6 +85,8 @@ def make_handler(store: ReviewStore):
                     self.reply(store.save_supplier_class(payload.get("run_id", ""), payload))
                 elif self.path == "/api/pdf/upload":
                     self.reply(intake.upload(payload.get("filename"), payload.get("base64")))
+                elif self.path == "/api/pdf/suggest":
+                    self.reply(intake.suggest(payload.get("document_id", "")))
                 elif self.path == "/api/pdf/confirm":
                     self.reply(intake.confirm(payload.get("document_id", ""), payload))
                 else:

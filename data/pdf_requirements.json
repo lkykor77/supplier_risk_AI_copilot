@@ -1,0 +1,137 @@
+[
+  {
+    "id": "BUYER-01",
+    "description": "The supplier identifies a security contact.",
+    "question_id": "security_contact",
+    "keyword": "security@"
+  },
+  {
+    "id": "BUYER-02",
+    "description": "The supplier has a documented incident response plan.",
+    "question_id": "incident_response",
+    "keyword": "documented incident response plan"
+  },
+  {
+    "id": "BUYER-03",
+    "description": "The supplier reviews user access at least annually.",
+    "question_id": "access_review",
+    "keyword": "annual access review"
+  },
+  {
+    "id": "BUYER-04",
+    "description": "The supplier requires multi-factor authentication for all administrator accounts.",
+    "question_id": "admin_mfa",
+    "keyword": "multi-factor authentication"
+  },
+  {
+    "id": "BUYER-05",
+    "description": "The supplier tests restoring backups at least annually.",
+    "question_id": "backup_restore",
+    "keyword": "annual backup restore test"
+  },
+  {
+    "id": "BUYER-06",
+    "description": "The supplier has a documented information security policy.",
+    "question_id": "security_policy",
+    "keyword": "security policy",
+    "hecvat_reference": "HLPP-03"
+  },
+  {
+    "id": "BUYER-07",
+    "description": "The supplier applies role-based or equivalent structured access controls to staff accounts.",
+    "question_id": "staff_rbac",
+    "keyword": "staff rbac",
+    "hecvat_reference": "HLAP-02"
+  },
+  {
+    "id": "BUYER-08",
+    "description": "The supplier has documented and implemented safeguards for remote employee workstations.",
+    "question_id": "remote_work",
+    "keyword": "remote work",
+    "hecvat_reference": "HLAP-03"
+  },
+  {
+    "id": "BUYER-09",
+    "description": "The supplier has implemented procedures for managing software dependencies and repositories.",
+    "question_id": "software_supply_chain",
+    "keyword": "software supply chain",
+    "hecvat_reference": "HLAP-06"
+  },
+  {
+    "id": "BUYER-10",
+    "description": "The service supports single sign-on for users and administrators.",
+    "question_id": "sso",
+    "keyword": "sso",
+    "hecvat_reference": "HLAA-01"
+  },
+  {
+    "id": "BUYER-11",
+    "description": "The service makes audit logs available covering login, logout, actions, timestamps and source IP addresses.",
+    "question_id": "audit_logs",
+    "keyword": "audit logs",
+    "hecvat_reference": "HLAA-07"
+  },
+  {
+    "id": "BUYER-12",
+    "description": "The service automatically locks or ends inactive sessions.",
+    "question_id": "session_timeout",
+    "keyword": "session timeout",
+    "hecvat_reference": "HLAA-09"
+  },
+  {
+    "id": "BUYER-13",
+    "description": "The supplier maintains a systems configuration management strategy.",
+    "question_id": "configuration",
+    "keyword": "configuration",
+    "hecvat_reference": "HLSY-01"
+  },
+  {
+    "id": "BUYER-14",
+    "description": "The supplier scans systems and applications for vulnerabilities and remediates findings before releases.",
+    "question_id": "vulnerability_scanning",
+    "keyword": "vulnerability scanning",
+    "hecvat_reference": "HLSY-03"
+  },
+  {
+    "id": "BUYER-15",
+    "description": "The supplier has implemented procedures to mitigate security risks while patches are pending.",
+    "question_id": "patch_mitigation",
+    "keyword": "patch mitigation",
+    "hecvat_reference": "HLSY-05"
+  },
+  {
+    "id": "BUYER-16",
+    "description": "The supplier separates customer data using documented technical access controls.",
+    "question_id": "tenant_isolation",
+    "keyword": "tenant isolation",
+    "hecvat_reference": "HLDA-01"
+  },
+  {
+    "id": "BUYER-17",
+    "description": "The supplier encrypts sensitive data in transit using secure protocols.",
+    "question_id": "transit_encryption",
+    "keyword": "transit encryption",
+    "hecvat_reference": "HLDA-02"
+  },
+  {
+    "id": "BUYER-18",
+    "description": "The supplier encrypts sensitive data at rest.",
+    "question_id": "rest_encryption",
+    "keyword": "rest encryption",
+    "hecvat_reference": "HLDA-03"
+  },
+  {
+    "id": "BUYER-19",
+    "description": "The supplier segments trusted and untrusted networks.",
+    "question_id": "network_segmentation",
+    "keyword": "network segmentation",
+    "hecvat_reference": "HLNT-01"
+  },
+  {
+    "id": "BUYER-20",
+    "description": "The supplier assesses the security of third parties that host or receive customer data.",
+    "question_id": "third_party_assessment",
+    "keyword": "third party assessment",
+    "hecvat_reference": "HLTP-02"
+  }
+]

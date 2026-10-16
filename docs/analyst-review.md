@@ -12,7 +12,7 @@ Open **http://127.0.0.1:8501** in your browser. Press Control-C in Terminal to s
 
 1. Choose the local Open Weight AI model evaluation run with 25 assessments.
 2. Enter your name or initials. No assessment is automatically approved.
-3. Choose `evaluation-h` and inspect `BUYER-01`.
+3. Choose **Fictional Supplier H** and inspect **Question 1**.
 4. Compare the complete supplier answer with the AI quote and explanation.
 5. Click **Correct assessment**, choose `unknown`, and explain why unspecified contact details do not prove the practice is absent.
 6. Add a review note explaining the correction and save.
@@ -44,7 +44,7 @@ Automated tests cover persistence, unchanged model outputs, fabricated quotes, r
 
 Time a manual review and an assisted review, including corrections. Ask a potential user to try the screen and record what they find useful or confusing. Keep measured feedback separate from simulated or automated tests.
 
-Saved-report review uses Python's standard library with a small HTML/CSS/JavaScript interface. The optional [PDF intake workflow](pdf-intake.md) adds local extraction and OCR dependencies and calls LM Studio only after answer confirmation. Streamlit, Docker and hosted deployment are optional future choices.
+Saved-report review uses Python's standard library with a small HTML/CSS/JavaScript interface. The optional [PDF intake workflow](pdf-intake.md) adds local extraction and OCR dependencies and uses LM Studio to propose answer mappings after upload, then assesses only after answer confirmation. Local PDF intake covers 20 questions. Approve the prefilled excerpts and page references; unanswered questions can remain blank with no source page. OCR correction notes are optional unless you change OCR wording. Streamlit, Docker and hosted deployment are optional future choices.
 
 ## Weighted questionnaire risk indicator
 

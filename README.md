@@ -16,7 +16,7 @@ The public demo uses fictional suppliers and saved AI results. The full applicat
 | --- | --- |
 | Understand the business decision | Supplier information security risk problem statement, analyst pain points, stakeholder handoffs and a [proposed customer pilot](docs/customer-deployment-plan.md) |
 | Turn fragmented data into a pipeline | Document extraction/OCR → checked answers → requirements → structured assessments → human decisions → risk summary, with source references |
-| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 47 automated tests |
+| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 54 automated tests |
 | Build a local AI harness | Custom Python orchestration of prompts, allowlisted Obsidian context, loopback LM Studio requests, structured-output parsing and evidence validation |
 | Make a deployment choice for confidential evidence | On-device PDF/OCR and Open Weight AI model inference; local records; no document upload to a cloud AI service or cloud fallback in the local workflow |
 | Exercise product judgment | Explicit PDF confirmation, visible model errors, separate reviewer decisions, unknown-evidence handling and critical-supplier follow-up |
@@ -30,11 +30,11 @@ This is an independent prototype with verified technical evidence and a proposed
 
 Before working with a potential supplier—sharing information, granting system access, or depending on its services—a company needs to assess the information security risks that relationship could introduce. This project supports that pre-engagement supplier risk assessment for companies operating in the **U.S., Europe and Korea**. 
 
-The security team reviews whether the supplier’s stated controls and policies meet the buyer’s security requirements, and which gaps require evidence, remediation or escalation. Those requirements may be informed by ISO/IEC 27001, NIST CSF, contracts, and regulations applicable to the organization and supplier relationship. NIST’s [supply-chain guide](https://csrc.nist.gov/pubs/sp/1305/final) describes defining and communicating supplier requirements; [ISO/IEC 27001](https://www.iso.org/standard/27001) provides a risk-based information-security management context.
+The security team reviews whether the supplier’s stated controls and policies satisfy the criteria covered by the organization’s security questions, and which gaps require evidence, remediation or escalation. Those requirements may be informed by ISO/IEC 27001, NIST CSF, contracts, and regulations applicable to the organization and supplier relationship. NIST’s [supply-chain guide](https://csrc.nist.gov/pubs/sp/1305/final) describes defining and communicating supplier requirements; [ISO/IEC 27001](https://www.iso.org/standard/27001) provides a risk-based information-security management context.
 
 The operational question is **what information security risk would this supplier relationship introduce, what evidence supports the assessment, and what must be resolved before proceeding?** The buyer’s risk owner decides whether to proceed, require remediation, accept an exception or decline the relationship. Geography alone does not determine risk or criticality; assessment depth depends on data sensitivity, access, service dependency and applicable obligations. 
 
-Security analysts, procurement teams and risk owners need a shared, explainable review record. The proposed analyst receives evidence in inconsistent formats: standard questionnaires, spreadsheets, PDFs, or scanned documents with supplier-defined layouts. The analyst must locate each answer, compare it with the buyer’s requirements, identify contradictions and missing evidence, and document the assessment for a human decision.
+Security analysts, procurement teams and risk owners need a shared, explainable review record. The proposed analyst receives evidence in inconsistent formats: standard questionnaires, spreadsheets, PDFs, or scanned documents with supplier-defined layouts. The analyst must locate each answer, compare it with the assessment criteria, identify contradictions and missing evidence, and document the assessment for a human decision.
 
 ### Pain points
 
@@ -48,7 +48,7 @@ Manual review time is a discovery question. The planned user study will measure 
 
 ### How the AI tool helps
 
-The app extracts PDF text and local OCR, lets an analyst confirm question-to-answer mappings and source pages, and asks a local Open Weight AI model to propose structured assessments against the configured buyer requirements. Each suggestion includes a quote and reason. People then accept or correct the results, with original AI output preserved separately from their decisions.
+The app extracts PDF text and local OCR, lets an analyst confirm question-to-answer mappings and source pages, and asks a local Open Weight AI model to propose structured assessments against the configured security questions. Each suggestion includes a quote and reason. People then accept or correct the results, with original AI output preserved separately from their decisions.
 
 After every requirement has a human decision, the tool calculates a **weighted questionnaire risk indicator**. It separates confirmed gaps from unknown evidence and distinguishes normal suppliers from critical suppliers needing enhanced review. It supports prioritizing follow-up; it does not automatically approve suppliers.
 
@@ -56,7 +56,7 @@ After every requirement has a human decision, the tool calculates a **weighted q
 
 The intended outcome is a more consistent, traceable review record: checked source evidence, inspectable AI suggestions, human decisions, and a transparent summary of weighted gaps. Reducing repetitive review effort is a hypothesis to validate with users, not a proven result.
 
-Today, the prototype implements **five fictional buyer requirements**, a working PDF-to-review workflow, synthetic evaluations, and human-reviewed gap scoring. **The demo now shows [illustrative ISO 27001/NIST topic references](docs/framework-references.md) for each question. Complete validated control mappings, regulatory assessment, direct Excel import, and real-supplier validation remain planned.** It does not certify compliance or verify that supplier claims are true.
+Today, the prototype implements **20 questions for local PDF intake and five frozen benchmark questions**, a working PDF-to-review workflow, synthetic evaluations, and human-reviewed gap scoring. **The demo now shows [illustrative ISO 27001/NIST topic references](docs/framework-references.md) for the original five questions and HECVAT topic references for the added questions. Complete validated control mappings, regulatory assessment, direct Excel import, and real-supplier validation remain planned.** It does not certify compliance or verify that supplier claims are true.
 
 ## Confidential evidence: why use a local Open Weight AI model?
 
@@ -71,7 +71,7 @@ Confidential supplier documents should not be sent to an unapproved cloud AI ser
 
 ## What the custom AI harness does
 
-The **AI harness** is the application code surrounding the model—not the model itself. Python prepares the buyer rubric and supplier answers, loads explicitly selected Obsidian context, calls LM Studio through a constrained loopback client, parses completed structured output and validates requirement coverage and exact quotes. The review application keeps saved AI suggestions separate from accountable human decisions and calculates the indicator only after complete review. This is a bounded assessment workflow, not an autonomous supplier-approval agent.
+The **AI harness** is the application code surrounding the model—not the model itself. Python prepares the question rubric and supplier answers, loads explicitly selected Obsidian context, calls LM Studio through a constrained loopback client, parses completed structured output and validates requirement coverage and exact quotes. The review application keeps saved AI suggestions separate from accountable human decisions and calculates the indicator only after complete review. This is a bounded assessment workflow, not an autonomous supplier-approval agent.
 
 The implementation is inspectable in [local_assessor.py](local_assessor.py), [assessment.py](assessment.py), [vault_context.py](vault_context.py), [pdf_intake.py](pdf_intake.py) and [review_store.py](review_store.py). LM Studio hosts the model; the custom Python harness manages its use.
 
@@ -85,7 +85,7 @@ These contexts illustrate how a buyer could use the existing synthetic answers. 
 | **European company → managed IT provider (Supplier G)** | Privileged production access; questionnaire and requested scanned procedures | Contractor administrators are exempt from MFA; non-admin access is never reviewed; the incident process is undocumented. Request MFA enforcement, broader access reviews and a written plan; escalate unresolved gaps before privileged access is granted. |
 | **Korean manufacturer → logistics platform (Supplier H)** | Shipment/customer contact data and dispatch dependency; mixed PDF with conflicting answers | Incident-plan and access-review claims contradict each other; nightly backups do not demonstrate restore testing. Request reconciled, dated evidence and restore-test records; correct the saved contact-label error to Unknown. |
 
-The proposed document packs are scenario context; the public demo displays saved questionnaire answers and has no document upload. Direct spreadsheet import, broader privacy/regulatory checks and overall residual-risk assessment remain outside the implemented five-question rubric. Read the [scenario walkthroughs](docs/supplier-assessment-scenarios.md) or [try them in the demo](https://lkykor77.github.io/supplier_risk_AI_copilot/#scenarios).
+The proposed document packs are scenario context; the public demo displays saved questionnaire answers and has no document upload. Direct spreadsheet import, broader privacy/regulatory checks and overall residual-risk assessment remain outside this prototype’s scope. Local PDF intake supports 20 questions; the demo includes an authored 20-question example and the original five-question saved model runs. Read the [scenario walkthroughs](docs/supplier-assessment-scenarios.md) or [try them in the demo](https://lkykor77.github.io/supplier_risk_AI_copilot/#scenarios).
 
 ## Features at a glance
 
@@ -103,7 +103,7 @@ The proposed document packs are scenario context; the public demo displays saved
 
 ## Data flow
 
-The pipeline keeps supplier identity, source document, answer, buyer requirement, AI assessment and human decision connected. Each stage addresses a data-quality or decision-quality problem rather than merely passing text to a model.
+The pipeline keeps supplier identity, source document, answer, security question, AI assessment and human decision connected. Each stage addresses a data-quality or decision-quality problem rather than merely passing text to a model.
 
 ![Data flow from supplier evidence through checked extraction, local AI, human review, and weighted questionnaire risk](docs/diagrams/data-flow.png)
 
@@ -137,7 +137,7 @@ The Python API serves the local review app. Swift/Node helpers extract PDFs; LM 
 
 ![Separate reviewer decision alongside the original AI assessment in the local-app walkthrough](docs/screenshots/reviewer-decision-walkthrough.png)
 
-**Engineering evidence:** 47 app tests passed on the development Mac. In one frozen synthetic evaluation, the Open Weight AI model matched 24/25 draft labels, versus 23/25 for an earlier Gemini run and 8/25 for the keyword baseline. The small dataset and unvalidated draft labels do not establish real-world accuracy or general model superiority. See the [results and limitations](docs/local-integration-results.md).
+**Engineering evidence:** 54 app tests passed on the development Mac. In one frozen synthetic evaluation, the Open Weight AI model matched 24/25 draft labels, versus 23/25 for an earlier Gemini run and 8/25 for the keyword baseline. The small dataset and unvalidated draft labels do not establish real-world accuracy or general model superiority. See the [results and limitations](docs/local-integration-results.md).
 
 ## Review assessments in your browser
 
@@ -145,17 +145,17 @@ The Python API serves the local review app. Swift/Node helpers extract PDFs; LM 
 python3 review_app.py
 ```
 
-Open **http://127.0.0.1:8501**. The [analyst review guide](docs/analyst-review.md) explains how to accept or correct assessments, validate quotes, and save decisions separately from the AI output. It works from saved reports without running a model. Your review history stays local.
+Open **http://127.0.0.1:8501**. The [analyst review guide](docs/analyst-review.md) explains how to accept or correct assessments, validate quotes, and save decisions separately from the AI output. Saved-report review works without running a model. To assess a PDF, keep LM Studio running, choose **Upload questionnaire PDF**, review the 20 automatically proposed answers and page references, enter your initials and approve the mapping. Leave both answer and page blank when evidence is not found. Accept or correct every assessment before viewing the risk indicator. Your review history stays local. Restart the Python server after code updates, then reload the browser.
 
 ![Analyst workspace — isolated automated QA example](docs/screenshots/analyst-review.jpg)
 
 ## Upload supplier questionnaires as PDF
 
-The [PDF intake guide](docs/pdf-intake.md) covers local uploads of text, scanned, and mixed PDFs. Check the extracted text, map answers to the five requirements with page references, then assess with LM Studio and review the proposed decisions. Originals and intake records stay local. No Google API call is used for this flow.
+The [PDF intake guide](docs/pdf-intake.md) covers local uploads of text, scanned, and mixed PDFs. The app proposes answers and page references for 20 security questions using local table parsing and the Open Weight AI model. Review and approve the proposed mapping, then assess with LM Studio. Unanswered questions require no source page and remain unresolved evidence gaps. OCR review notes are populated without inventing corrections. The public demo adds an explicitly hand-authored 20-question workflow example alongside the original five-question saved model runs. The frozen benchmark retains five questions. Originals and intake records stay local. No Google API call is used for this flow.
 
 ## Run the keyword exercise
 
-The assessors and saved-report review use Python's standard library. PDF intake adds a macOS helper and a Node OCR dependency. It includes a keyword baseline, a Gemini assessor, and an Open Weight AI model assessor with optional Obsidian context. All suppliers and answers are fictional.
+The assessors and saved-report review use Python's standard library. PDF intake adds a macOS helper, Node OCR and local pdfplumber table parsing. It includes a keyword baseline, a Gemini assessor, and an Open Weight AI model assessor with optional Obsidian context. All suppliers and answers are fictional.
 
 After cloning this repository, open a terminal in the project folder and run:
 
@@ -181,11 +181,11 @@ The [problem statement](docs/problem-statement.md) defines the operational quest
 - Suggested statuses describe the supplied answers; they do not verify actual supplier practices or certify compliance.
 - Human decisions are saved separately from immutable model output, with an audit history.
 
-The five assessed criteria are fictional buyer requirements. Related framework references are displayed separately as topic alignments, with explicit limits. The [reference guide](docs/framework-references.md) documents the topic associations and their limits. Some framework outcomes concern the buyer's own processes and cannot be assessed from supplier answers alone.
+The five benchmark criteria are fictional security questions. Local PDF intake adds 15 HECVAT-inspired security questions; these expanded criteria have not been benchmarked. Related framework references are displayed separately as topic alignments, with explicit limits. The [reference guide](docs/framework-references.md) documents the topic associations and their limits. Some framework outcomes concern the buyer's own processes and cannot be assessed from supplier answers alone.
 
 ## Implementation milestones
 
-1. Built a keyword baseline and a bounded buyer rubric using fictional supplier answers.
+1. Built a keyword baseline and a bounded question rubric using fictional supplier answers.
 2. Implemented structured AI assessments with complete requirement coverage and exact evidence checks.
 3. Froze a separate synthetic evaluation set and preserved prompt/data hashes.
 4. Integrated local Open Weight AI model inference through LM Studio and optional Obsidian rules/memory.

@@ -61,6 +61,9 @@ def request_json(base_url: str, endpoint: str, payload: dict | None = None, time
         with opener.open(request, timeout=timeout) as response:
             return json.load(response)
     except urllib.error.HTTPError as error:
+        detail = error.read(4096).decode(errors="replace").lower()
+        if "context length" in detail or "context window" in detail:
+            raise ValueError("The loaded model context is too small. Increase context length in LM Studio (for example 8192), reload the model, and retry. No cloud request was made.") from None
         raise ValueError(f"Local server HTTP {error.code}. Check model ID, schema support, and server authentication.") from None
     except (urllib.error.URLError, TimeoutError, OSError):
         raise ValueError("Local server unavailable or timed out. Start LM Studio's server and load the model.") from None

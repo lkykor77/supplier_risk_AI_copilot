@@ -59,7 +59,7 @@ function card(row) {
   const article=node('article','card'), top=node('div','card-top'), title=node('div');
   const supplier=run.suppliers.find(s=>s.id===selectedSupplier);const q=FrameworkView.questions[row.requirement_id];
   title.append(node('div','requirement-id',FrameworkView.supplierName(selectedSupplier)+' · '+FrameworkView.label(row.requirement_id)+' of '+supplier.assessments.length),node('h3','',q?.question||row.description));
-  top.append(title,node('span','pill '+row.ai.status,'Buyer requirement · '+labels[row.ai.status])); article.append(top,node('p','buyer-criterion','Buyer requirement: '+row.description));
+  top.append(title,node('span','pill '+row.ai.status,'Question result · '+labels[row.ai.status])); article.append(top,node('p','buyer-criterion','Assessment question: '+row.description));
   const columns=node('div','columns'), answer=node('div'), suggestion=node('div');
   answer.append(node('p','field-title','Supplier answer'),node('p','answer',row.answer||'No answer supplied.'));
   suggestion.append(node('p','field-title','AI evidence & explanation'),node('p','quote',row.ai.evidence_quote||'No evidence quote.'),node('p','reason',row.ai.reason));
@@ -109,25 +109,30 @@ $('uploadPdf').onclick=()=>$('pdfFile').click();
 $('pdfFile').onchange=async()=>{
   const file=$('pdfFile').files[0];if(!file)return;
   if(file.size>10*1024*1024){notice('Choose a PDF no larger than 10 MB.',true);return;}
+  const started=Date.now();const progressTimer=setInterval(()=>{if($('uploadPdf').disabled)notice(`Processing locally · ${Math.round((Date.now()-started)/1000)} seconds elapsed. Extracting PDF/OCR and matching evidence; keep LM Studio running.`);},1000);
   $('uploadPdf').disabled=true;notice('Extracting PDF text and on-device OCR. The first run may build the local helper…');
   try{
     const encoded=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.onerror=reject;reader.readAsDataURL(file);});
     pdfDocument=await api('/api/pdf/upload',{filename:file.name,base64:encoded});
+    notice('PDF extracted. The local Open Weight AI model is matching evidence to 20 questions. This can take several minutes…');
+    const suggestions=await api('/api/pdf/suggest',{document_id:pdfDocument.id});
+    const proposed=Object.fromEntries(suggestions.mappings.map(m=>[m.requirement_id,m]));
     $('pdfSummary').textContent=`${pdfDocument.filename} · ${pdfDocument.pages.length} page(s) · ${pdfDocument.native_engine} + ${pdfDocument.ocr_engine}`;
     $('pdfReviewer').value=$('reviewer').value;
     $('originalPdf').href='/api/pdf?id='+encodeURIComponent(pdfDocument.id);$('pdfPage').replaceChildren();
     for(const page of pdfDocument.pages){const option=node('option','',`Page ${page.page}`);option.value=page.page;$('pdfPage').append(option);}
     $('pdfMappings').replaceChildren();
     for(const requirement of pdfDocument.requirements){
-      const field=node('div','mapping');field.dataset.requirementId=requirement.id;field.dataset.modes='{}';
-      field.append(node('h3','',`${FrameworkView.label(requirement.id)} · ${requirement.description}`));
-      const answerLabel=node('label','','Supplier answer'),answer=node('textarea');answer.rows=3;answer.className='mapped-answer';answer.maxLength=16000;answerLabel.append(answer);field.append(answerLabel);
+      const field=node('div','mapping');field.dataset.requirementId=requirement.id;field.dataset.modes=JSON.stringify(proposed[requirement.id].modes);
+      const draft=proposed[requirement.id];field.append(node('p','',draft.extraction_note));
+      field.append(node('h3','',`${FrameworkView.label(requirement.id)} · ${requirement.description}`));if(requirement.hecvat_reference)field.append(node('small','',`Related HECVAT Lite topic: ${requirement.hecvat_reference}`));
+      const answerLabel=node('label','','Supplier answer'),answer=node('textarea');answer.value=draft.answer;answer.rows=3;answer.className='mapped-answer';answer.maxLength=16000;answerLabel.append(answer);field.append(answerLabel);
       const copy=node('button','secondary','Copy selected answer');copy.type='button';copy.onclick=()=>{const box=$('pageText');const text=box.value.slice(box.selectionStart,box.selectionEnd);if(!text.trim()){ $('pdfError').textContent='Select answer text in the source-page box first.';return;}answer.value=text;field.querySelector('.mapped-pages').value=$('pdfPage').value;field.dataset.modes=JSON.stringify({[$('pdfPage').value]:$('pdfMode').value});$('pdfError').textContent='';};field.append(copy);
-      const pagesLabel=node('label','','Source pages (for example 1, 2)'),pages=node('input');pages.className='mapped-pages';pagesLabel.append(pages);field.append(pagesLabel);
-      const correctionLabel=node('label','','OCR correction note (only if you fix extracted wording)'),correction=node('input');correction.className='mapped-correction';correction.maxLength=2000;correctionLabel.append(correction);field.append(correctionLabel);$('pdfMappings').append(field);
+      const pagesLabel=node('label','','Source pages (for example 1, 2)'),pages=node('input');pages.className='mapped-pages';pages.value=draft.pages.join(', ');pages.placeholder='Leave blank when not found';pagesLabel.append(pages);field.append(pagesLabel);
+      const correctionLabel=node('label','','OCR correction note (only if you fix extracted wording)'),correction=node('input');correction.className='mapped-correction';correction.value=draft.correction_note;correction.placeholder='None — wording unchanged';correction.maxLength=2000;correctionLabel.append(correction);field.append(correctionLabel);const absent=node('button','secondary','Mark as not found');absent.type='button';absent.onclick=()=>{answer.value='';pages.value='';correction.value='';field.dataset.modes='{}';};field.append(absent);$('pdfMappings').append(field);
     }
-    $('confirmPdf').checked=false;$('pdfVault').checked=false;$('pdfError').textContent='';showPdfPage();$('pdfDialog').showModal();notice('PDF extracted. Check the source pages and confirm each mapped answer.');
-  }catch(error){notice(error.message,true);}finally{$('uploadPdf').disabled=false;$('pdfFile').value='';}
+    $('confirmPdf').checked=false;$('pdfVault').checked=false;$('pdfError').textContent='';showPdfPage();$('pdfDialog').showModal();notice('Answers and pages proposed automatically. Review and approve; no page is required for a blank answer.');
+  }catch(error){notice(error.message,true);}finally{clearInterval(progressTimer);$('uploadPdf').disabled=false;$('pdfFile').value='';}
 };
 function showPdfPage(){const page=pdfDocument.pages.find(p=>p.page===Number($('pdfPage').value));$('pdfMode').value=page.mode;showPdfText();}
 function showPdfText(){const page=pdfDocument.pages.find(p=>p.page===Number($('pdfPage').value));page.mode=$('pdfMode').value;$('pageText').value=page[page.mode+'_text'];$('pageWarning').textContent=page.warning|| (page.mode==='ocr'?'OCR text can contain errors. Check it against the original page.':'PDF text order can differ from the visual layout. Check tables and embedded images; switch to OCR when needed.');}

@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from ai_assessor import load_inputs
+from pdf_mapping import pdf_requirements
 from pdf_intake import PDFIntake, ROOT, extract_pdf
 from review_store import ReviewStore
 
@@ -22,7 +22,7 @@ class IntakeTests(unittest.TestCase):
         self.intake = PDFIntake(self.root, extractor=lambda path: self.extraction.copy())
         encoded = base64.b64encode(b"%PDF-1.4\nfictional test fixture").decode()
         self.document = self.intake.upload("fictional.pdf", encoded)
-        requirements, _ = load_inputs("development")
+        requirements = pdf_requirements()
         self.payload = {"confirmed": True, "reviewer": "TEST FIXTURE",
                         "mappings": [{"requirement_id": r["id"], "answer": "", "pages": [],
                                       "modes": {}, "correction_note": ""} for r in requirements]}
@@ -58,6 +58,18 @@ class IntakeTests(unittest.TestCase):
         mapping = json.loads((self.intake.folder(self.document["id"]) / ("mapping-" + result["mapping_id"] + ".json")).read_text())
         self.assertTrue(mapping["provenance"]["BUYER-03"]["ocr_corrected"])
 
+    def test_no_evidence_needs_no_page_and_twenty_decisions(self):
+        for row in self.payload['mappings']:
+            row.update(answer='',pages=[])
+        result = self.intake.confirm(self.document['id'], self.payload)
+        saved = json.loads((self.intake.folder(self.document['id']) / ('mapping-' + result['mapping_id'] + '.json')).read_text())
+        self.assertEqual(len(saved['requirements']), 20)
+        self.assertTrue(all(not p['pages'] for p in saved['provenance'].values()))
+
+    def test_multiple_verbatim_excerpts_are_accepted(self):
+        self.payload['mappings'][2]['answer'] = 'The supplier reviews\n\nall user access annually.'
+        self.intake.confirm(self.document['id'], self.payload)
+
     def test_no_path_traversal_or_non_pdf(self):
         with self.assertRaises(ValueError):
             self.intake.folder("../.gemini-key")
@@ -74,12 +86,15 @@ class IntakeTests(unittest.TestCase):
 
     def test_pdf_assessment_integrates_with_review_without_accuracy_key(self):
         confirmed = self.intake.confirm(self.document["id"], self.payload)
-        requirements, _ = load_inputs("development")
+        requirements = pdf_requirements()
         rows = [{"requirement_id": r["id"], "status": "met" if r["id"] == "BUYER-03" else "unknown",
                  "evidence_quote": self.text if r["id"] == "BUYER-03" else "", "reason": "Test fixture explanation."}
                 for r in requirements]
         response = {"choices": [{"finish_reason": "stop", "message": {"content": json.dumps({"assessments": rows})}}]}
-        with patch("pdf_intake.request_json", return_value=response):
+        def respond(base, endpoint, payload, timeout):
+            ids = {r["id"] for r in json.loads(payload["messages"][1]["content"])["requirements"]}
+            return {"choices": [{"finish_reason": "stop", "message": {"content": json.dumps({"assessments": [r for r in rows if r["requirement_id"] in ids]})}}]}
+        with patch("pdf_intake.request_json", side_effect=respond):
             result = self.intake.assess(self.document["id"], confirmed["mapping_id"])
         store = ReviewStore(self.root)
         self.assertEqual(store.catalog()[0]["id"], result["report_sha256"])

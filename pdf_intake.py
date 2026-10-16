@@ -13,7 +13,7 @@ import threading
 import time
 import uuid
 
-from ai_assessor import load_inputs
+from pdf_mapping import pdf_requirements, suggest_mappings, exclude_score_summaries
 from assessment import validate_assessment
 from baseline import assess
 from local_assessor import local_payload, parse_local, read_config, request_json
@@ -77,6 +77,26 @@ def extract_pdf(path: Path) -> dict:
         extracted["ocr_engine"] = "Tesseract.js fallback (on-device)"
     if sum(len(p["native_text"]) + len(p["ocr_text"]) for p in extracted["pages"]) > 300000:
         raise ValueError("Extracted PDF text exceeds this prototype's size limit.")
+    layout_python = ROOT / '.venv/bin/python'
+    if layout_python.exists():
+        try:
+            layout = subprocess.run([str(layout_python), str(ROOT / 'helpers/pdf_tables.py'), str(path)],
+                                    capture_output=True, timeout=90)
+            if layout.returncode == 0:
+                by_page = {p['page']:p['text'] for p in json.loads(layout.stdout)}
+                for page in extracted['pages']:
+                    if page['page'] in by_page and len(page['native_text']) >= 80:
+                        page['raw_native_text'] = page['native_text']
+                        page['native_text'] = by_page[page['page']]
+                        page['mode'] = 'native'
+                        page['text'] = page['native_text']
+                        page['warning'] = 'Table cells grouped by row. Check source layout and column labels.'
+                extracted['native_engine'] = 'PDFKit + pdfplumber table rows'
+            else:
+                extracted['layout_warning'] = 'Table extraction is unavailable; check reading order carefully.'
+        except (subprocess.TimeoutExpired, ValueError, OSError):
+            extracted['layout_warning'] = 'Table layout extraction failed; check text order carefully.'
+    extracted['extraction_version'] = 2
     return extracted
 
 
@@ -114,7 +134,7 @@ class PDFIntake:
             if not original.exists():
                 original.write_bytes(data)
             metadata = folder / "extraction.json"
-            if not metadata.exists():
+            if not metadata.exists() or json.loads(metadata.read_text()).get("extraction_version") != 2:
                 extracted = self.extractor(original)
                 extracted.update(id=document_id, filename=Path(filename).name[:120],
                                  uploaded_at=datetime.now(timezone.utc).isoformat())
@@ -124,16 +144,31 @@ class PDFIntake:
     def read(self, document_id: str) -> dict:
         folder = self.folder(document_id)
         extraction = json.loads((folder / "extraction.json").read_text())
-        requirements, _ = load_inputs("development")
-        return {**extraction, "requirements": [{k: r[k] for k in ["id", "description", "question_id"]}
+        requirements = pdf_requirements()
+        return {**extraction, "requirements": [{k: r[k] for k in ["id", "description", "question_id", "hecvat_reference"] if k in r}
                                                for r in requirements]}
+
+    def suggest(self, document_id: str) -> dict:
+        document = self.read(document_id)
+        requirements = pdf_requirements()
+        fingerprint = hashlib.sha256(json.dumps([requirements, read_config()['model'], document['pages'], 'mapping-v2']).encode()).hexdigest()
+        path = self.folder(document_id) / ('suggestions-' + fingerprint + '.json')
+        if path.exists():
+            cached = json.loads(path.read_text())
+            cached['mappings'] = exclude_score_summaries(cached['mappings'], document)
+            return cached
+        result = {"mappings": exclude_score_summaries(suggest_mappings(document, requirements), document)}
+        temporary = path.with_suffix('.' + str(uuid.uuid4()) + '.tmp')
+        temporary.write_text(json.dumps(result, indent=2) + '\n')
+        temporary.replace(path)
+        return result
 
     def confirm(self, document_id: str, payload: dict) -> dict:
         with self.lock:
             document = self.read(document_id)
             if payload.get("confirmed") is not True or not isinstance(payload.get("reviewer"), str) or not payload["reviewer"].strip():
                 raise ValueError("Confirm the mapped answers against the PDF and enter your name or initials.")
-            requirements, _ = load_inputs("development")
+            requirements = pdf_requirements()
             mappings = payload.get("mappings")
             if (not isinstance(mappings, list) or not all(isinstance(m, dict) for m in mappings)
                     or len(mappings) != len(requirements)
@@ -154,10 +189,10 @@ class PDFIntake:
                 if not isinstance(answer, str) or not isinstance(correction, str) or len(correction) > 2000:
                     raise ValueError("Invalid mapped text or correction note.")
                 total += len(answer)
-                if total > 16000:
-                    raise ValueError("Mapped answers exceed this prototype's 16,000-character limit.")
+                if total > 60000:
+                    raise ValueError("Mapped answers exceed this prototype's 60,000-character limit.")
                 if not isinstance(source_pages, list) or any(type(p) is not int or p not in pages for p in source_pages):
-                    raise ValueError("Use valid source page numbers.")
+                    raise ValueError(f"{mapping['requirement_id']}: use page numbers from 1 to {len(pages)}, or leave both answer and pages blank for Not found.")
                 if answer.strip() and not source_pages:
                     raise ValueError("Every nonblank answer needs a source page.")
                 selected = []
@@ -168,7 +203,7 @@ class PDFIntake:
                         raise ValueError("Invalid extraction mode.")
                     selected.append(pages[number][mode + "_text"])
                     ocr_selected |= mode == "ocr"
-                copied = not answer.strip() or normalized(answer) in normalized("\n".join(selected))
+                copied = not answer.strip() or all(normalized(part) in normalized("\n".join(selected)) for part in answer.split("\n\n") if part.strip())
                 if not copied and not (ocr_selected and correction.strip()):
                     raise ValueError("Copy the answer from its selected source pages. OCR corrections require an explanation.")
                 requirement = next(r for r in requirements if r["id"] == mapping["requirement_id"])
@@ -178,7 +213,7 @@ class PDFIntake:
             mapping_id = str(uuid.uuid4())
             confirmed = {"id": mapping_id, "document_id": document_id, "confirmed_by": payload["reviewer"].strip()[:100],
                          "confirmed_at": datetime.now(timezone.utc).isoformat(),
-                         "supplier": {"id": "pdf-" + document_id[:12], "answers": answers}, "provenance": provenance}
+                         "requirements": requirements, "supplier": {"id": "pdf-" + document_id[:12], "answers": answers}, "provenance": provenance}
             (self.folder(document_id) / ("mapping-" + mapping_id + ".json")).write_text(json.dumps(confirmed, indent=2) + "\n")
             return {"mapping_id": mapping_id, "document_id": document_id}
 
@@ -186,17 +221,32 @@ class PDFIntake:
         if not isinstance(mapping_id, str) or not re.fullmatch(r"[a-f0-9-]{36}", mapping_id):
             raise ValueError("Invalid confirmed mapping ID.")
         confirmed = json.loads((self.folder(document_id) / ("mapping-" + mapping_id + ".json")).read_text())
-        requirements, _ = load_inputs("development")
+        requirements = pdf_requirements()
         supplier = confirmed["supplier"]
+        requirements = confirmed.get("requirements", [r for r in requirements if r["question_id"] in supplier["answers"]])
         config = read_config()
         context, sources = None, []
         if with_vault:
             from vault_context import load_context
             context, sources = load_context(config)
-        payload, prompt = local_payload(requirements, supplier, config, context)
         started = time.monotonic()
-        response = request_json(config["base_url"], "/chat/completions", payload, config["timeout_seconds"])
-        rows = validate_assessment(parse_local(response), requirements, supplier)
+        rows, usages, prompt = [], [], ""
+        for requirement in requirements:
+            batch = [requirement]
+            if not supplier['answers'].get(requirement['question_id'], '').strip():
+                rows.append(dict(requirement_id=requirement['id'], status='unknown', evidence_quote='',
+                                 reason='No supplier answer was found and confirmed for this requirement. Request supporting evidence.'))
+                continue
+            payload, prompt = local_payload(batch, supplier, config, context)
+            payload['messages'][0]['content'] += (
+                "\nPDF excerpts can include questionnaire questions, column headings and completion guidance. "
+                "Those are not supplier claims. Assess only vendor answers and comments; retain contradictory evidence. "
+                "A statement of Not applicable is a supplier claim requiring analyst review, not automatically met. "
+                "Do not treat a named policy as independently verified or infer a frequency that is not stated.")
+            prompt = payload['messages'][0]['content']
+            response = request_json(config["base_url"], "/chat/completions", payload, config["timeout_seconds"])
+            rows.extend(validate_assessment(parse_local(response), batch, supplier))
+            usages.append(response.get("usage", {}))
         by_id = {r["id"]: r for r in requirements}
         for row in rows:
             requirement = by_id[row["requirement_id"]]
@@ -209,7 +259,7 @@ class PDFIntake:
                   "dataset_sha256": hashlib.sha256(json.dumps([requirements, [supplier]], sort_keys=True).encode()).hexdigest(),
                   "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(), "note_sources": sources,
                   "suppliers": [{"supplier_id": supplier["id"], "assessments": rows,
-                                 "latency_seconds": round(time.monotonic() - started, 3), "usage": response.get("usage", {})}]}
+                                 "latency_seconds": round(time.monotonic() - started, 3), "usage": usages}]}
         target = self.folder(document_id) / ("assessment-run-" + run_id + ".json")
         target.write_text(json.dumps(report, indent=2) + "\n")
         return {"report_sha256": hashlib.sha256(target.read_bytes()).hexdigest()}
