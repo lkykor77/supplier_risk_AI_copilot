@@ -1,0 +1,87 @@
+[
+  {
+    "id": "fictional-a",
+    "answers": {
+      "security_contact": "Contact security@fictional-a.example for security questions.",
+      "incident_response": "We have a documented incident response plan approved by our security lead.",
+      "access_review": "We conduct an annual access review for all users.",
+      "admin_mfa": "We require multi-factor authentication for all administrator accounts.",
+      "backup_restore": "We perform an annual backup restore test for our backed-up systems."
+    },
+    "expected": {
+      "BUYER-01": "met",
+      "BUYER-02": "met",
+      "BUYER-03": "met",
+      "BUYER-04": "met",
+      "BUYER-05": "met"
+    }
+  },
+  {
+    "id": "fictional-b",
+    "answers": {
+      "security_contact": "",
+      "incident_response": "",
+      "access_review": "",
+      "admin_mfa": "",
+      "backup_restore": ""
+    },
+    "expected": {
+      "BUYER-01": "unknown",
+      "BUYER-02": "unknown",
+      "BUYER-03": "unknown",
+      "BUYER-04": "unknown",
+      "BUYER-05": "unknown"
+    }
+  },
+  {
+    "id": "fictional-c",
+    "answers": {
+      "security_contact": "Contact security@fictional-c.example for security questions.",
+      "incident_response": "We do not have a documented incident response plan.",
+      "access_review": "No annual access review is conducted; we do not review user access at any frequency.",
+      "admin_mfa": "We do not use multi-factor authentication for any administrator accounts.",
+      "backup_restore": "We do not perform an annual backup restore test or any other restore testing."
+    },
+    "expected": {
+      "BUYER-01": "met",
+      "BUYER-02": "missing",
+      "BUYER-03": "missing",
+      "BUYER-04": "missing",
+      "BUYER-05": "missing"
+    }
+  },
+  {
+    "id": "fictional-d",
+    "answers": {
+      "security_contact": "",
+      "incident_response": "",
+      "access_review": "We review access for every user once every two years.",
+      "admin_mfa": "We require a second authentication factor for cloud administrators, but our other administrator accounts use only passwords.",
+      "backup_restore": "We test restoring backups once every two years."
+    },
+    "expected": {
+      "BUYER-01": "unknown",
+      "BUYER-02": "unknown",
+      "BUYER-03": "partly_met",
+      "BUYER-04": "partly_met",
+      "BUYER-05": "partly_met"
+    }
+  },
+  {
+    "id": "fictional-e",
+    "answers": {
+      "security_contact": "",
+      "incident_response": "",
+      "access_review": "We review access regularly.",
+      "admin_mfa": "Our administrator accounts are secure.",
+      "backup_restore": "We back up our systems regularly."
+    },
+    "expected": {
+      "BUYER-01": "unknown",
+      "BUYER-02": "unknown",
+      "BUYER-03": "unknown",
+      "BUYER-04": "unknown",
+      "BUYER-05": "unknown"
+    }
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "name": "supplier-risk-pdf-ocr",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local OCR fallback for the Python supplier questionnaire app",
+  "dependencies": {"tesseract.js": "7.0.0"}
+}
