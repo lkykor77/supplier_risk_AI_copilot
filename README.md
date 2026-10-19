@@ -16,7 +16,7 @@ The public demo uses fictional suppliers and saved AI results. The full applicat
 | --- | --- |
 | Understand the business decision | Supplier information security risk problem statement, analyst pain points, stakeholder handoffs and a [proposed customer pilot](docs/customer-deployment-plan.md) |
 | Turn fragmented data into a pipeline | Document extraction/OCR → checked answers → requirements → structured assessments → human decisions → risk summary, with source references |
-| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 54 automated tests |
+| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 50 automated tests |
 | Build a local AI harness | Custom Python orchestration of prompts, allowlisted Obsidian context, loopback LM Studio requests, structured-output parsing and evidence validation |
 | Make a deployment choice for confidential evidence | On-device PDF/OCR and Open Weight AI model inference; local records; no document upload to a cloud AI service or cloud fallback in the local workflow |
 | Exercise product judgment | Explicit PDF confirmation, visible model errors, separate reviewer decisions, unknown-evidence handling and critical-supplier follow-up |

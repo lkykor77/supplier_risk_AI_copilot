@@ -10,3 +10,4 @@ reviews/
 intake/
 .cache/
 node_modules/
+.*-key
