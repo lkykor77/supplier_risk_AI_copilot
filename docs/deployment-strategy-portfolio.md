@@ -21,3 +21,7 @@ The product question is: **how can a security analyst turn inconsistent supplier
 | Communication and adoption | Public interactive demo, captioned walkthrough, English/Korean overview, diagrams and a proposed reviewer-training sequence |
 | Impact measurement | Defined manual/assisted timing and error measures; synthetic technical evidence reported separately from unmeasured customer outcomes |
 
+
+## Local RAG engineering extension
+
+Supplier Evidence Search turns a multi-document security-review problem into a bounded retrieval and decision workflow. The implementation connects PDF/OCR extraction, supplier-scoped SQLite indexing, BM25/local embedding retrieval, citation-checked Open Weight LLM generation and existing human review. The first small retrieval fixture supports reproducibility rather than a claim of customer impact; independent evidence labeling and analyst-effort measurement remain the next validation steps. See [the RAG design and limitations](local-rag.md).

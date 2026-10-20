@@ -9,8 +9,15 @@
   "presence_penalty": 1.5,
   "reasoning_effort": "none",
   "vault_path": "",
-  "rule_notes": ["long_term_memory.md", "00_core.md", "10_output.md"],
+  "rule_notes": [
+    "long_term_memory.md",
+    "00_core.md",
+    "10_output.md"
+  ],
   "knowledge_notes": [],
-  "memory_notes": ["Supplier Risk Copilot/project-memory.md"],
-  "project_memory_note": "Supplier Risk Copilot/project-memory.md"
+  "memory_notes": [
+    "Supplier Risk Copilot/project-memory.md"
+  ],
+  "project_memory_note": "Supplier Risk Copilot/project-memory.md",
+  "embedding_model": "text-embedding-nomic-embed-text-v1.5"
 }

@@ -14,7 +14,7 @@ async function refresh() {
     const catalog=await api('/api/runs'), previous=$('runSelect').value;
     catalog.sort((a,b)=>Number(b.context_mode==='selected-vault-notes')-Number(a.context_mode==='selected-vault-notes'));
     $('runSelect').replaceChildren();
-    for(const item of catalog) { const option=node('option','',`${modelName(item.model)}${item.context_mode==='selected-vault-notes'?' · Obsidian rules & memory':''} · ${item.dataset} · ${item.count} assessments`); option.value=item.id; $('runSelect').append(option); }
+    for(const item of catalog) { const option=node('option','',`${modelName(item.model)}${item.context_mode==='selected-vault-notes'?' · Obsidian rules & memory':''} · ${item.dataset}${item.supplier_name?" · "+item.supplier_name:""} · ${item.count} assessments`); option.value=item.id; $('runSelect').append(option); }
     if(!catalog.length){run=null; $('cards').replaceChildren(node('div','empty','No completed reports yet. Run an assessor, then refresh.')); return;}
     if(catalog.some(item=>item.id===previous))$('runSelect').value=previous;
     await loadRun();
@@ -32,19 +32,19 @@ function render() {
     const reviewed=supplier.assessments.filter(r=>r.review).length;
     const button=node('button','supplier'+(supplier.id===selectedSupplier?' active':''));
     const draft=RiskView.provisional(supplier.assessments,supplier.risk?.supplier_class||'normal');
-    button.append(node('strong','',FrameworkView.supplierName(supplier.id)),node('small','',`${reviewed} / ${supplier.assessments.length} reviewed · provisional ${draft.score.toFixed(1)} / 100`));
+    button.append(node('strong','',(supplier.name||FrameworkView.supplierName(supplier.id))),node('small','',`${reviewed} / ${supplier.assessments.length} reviewed · provisional ${draft.score.toFixed(1)} / 100`));
     button.onclick=()=>{selectedSupplier=supplier.id;render();};
     button.setAttribute('aria-current',supplier.id===selectedSupplier?'true':'false'); $('suppliers').append(button);
   }
   const supplier=run.suppliers.find(s=>s.id===selectedSupplier);
-  $('showKey').disabled=run.meta.dataset==='pdf';if($('showKey').disabled)$('showKey').checked=false;
-  $('keyWarning').textContent=run.meta.dataset==='pdf'?'PDF assessments have no benchmark answer key':'Draft labels · not independently validated';
-  $('supplierTitle').textContent=FrameworkView.supplierName(supplier.id)+' · questionnaire';
+  $('showKey').disabled=['pdf','rag'].includes(run.meta.dataset);if($('showKey').disabled)$('showKey').checked=false;
+  $('keyWarning').textContent=['pdf','rag'].includes(run.meta.dataset)?'Document assessments have no benchmark answer key':'Draft labels · not independently validated';
+  $('supplierTitle').textContent=(supplier.name||FrameworkView.supplierName(supplier.id))+' · questionnaire';
   const risk=supplier.risk||{ready:false,supplier_class:'normal',reviewed:supplier.assessments.filter(r=>r.review).length,total:supplier.assessments.length};
   RiskView.renderProvisional($('provisionalResult'),run.suppliers,selectedSupplier);
   RiskView.render($('riskResult'),risk);$('riskResult').querySelector('h3').textContent='Final weighted questionnaire risk indicator · human review';$('supplierClass').value=risk.supplier_class;
   $('classNotice').textContent=`Classification changes recorded: ${(run.classification_events||[]).filter(e=>e.supplier_id===supplier.id).length}.`;
-  $('runMeta').textContent=`${modelName(run.meta.model)} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Obsidian rules & memory used when generated':'Original assessment prompt · no Obsidian context'}`;
+  $('runMeta').textContent=`${modelName(run.meta.model)} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Obsidian rules & memory used when generated':run.meta.dataset==='rag'?'Local RAG · retrieved supplier evidence · no Obsidian context':'Original assessment prompt · no Obsidian context'}`;
   $('reviewProgress').textContent=`${run.reviewed_count} / ${run.meta.count} reviewed`;
   $('progress').max=run.meta.count; $('progress').value=run.reviewed_count;
   $('cards').replaceChildren();
@@ -62,7 +62,7 @@ function render() {
 function card(row) {
   const article=node('article','card'), top=node('div','card-top'), title=node('div');
   const supplier=run.suppliers.find(s=>s.id===selectedSupplier);const q=FrameworkView.questions[row.requirement_id];
-  title.append(node('div','requirement-id',FrameworkView.supplierName(selectedSupplier)+' · '+FrameworkView.label(row.requirement_id)+' of '+supplier.assessments.length),node('h3','',q?.question||row.description));
+  title.append(node('div','requirement-id',(supplier.name||FrameworkView.supplierName(selectedSupplier))+' · '+FrameworkView.label(row.requirement_id)+' of '+supplier.assessments.length),node('h3','',q?.question||row.description));
   top.append(title,node('span','pill '+row.ai.status,'Question result · '+labels[row.ai.status])); article.append(top,node('p','buyer-criterion','Assessment question: '+row.description));
   const columns=node('div','columns'), answer=node('div'), suggestion=node('div');
   answer.append(node('p','field-title','Supplier answer'),node('p','answer',row.answer||'No answer supplied.'));
@@ -75,6 +75,8 @@ function card(row) {
     if(row.review.comment)review.append(node('p','',`Review note: ${row.review.comment}`));article.append(review);
   }
   if(row.pdf_source){const source=node('div','answer-key');source.append(node('span','',`PDF evidence · page(s) ${row.pdf_source.pages.join(', ')||'not found'}${row.pdf_source.ocr_corrected?' · OCR wording corrected by analyst':''} · `));const link=node('a','','Open source PDF');link.href='/api/pdf?id='+encodeURIComponent(row.pdf_source.document_id)+'#page='+(row.pdf_source.pages[0]||1);link.target='_blank';link.rel='noopener';source.append(link);article.append(source);}
+  if(row.retrieved_passages?.length){const details=node('details','rag-passage');details.append(node('summary','',`RAG evidence · ${row.rag_sources.length} cited / ${row.retrieved_passages.length} retrieved passages`),node('p','muted','All retrieved passages are shown, including uncited evidence. Check exceptions and contradictions; citation validation checks text existence, not the correctness of the conclusion.'));
+    for(const p of row.retrieved_passages){const cited=row.rag_sources.find(c=>c.id===p.id),box=node('div','rag-passage'),a=node('a','',`${cited?'CITED · ':''}${p.filename} · page ${p.page} · ${p.mode} · version ${p.document_id.slice(0,12)}`);a.href='/api/pdf?id='+encodeURIComponent(p.document_id)+'#page='+p.page;a.target='_blank';a.rel='noopener';box.append(a,node('p','',p.text));if(cited)box.append(node('p','quote','Cited quote: '+cited.quote));details.append(box);}article.append(details);}
   if($('showKey').checked&&row.expected)article.append(node('div','answer-key',`Synthetic answer key: ${labels[row.expected]}. Treat this draft label as a learning reference, not verified ground truth.`));
   const actions=node('div','card-actions'), buttons=node('div');
   actions.append(node('span','review-state',row.review?`Reviewed by ${row.review.reviewer}`:'Awaiting your review'));
@@ -83,7 +85,8 @@ function card(row) {
   actions.append(buttons);article.append(actions);return article;
 }
 function openEditor(row) {
-  editing=row; $('editTitle').textContent=FrameworkView.supplierName(selectedSupplier)+' · '+FrameworkView.label(row.requirement_id);$('editRequirement').textContent=row.description;
+  const supplier=run.suppliers.find(s=>s.id===selectedSupplier);
+  editing=row; $('editTitle').textContent=(supplier.name||FrameworkView.supplierName(selectedSupplier))+' · '+FrameworkView.label(row.requirement_id);$('editRequirement').textContent=row.description;
   fillDraft(row.review||row.ai);$('editComment').value=row.review?.comment||'';$('editError').textContent='';$('editor').showModal();
 }
 function fillDraft(source){$('editStatus').value=source.status;$('editQuote').value=source.evidence_quote;$('editReason').value=source.reason;}

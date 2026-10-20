@@ -8,3 +8,5 @@
 #provisionalResult{overflow-x:auto}#provisionalResult table{width:100%;border-collapse:collapse;font-size:13px}#provisionalResult th,#provisionalResult td{padding:10px;text-align:left;border-bottom:1px solid #d6dfd1}#provisionalResult tr[aria-current="true"]{background:#e2ebdb}
 
 .workspace>*,.review-panel{min-width:0}.toolbar label,.toolbar select{min-width:0}#suppliers{max-width:100%}#provisionalResult td:first-child{overflow-wrap:anywhere}
+
+.rag-panel{border:1px solid #ced9cf;border-radius:8px;padding:20px;margin:24px 0;background:#f5f8f1}.rag-panel summary{font-size:20px;font-weight:650;cursor:pointer}.rag-controls{display:flex;gap:16px;align-items:end;flex-wrap:wrap;margin:16px 0}.rag-controls label{flex:1;min-width:180px}.rag-controls input,.rag-controls select{width:100%;box-sizing:border-box}.rag-panel>label{display:block;margin:12px 0}.rag-passage{padding:16px;border:1px solid #ced9cf;margin:12px 0;border-radius:6px;overflow-wrap:anywhere}.rag-passage pre{white-space:pre-wrap;font:inherit}.rag-panel button{margin:4px 0}.rag-passage summary{font-size:14px}.rag-panel select{max-width:100%}

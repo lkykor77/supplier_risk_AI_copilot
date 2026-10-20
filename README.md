@@ -16,7 +16,7 @@ The public demo uses fictional suppliers and saved AI results. The full applicat
 | --- | --- |
 | Understand the business decision | Supplier information security risk problem statement, analyst pain points, stakeholder handoffs and a [proposed customer pilot](docs/customer-deployment-plan.md) |
 | Turn fragmented data into a pipeline | Document extraction/OCR → checked answers → requirements → structured assessments → human decisions → risk summary, with source references |
-| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 50 automated tests |
+| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 63 automated tests |
 | Build a local AI harness | Custom Python orchestration of prompts, allowlisted Obsidian context, loopback LM Studio requests, structured-output parsing and evidence validation |
 | Make a deployment choice for confidential evidence | On-device PDF/OCR and Open Weight AI model inference; local records; no document upload to a cloud AI service or cloud fallback in the local workflow |
 | Exercise product judgment | Explicit PDF confirmation, visible model errors, separate reviewer decisions, unknown-evidence handling and critical-supplier follow-up |
@@ -184,6 +184,18 @@ The [problem statement](docs/problem-statement.md) defines the operational quest
 - Human decisions are saved separately from immutable model output, with an audit history.
 
 The five benchmark criteria are fictional security questions. Local PDF intake adds 15 HECVAT-inspired security questions; these expanded criteria have not been benchmarked. Related framework references are displayed separately as topic alignments, with explicit limits. The [reference guide](docs/framework-references.md) documents the topic associations and their limits. Some framework outcomes concern the buyer's own processes and cannot be assessed from supplier answers alone.
+
+## Local RAG: supplier evidence across documents
+
+![Local RAG data flow and human review boundary](docs/diagrams/local-rag.png)
+
+A supplier's questionnaire may describe an exception that is absent from its policy. **Supplier Evidence Search** retrieves relevant passages across a supplier-specific PDF pack before the local Open Weight AI model generates suggestions for the existing 20 security questions. Analysts see document names, page references, exact citations and all retrieved passages before making decisions.
+
+The Python pipeline combines BM25 with optional local embedding retrieval, stores a private SQLite index, validates citations and preserves immutable assessment snapshots. LM Studio serves both the Open Weight LLM and local embeddings; Obsidian remains separate guidance. There is no cloud inference or cloud embedding fallback. A clearly labeled keyword-only mode works without an embedding model.
+
+![Saved local RAG suggestion and cited supplier passage](docs/screenshots/local-rag-evidence.png)
+
+Try the [fictional two-document evidence pack](examples/rag/) and follow the [local RAG setup, architecture and evaluation guide](docs/local-rag.md). The first live retrieval check found all seven expected source-page references across six small development queries with both methods; this is not evidence of general accuracy or hybrid-search superiority. The public demo presents all 20 saved fictional RAG suggestions and their sources, including a flagged Missing/Unknown model error; private uploads and inference run locally.
 
 ## Implementation milestones
 

@@ -1,0 +1,21 @@
+{
+  "supplier": "Fictional Supplier L",
+  "notice": "Synthetic development fixture, not a real supplier or independently validated benchmark.",
+  "documents": [
+    {"filename":"supplier-l-security-policy.pdf","pages":[
+      {"title":"Governance and access policy","text":"Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt."},
+      {"title":"Application and data security","text":"Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use."}
+    ]},
+    {"filename":"supplier-l-questionnaire.pdf","pages":[
+      {"title":"Supplier responses and exceptions","text":"Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy."}
+    ]}
+  ],
+  "queries": [
+    {"question_id":"BUYER-01","gold":[["supplier-l-security-policy.pdf",1]]},
+    {"question_id":"BUYER-03","gold":[["supplier-l-security-policy.pdf",1],["supplier-l-questionnaire.pdf",1]]},
+    {"question_id":"BUYER-05","gold":[["supplier-l-questionnaire.pdf",1]]},
+    {"question_id":"BUYER-11","gold":[["supplier-l-security-policy.pdf",2]]},
+    {"question_id":"BUYER-15","gold":[["supplier-l-questionnaire.pdf",1]]},
+    {"question_id":"BUYER-17","gold":[["supplier-l-security-policy.pdf",2]]}
+  ]
+}

@@ -11,3 +11,4 @@ intake/
 .cache/
 node_modules/
 .*-key
+/rag/

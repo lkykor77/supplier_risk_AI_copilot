@@ -24,7 +24,7 @@ function renderProvisional(target,suppliers,selected){
  const thead=element('thead');thead.append(head);table.append(thead);const body=element('tbody');
  for(const supplier of suppliers){const score=provisional(supplier.assessments,supplier.risk?.supplier_class||'normal'),tr=element('tr');
  if(supplier.id===selected)tr.setAttribute('aria-current','true');
- for(const value of [(global.FrameworkView?.supplierName(supplier.id)||supplier.id)+(supplier.id===selected?' · selected':''),score.suggested_gap_points.toFixed(1),score.unresolved_evidence_points.toFixed(1),score.score.toFixed(1)])tr.append(element('td',value));body.append(tr);}
+ for(const value of [(supplier.name||global.FrameworkView?.supplierName(supplier.id)||supplier.id)+(supplier.id===selected?' · selected':''),score.suggested_gap_points.toFixed(1),score.unresolved_evidence_points.toFixed(1),score.score.toFixed(1)])tr.append(element('td',value));body.append(tr);}
  table.append(body);target.append(table);
  target.append(element('p','Unknown is an evidence gap, not a verified missing control. The final indicator below uses human decisions only.'));
 }

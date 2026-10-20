@@ -34,15 +34,15 @@ class ReviewStore:
         report = json.loads(raw)
         if report.get("provider") != "local":
             raise ValueError("Only local model reports are supported.")
-        if report.get("complete") is not True or report.get("dataset") not in {"development", "evaluation", "pdf"}:
-            raise ValueError("Only completed development, evaluation or PDF reports can be reviewed.")
+        if report.get("complete") is not True or report.get("dataset") not in {"development", "evaluation", "pdf", "rag"}:
+            raise ValueError("Only completed development, evaluation, PDF or RAG reports can be reviewed.")
         if report.get('run_scope') == 'combined-fictional-development':
             if report['dataset'] != 'development':
                 raise ValueError('Combined supplier runs must be development experiments.')
             requirements, suppliers = combined_development_inputs()
             if {s['supplier_id'] for s in report['suppliers']} != {s['id'] for s in suppliers}:
                 raise ValueError('Combined development must include every selected supplier.')
-        elif report["dataset"] == "pdf":
+        elif report["dataset"] in {"pdf", "rag"}:
             requirements = report["source_data"]["requirements"]
             suppliers = report["source_data"]["suppliers"]
         else:
@@ -73,7 +73,7 @@ class ReviewStore:
         with self.lock:
             runs = {}
             replaced = set()
-            for pattern in ["results/latest*.json", "reports/*run*.json", "intake/*/assessment-run-*.json"]:
+            for pattern in ["results/latest*.json", "reports/*run*.json", "intake/*/assessment-run-*.json", "rag/*/assessment-run-*.json"]:
                 for path in sorted(self.root.glob(pattern)):
                     try:
                         run_id, snapshot = self._snapshot(path)
@@ -101,6 +101,7 @@ class ReviewStore:
     def _metadata(self, run_id: str, snapshot: dict) -> dict:
         report = snapshot["report"]
         return {"id": run_id, "model": report["model"], "dataset": report["dataset"],
+                "supplier_name": report.get("rag", {}).get("supplier_name"),
                 "context_mode": report.get("context_mode", "original-frozen-prompt"),
                 "created_at": report["created_at"], "count": sum(len(s["assessments"]) for s in report["suppliers"])}
 
@@ -128,12 +129,14 @@ class ReviewStore:
                                  "answer": supplier["answers"].get(requirement["question_id"], ""),
                                  "ai": {k: original[k] for k in ["status", "evidence_quote", "reason"]},
                                  "expected": supplier.get("expected", {}).get(requirement["id"]),
+                                 "retrieved_passages": snapshot["report"].get("rag", {}).get("retrievals", {}).get(requirement["id"], {}).get("passages", []),
+                                 "rag_sources": snapshot["report"].get("rag", {}).get("citations", {}).get(requirement["id"], []),
                                  "pdf_source": {"document_id": snapshot["report"]["source_document_id"],
                                                 **snapshot["report"]["source_mapping"]["provenance"][requirement["id"]]}
                                                 if snapshot["report"]["dataset"] == "pdf" else None,
                                  "review": state["decisions"].get(key)})
                 supplier_class = state.get("supplier_classes", {}).get(supplier["id"], "normal")
-                suppliers.append({"id": supplier["id"], "assessments": rows,
+                suppliers.append({"id": supplier["id"], "name": supplier.get("name"), "assessments": rows,
                                   "risk": summarize_risk(rows, supplier_class)})
             return {"meta": self._metadata(run_id, snapshot), "revision": state["revision"],
                     "suppliers": suppliers, "reviewed_count": len(state["decisions"]),

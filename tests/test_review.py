@@ -150,6 +150,29 @@ class ReviewTests(unittest.TestCase):
         # Existing archived completed snapshot still appears; the failed file adds no run.
         self.assertEqual(len(self.store.catalog()), 1)
 
+    def test_rag_routes_are_same_origin_and_source_review_is_required(self):
+        server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(self.store))
+        thread = threading.Thread(target=server.serve_forever, daemon=True);thread.start()
+        base = f"http://127.0.0.1:{server.server_port}"
+        def post(path,payload,origin):
+            request=urllib.request.Request(base+path,data=json.dumps(payload).encode(),headers={"Content-Type":"application/json","X-Review-App":"1","Origin":origin})
+            return urllib.request.urlopen(request)
+        try:
+            with self.assertRaises(urllib.error.HTTPError) as error:post('/api/rag/create',{'name':'TEST'},'https://example.com')
+            self.assertEqual(error.exception.code,403)
+            with post('/api/rag/create',{'name':'TEST'},base) as response:case=json.load(response)
+            with urllib.request.urlopen(base+'/api/rag/cases') as response:self.assertEqual(json.load(response)[0]['id'],case['id'])
+            with post('/api/rag/search',{'case_id':case['id'],'requirement_id':'BUYER-03'},base) as response:self.assertEqual(json.load(response)['passages'],[])
+            with self.assertRaises(urllib.error.HTTPError) as error:post('/api/rag/assess',{'case_id':case['id']},base)
+            self.assertEqual(error.exception.code,400)
+            fixture=Path(__file__).resolve().parents[1]/'examples/rag/supplier-l-security-policy.pdf'
+            expected=fixture.read_bytes();document_id=hashlib.sha256(expected).hexdigest()
+            with urllib.request.urlopen(base+'/api/pdf?id='+document_id) as response:self.assertEqual(response.read(),expected)
+            with self.assertRaises(urllib.error.HTTPError) as error:urllib.request.urlopen(base+'/rag/evidence.sqlite3')
+            self.assertEqual(error.exception.code,404)
+        finally:
+            server.shutdown();server.server_close();thread.join()
+
     def test_http_requires_same_origin_and_exposes_only_app_routes(self):
         server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(self.store))
         thread = threading.Thread(target=server.serve_forever, daemon=True)

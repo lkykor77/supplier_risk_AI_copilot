@@ -52,3 +52,7 @@ Use the local PDF workflow or `local_assessor.py` for confidential material. Kee
 The repository supports local model inference only. Installing models, runtimes, packages and OCR assets, checking updates, accessing GitHub Pages, or deliberately exporting records may involve network access. Independently configured Obsidian/iCloud sync, backups, extensions, malware or remote-access software can transmit information outside the app.
 
 Consequently, “this local workflow does not upload supplier content to cloud AI” is supported by the application design. “Nothing can ever leave the computer” would overstate what the application controls. Local storage is not a substitute for endpoint security, access control, retention policy or an approved supplier-risk process. The public demo contains fictional saved results and accepts no document uploads.
+
+## Local retrieval boundary
+
+The RAG extension uses the same loopback-only client for embeddings and generation. Its SQLite passage/vector index stays under ignored `/rag/`, separated by supplier evidence-pack ID. Retrieval is scoped before computing ranking statistics, and personal Obsidian notes are not indexed as supplier evidence. Existing original PDFs, extracted text and human reviews stay in their ignored local directories. Only the included fictional development pack and its explicitly generated public-fixture reports belong in GitHub. See [local RAG](local-rag.md).
