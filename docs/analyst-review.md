@@ -66,4 +66,4 @@ The local app shows a provisional score for every supplier using only its saved 
 
 ## Workspace views
 
-The root URL opens on **Showcase**, a public fictional sample with a genuine local RAG + sample Obsidian rules/memory run. Use **Assess a supplier** for the existing review controls, uploads, evidence search and human risk decisions. The original 30-assessment vault-enabled development run remains the initial analyst selection. **Engineering details** keeps pipeline, context notes and limits out of the default sample. Demo decisions never modify real review records.
+The root URL opens on **Showcase**, a public fictional sample with a genuine local RAG + sample Obsidian rules/memory run. Use **Assess a supplier** for the existing review controls, uploads, evidence search and human risk decisions. When generated locally, the original 30-assessment vault-enabled development run remains the initial analyst selection. A fresh clone includes only approved fictional reports, including the three-question sample-context run. **Engineering details** keeps pipeline, context notes and limits out of the default sample. Demo decisions never modify real review records.

@@ -45,18 +45,18 @@ Do not treat lower latency or a high synthetic label score as proof of customer 
 
 ## Training and adoption walkthrough
 
-1. Select one fictional supplier and explain that its five cards are one questionnaire.
+1. Start with the clean showcase: one fictional supplier, one question, cited passages and separate Obsidian guidance. Then open the full review demo or local analyst workspace for a complete questionnaire.
 2. Inspect the answer, security requirement and related ISO/NIST topic; distinguish evidence from verified practice.
 3. Correct the saved unknown-versus-missing error and explain the change.
 4. Complete all human decisions; inspect confirmed gaps versus unresolved-evidence points.
 5. Classify the relationship as normal or critical, and discuss proportionate follow-up.
 6. Run the full local PDF workflow with a fictional scan, checking page references before inference.
 
-The public demo replays saved results; the actual application runs the Open Weight AI model through LM Studio. Obsidian supplies only selected local rules, knowledge and project memory. Reviewers should understand these boundaries before interpreting results.
+The clean showcase replays a three-question local RAG run using only included public sample rules/memory, with a RAG-only comparison. The full review demo also offers saved five-question runs and an authored 20-question example. These are practice decisions, separate from real review records. The public demo replays saved results; the actual application runs the Open Weight AI model through LM Studio. Obsidian supplies only selected local rules, knowledge and project memory. Reviewers should understand these boundaries before interpreting results.
 
 ## Scope decisions
 
-The first pilot focuses on one local analyst, five requirements, JSON/PDF input and a transparent review record. Excel import, multi-user access, complete validated framework mappings, richer threat/impact assessment and enterprise integration need further implementation. Prioritize them from observed workflow needs rather than expanding the stack prematurely.
+The proposed first pilot focuses on one local analyst, supported JSON/PDF input, supplier-document retrieval and a transparent review record. Select an agreed subset of the 20-question catalog with the customer; the original five-question benchmark does not validate the expanded scope. Excel import, multi-user access, complete validated framework mappings, richer threat/impact assessment and enterprise integration need further implementation. Prioritize them from observed workflow needs rather than expanding the stack prematurely.
 
 ## Project iteration already demonstrated
 
@@ -71,4 +71,4 @@ An independent analyst interview and real-world pilot remain next steps.
 
 ## Scenario-based next session
 
-Use the [fictional SaaS, managed IT and logistics scenarios](supplier-assessment-scenarios.md) to validate pre-engagement supplier information security decisions with an independent analyst. Identify exposure, required supporting records, remediation owners and who can accept unresolved risk before access or data sharing. Keep regional obligations as discovery questions, not assumptions encoded into the five-control score.
+Use the [fictional SaaS, managed IT and logistics scenarios](supplier-assessment-scenarios.md) to validate pre-engagement supplier information security decisions with an independent analyst. Identify exposure, required supporting records, remediation owners and who can accept unresolved risk before access or data sharing. Keep regional obligations as discovery questions, not assumptions encoded into the questionnaire score.

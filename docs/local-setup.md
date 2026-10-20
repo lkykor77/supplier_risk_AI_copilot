@@ -79,3 +79,9 @@ Vault paths, personal notes, raw local reports and debug responses are excluded 
 For an oMLX experiment, set `base_url` to its loopback `/v1` URL and `model` to a model served by that runtime. This does not convert or download model weights. Start only the server you intend to use.
 
 Official references: [LM Studio local chat API](https://lmstudio.ai/docs/developer/openai-compat/chat-completions), [structured outputs](https://lmstudio.ai/docs/developer/openai-compat/structured-output).
+
+## Start with the clean showcase
+
+Run `python3 review_app.py` and open http://127.0.0.1:8501. **Showcase** replays an approved fictional three-question RAG + sample Obsidian run without requiring a model server. Choose **Assess a supplier** for private uploads, inference and real human decisions; **Engineering details** explains context and evidence boundaries.
+
+To run retrieval and generation yourself, follow [local RAG](local-rag.md). Local embeddings are optional; keyword-only retrieval is explicitly labeled. The included [public sample vault](../examples/obsidian-vault/) demonstrates rules and memory without publishing personal notes.

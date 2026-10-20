@@ -10,7 +10,7 @@ The PDF helper, English/Korean OCR language files and Node OCR runtime are confi
 python3 review_app.py
 ```
 
-Open http://127.0.0.1:8501 and choose **Upload questionnaire PDF**.
+Open http://127.0.0.1:8501 and choose **Assess a supplier**, then **Upload questionnaire PDF**.
 
 1. Upload the PDF. Local text extraction and OCR run first, followed by automatic evidence selection in LM Studio. Large documents can take several minutes.
 2. Review the prefilled excerpts and source pages against the original. The model selects immutable excerpts; it cannot invent or silently rewrite supplier answers.
@@ -51,6 +51,6 @@ Use `examples/fictional-questionnaire-text.pdf` or `examples/fictional-questionn
 
 Automated checks cover native extraction, scanned extraction, required confirmation, page validation, verbatim mapping checks, explained OCR corrections, malformed input, and integration with the separate reviewer record. A two-page mixed fixture selected native text on page 1 and OCR on page 2. An encrypted fixture was rejected. The browser flow uses an isolated QA data directory and the reviewer name `Automated UI test`; these are test records, not user approvals.
 
-The live scanned-PDF browser test returned the five expected fixture statuses (`met`, `partly_met`, `met`, `met`, `unknown`) and valid quotes. This verifies one synthetic end-to-end example, not general supplier assessment accuracy. The current suite passes 50 tests on the development Mac. The public eight-page Cursive HECVAT PDF was also tested for table-row extraction, automatic proposals and acceptance of an unanswered question without a page. One expanded question was assessed live through LM Studio; all 20 assessment calls have not been independently evaluated for accuracy.
+The live scanned-PDF browser test returned the five expected fixture statuses (`met`, `partly_met`, `met`, `met`, `unknown`) and valid quotes. This verifies one synthetic end-to-end example, not general supplier assessment accuracy. The current suite passes 64 tests on the development Mac. The public eight-page Cursive HECVAT PDF was also tested for table-row extraction, automatic proposals and acceptance of an unanswered question without a page. One expanded question was assessed live through LM Studio; all 20 assessment calls have not been independently evaluated for accuracy.
 
 ![Scanned PDF assessed with local Open Weight AI model — isolated automated QA](screenshots/pdf-evidence-questions.png)

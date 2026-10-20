@@ -4,9 +4,9 @@
 
 A **Deployment Strategist portfolio project** that addresses **pre-engagement information security risk assessment of potential suppliers** through an operational data pipeline and a working review application. It connects customer workflow strategy with Python/JavaScript development, local inference through an **Open Weight AI model**, and human decisions supported by traceable evidence.
 
-**[Try the public interactive demo](https://lkykor77.github.io/supplier_risk_AI_copilot/)** · [Watch the 90-second walkthrough](https://lkykor77.github.io/supplier_risk_AI_copilot/#walkthrough) · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
+**[Try the clean RAG showcase](https://lkykor77.github.io/supplier_risk_AI_copilot/#rag)** · [See the local workflow](https://lkykor77.github.io/supplier_risk_AI_copilot/#walkthrough) · [Engineering case study](docs/portfolio-case-study.md) · [한국어 개요](docs/overview-ko.md)
 
-The public demo uses fictional suppliers and saved AI results. The full application processes JSON, selectable-text PDFs and scanned PDFs locally, integrates an Open Weight AI model through **LM Studio**, and can use selected **Obsidian rules, knowledge and project memory**.
+The public demo uses fictional suppliers and saved AI results. The full application processes JSON, selectable-text PDFs and scanned PDFs locally, integrates an Open Weight AI model through **LM Studio**, uses **local RAG** to find page-cited evidence across supplier documents, and can use selected **Obsidian rules, knowledge and project memory**.
 
 **Why local AI? Supplier submissions can contain confidential security policies, infrastructure details and incident procedures. The local assessment workflow keeps documents, extracted answers, selected Obsidian context and review records on the user’s computer; it does not upload them to a cloud AI provider.** A lightweight **custom Python AI harness** manages the model requests and validation around LM Studio. [Privacy boundary and harness design](docs/local-privacy-and-ai-harness.md).
 
@@ -85,7 +85,7 @@ These contexts illustrate how a buyer could use the existing synthetic answers. 
 | **European company → managed IT provider (Supplier G)** | Privileged production access; questionnaire and requested scanned procedures | Contractor administrators are exempt from MFA; non-admin access is never reviewed; the incident process is undocumented. Request MFA enforcement, broader access reviews and a written plan; escalate unresolved gaps before privileged access is granted. |
 | **Korean manufacturer → logistics platform (Supplier H)** | Shipment/customer contact data and dispatch dependency; mixed PDF with conflicting answers | Incident-plan and access-review claims contradict each other; nightly backups do not demonstrate restore testing. Request reconciled, dated evidence and restore-test records; correct the saved contact-label error to Unknown. |
 
-The proposed document packs are scenario context; the public demo displays saved questionnaire answers and has no document upload. Direct spreadsheet import, broader privacy/regulatory checks and overall residual-risk assessment remain outside this prototype’s scope. Local PDF intake supports 20 questions; the demo includes an authored 20-question example and the original five-question saved model runs. Read the [scenario walkthroughs](docs/supplier-assessment-scenarios.md) or [try them in the demo](https://lkykor77.github.io/supplier_risk_AI_copilot/#scenarios).
+The proposed document packs are scenario context; the public demo displays saved questionnaire answers and has no document upload. Direct spreadsheet import, broader privacy/regulatory checks and overall residual-risk assessment remain outside this prototype’s scope. Local PDF intake supports 20 questions; the public showcase presents three selected RAG questions with sample Obsidian context; the full review demo includes an authored 20-question example and the original five-question saved model runs. Read the [scenario walkthroughs](docs/supplier-assessment-scenarios.md) or [try them in the demo](https://lkykor77.github.io/supplier_risk_AI_copilot/#scenarios).
 
 ## Features at a glance
 
@@ -95,10 +95,12 @@ The proposed document packs are scenario context; the public demo displays saved
 | Confidential local inference | Open Weight AI model through LM Studio; supplier content stays within the local application workflow; no cloud AI upload or fallback |
 | Custom Python AI harness | Prompt/context preparation, loopback endpoint enforcement, proxy/redirect refusal, completed JSON parsing, coverage and verbatim-evidence checks |
 | Obsidian rules and memory | Optional allowlisted AI rules/knowledge and app-owned project memory; personal notes stay private; frozen evaluation excludes vault context |
+| Local RAG | Supplier-scoped SQLite evidence index, BM25 and optional local embeddings, page-cited passages and citation-checked suggestions |
+| Clean showcase | One question at a time; genuine local RAG + public sample Obsidian rules/memory, with a preserved RAG-only comparison |
 | Human review | Accept or correct labels, quotes and explanations; retain original AI output and decision history |
 | Weighted questionnaire risk | Fixed status factors and equal control weights; final human decisions only; unresolved evidence shown separately; normal/critical supplier classification and enhanced-review flags |
 | Public interactive demo | Fictional answers and saved AI results; try corrections and scoring without a model server; no public document uploads |
-| Engineering evidence | Tests, frozen synthetic comparisons, failure analysis, setup guides, captioned walkthrough and English/Korean project overview |
+| Engineering evidence | Tests, frozen synthetic comparisons, failure analysis, setup guides, verified screenshots and English/Korean project overview |
 | Future scope | Validated framework/regulatory mappings, Excel import, richer supplier risk scenarios and measured user outcomes |
 
 ## Data flow

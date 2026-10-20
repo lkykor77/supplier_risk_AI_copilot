@@ -8,7 +8,7 @@ Classify a supplier as critical based on the actual relationship: important serv
 
 ## Fixed prototype formula
 
-All current requirements have equal importance (20% each for the five-control questionnaire). Status factors are:
+All current requirements have equal importance (20% each for five questions; 5% each for the full 20-question catalog). Status factors are:
 
 | Human decision | Factor | Interpretation |
 | --- | --- | --- |

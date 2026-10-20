@@ -4,9 +4,9 @@ A working prototype that connects an operational pre-engagement supplier informa
 
 ## Problem and scope
 
-An analyst needs to distinguish a claimed security practice from an explicit gap or insufficient evidence. A deliberately naive keyword baseline accepts phrases even when a supplier denies the practice, while missing equivalent wording. The project implements five fictional buyer requirements and four statuses: met, partly met, missing, unknown.
+An analyst needs to distinguish a claimed security practice from an explicit gap or insufficient evidence. A deliberately naive keyword baseline accepts phrases even when a supplier denies the practice, while missing equivalent wording. The expanded PDF and RAG workflows cover 20 security questions and four statuses: met, partly met, missing, unknown. The original five-question benchmark remains frozen and separate.
 
-The initial questionnaire exercise developed into JSON assessment, frozen evaluation, local inference, selected Obsidian context, a review interface, and PDF intake. It is a portfolio prototype, not a compliance certification service. No customer discovery interviews, production deployments, or real-supplier accuracy measurements are claimed.
+The initial questionnaire exercise developed into JSON assessment, frozen evaluation, local inference, selected Obsidian context, a review interface, PDF intake, supplier-scoped RAG, and a clean showcase separate from operational controls. It is a portfolio prototype, not a compliance certification service. No customer discovery interviews, production deployments, or real-supplier accuracy measurements are claimed.
 
 ## Customer decision and delivery strategy
 
@@ -21,11 +21,12 @@ The pipeline links **Supplier → Questionnaire/source document → Answer → S
 ## Implementation
 
 - **Input:** fictional JSON answers or local analyst-uploaded PDFs. PDFKit extracts text and renders pages; Apple Vision attempts OCR, with local Tesseract.js fallback configured for English and Korean.
-- **Confirmation:** the analyst maps answers to requirements and page numbers. Nonblank mappings must occur in their selected extracted text after whitespace normalization; explained OCR corrections are marked. Blank answers remain unknown.
+- **Confirmation:** the app proposes answers and source pages; the analyst checks and approves them. Nonblank mappings must occur in their selected extracted text after whitespace normalization; explained OCR corrections are marked. Blank answers remain unknown.
 - **Assessment:** the Python client calls an explicitly configured loopback LM Studio endpoint, requests structured JSON, rejects truncated or missing final output, and validates requirement coverage and exact evidence quotes. Expected labels are excluded from model input.
+- **Retrieval:** supplier-scoped SQLite passages, BM25 and optional local embeddings supply page-cited evidence across documents. Citation checks establish source matches, not whether a conclusion is correct.
 - **Context:** optional allowlisted Obsidian notes are read with path checks and provenance hashes. App-owned project memory stays separate from personal rule notes. Vault context is prohibited for the frozen evaluation.
 - **Review:** immutable source/model snapshots, separate reviewer decisions, required correction notes, revision checks, and append-only decision events. Evidence can be traced back to the original PDF page.
-- **Public presentation:** a static GitHub Pages demo serves only explicitly copied fictional data and assets. Demo corrections stay in browser session storage; no local model, private vault, or uploaded PDF is exposed.
+- **Public presentation:** a static GitHub Pages demo serves only explicitly copied fictional data and assets. Full-review demo corrections stay in browser session storage; clean-showcase practice decisions stay in memory; no local model, private vault, or uploaded PDF is exposed.
 
 ## Decisions and tradeoffs
 
@@ -55,7 +56,7 @@ An earlier local request returned schema-shaped JSON in `reasoning_content` with
 
 ## Verified checks
 
-- 47 automated app tests passed on the development Mac, covering evidence validation, provider behavior, vault boundaries, intake mapping, review persistence, audit history, and concurrency conflicts.
+- 64 automated app tests passed on the development Mac, covering evidence validation, provider behavior, vault boundaries, intake mapping, review persistence, audit history, and concurrency conflicts.
 - A one-page selectable-text PDF and its image-only equivalent extracted successfully. A two-page mixed fixture selected native text and OCR per page; an encrypted fixture was rejected.
 - A live browser flow uploaded the fictional scan, confirmed the five mapped answers, and called the Open Weight AI model through LM Studio. It returned the expected fixture statuses in 27.276 seconds. That is one end-to-end example, not an accuracy benchmark.
 - The public demo is tested separately for corrections, fabricated-quote rejection, session persistence, reset, and responsive layout.
@@ -74,7 +75,7 @@ Portfolio feedback led to concrete changes: local PDF intake with checked mappin
 
 ## Reproduce and present
 
-Follow the [README](../README.md) and local setup guides. The public `showcase/` folder is a self-contained static demo published by `.github/workflows/pages.yml`. It includes a captioned walkthrough assembled from actual local app captures, not a continuous screen recording. Captures use fictional data in an isolated QA folder, with reviewer actions clearly marked as tests.
+Follow the [README](../README.md) and local setup guides. The public `showcase/` folder is a self-contained static demo published by `.github/workflows/pages.yml`. It opens a concise RAG showcase with three selected questions from a genuine local run using a public sample Obsidian rules note and memory note. A RAG-only comparison preserves the earlier error. Screenshots use fictional data in an isolated QA folder; the full assessment workflow remains separately available. Personal notes and supplier uploads are excluded.
 
 Assisted development used Codex for implementation and verification. The repository exposes the code, tests, decisions and limitations so the work can be inspected and reproduced.
 

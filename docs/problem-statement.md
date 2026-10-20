@@ -8,7 +8,7 @@ Finding relevant answers, interpreting vague or contradictory claims, tracking s
 
 The proposed tool extracts supported PDF evidence locally, requires analyst confirmation, suggests structured statuses with evidence quotes, and retains human decisions separately. After complete human review, a deterministic weighted control-gap indicator supports follow-up prioritization. Unknown evidence remains visible; critical suppliers receive enhanced-review flags for non-met answers.
 
-Current scope is five fictional buyer requirements, JSON/PDF input, local AI and optional Obsidian context, human review and questionnaire-gap scoring. Full framework mappings, Excel import, regulatory checks and real-supplier validation remain future work. The tool supports the assessment process; it does not certify compliance, verify supplier practices or make acceptance decisions.
+Current scope includes 20 security questions for PDF intake and supplier-document RAG, JSON input, local AI, optional Obsidian rules/memory, human review and questionnaire-gap scoring. The original five-question frozen benchmark remains separate. A clean three-question public showcase demonstrates genuine local retrieval and public sample context without exposing personal notes. Full framework mappings, Excel import, regulatory checks and real-supplier validation remain future work. The tool supports the assessment process; it does not certify compliance, verify supplier practices or make acceptance decisions.
 
 ## Validation measures
 
