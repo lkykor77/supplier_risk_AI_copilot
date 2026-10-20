@@ -1,0 +1,532 @@
+{
+  "runs": [
+    {
+      "id": "with-context",
+      "label": "RAG + Obsidian rules & memory",
+      "has_context": true,
+      "context_counts": {
+        "rules": 1,
+        "knowledge": 0,
+        "memory": 1
+      },
+      "question_count": 3,
+      "questions": [
+        {
+          "id": "BUYER-03",
+          "short_label": "Access reviews",
+          "question": "Is access reviewed at least annually for all users?",
+          "assessment": {
+            "requirement_id": "BUYER-03",
+            "status": "partly_met",
+            "evidence_quote": "Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users.",
+            "reason": "The supplier explicitly states that while the policy requires annual reviews for all users, the operational practice only reviews contractors every two years, meaning the requirement is only partially satisfied."
+          },
+          "display_sources": [
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "excerpt": "Our access policy requires all user access, including contractors, to be reviewed annually.",
+              "cited": true
+            },
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "excerpt": "Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users.",
+              "cited": true
+            }
+          ],
+          "passages": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522
+            },
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.015873
+            },
+            {
+              "id": "7363df3e0d296ea68e1aa18f74dd007b29e4f741e56c12f7164561fad95cdcdb",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "onflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 2",
+              "retrieval_score": 0.015625
+            }
+          ],
+          "citations": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "quote": "Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users."
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "quote": "Our access policy requires all user access, including contractors, to be reviewed annually."
+            }
+          ],
+          "review_note": "A policy target does not prove implementation. The two-year contractor cycle is an explicit frequency gap; inspect both sources before deciding."
+        },
+        {
+          "id": "BUYER-08",
+          "short_label": "Evidence gap",
+          "question": "Are remote employee workstations protected?",
+          "assessment": {
+            "requirement_id": "BUYER-08",
+            "status": "unknown",
+            "evidence_quote": "Remote employee workstation safeguards: no response supplied.",
+            "reason": "The supplier explicitly states that no response was supplied for remote employee workstation safeguards, so the presence or absence of documented and implemented safeguards cannot be determined."
+          },
+          "display_sources": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032787,
+              "excerpt": "Remote employee workstation safeguards: no response supplied.",
+              "cited": true
+            }
+          ],
+          "passages": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032787
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032258
+            },
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.031746
+            },
+            {
+              "id": "7363df3e0d296ea68e1aa18f74dd007b29e4f741e56c12f7164561fad95cdcdb",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "onflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 2",
+              "retrieval_score": 0.015625
+            }
+          ],
+          "citations": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032787,
+              "quote": "Remote employee workstation safeguards: no response supplied."
+            }
+          ],
+          "review_note": "An unanswered question means insufficient evidence, not an absent practice. Under the project rubric, Unknown is the appropriate draft label."
+        },
+        {
+          "id": "BUYER-17",
+          "short_label": "Encryption",
+          "question": "Is sensitive data encrypted in transit?",
+          "assessment": {
+            "requirement_id": "BUYER-17",
+            "status": "met",
+            "evidence_quote": "Sensitive data uses TLS 1.2 or later in transit and encryption at rest.",
+            "reason": "The supplier explicitly states that sensitive data is encrypted in transit using TLS 1.2 or later, which is a secure protocol, fully satisfying the requirement."
+          },
+          "display_sources": [
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.032787,
+              "excerpt": "Sensitive data uses TLS 1.2 or later in transit and encryption at rest.",
+              "cited": true
+            }
+          ],
+          "passages": [
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.032787
+            },
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.016129
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.015873
+            },
+            {
+              "id": "7363df3e0d296ea68e1aa18f74dd007b29e4f741e56c12f7164561fad95cdcdb",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "onflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 2",
+              "retrieval_score": 0.015625
+            }
+          ],
+          "citations": [
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.032787,
+              "quote": "Sensitive data uses TLS 1.2 or later in transit and encryption at rest."
+            }
+          ],
+          "review_note": ""
+        }
+      ]
+    },
+    {
+      "id": "rag-only",
+      "label": "RAG only \u00b7 comparison example",
+      "has_context": false,
+      "context_counts": {
+        "rules": 0,
+        "knowledge": 0,
+        "memory": 0
+      },
+      "question_count": 20,
+      "questions": [
+        {
+          "id": "BUYER-03",
+          "short_label": "Access reviews",
+          "question": "Is access reviewed at least annually for all users?",
+          "assessment": {
+            "requirement_id": "BUYER-03",
+            "status": "unknown",
+            "evidence_quote": "Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users.",
+            "reason": "The supplier provides conflicting claims: the operational evidence states contractor access is reviewed every two years, while the security policy states all user access (including contractors) is reviewed annually. Per the rules, conflicting claims result in an unknown status."
+          },
+          "display_sources": [
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "excerpt": "Our access policy requires all user access, including contractors, to be reviewed annually.",
+              "cited": true
+            },
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "excerpt": "Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users.",
+              "cited": true
+            }
+          ],
+          "passages": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522
+            },
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.015873
+            },
+            {
+              "id": "7363df3e0d296ea68e1aa18f74dd007b29e4f741e56c12f7164561fad95cdcdb",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "onflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 2",
+              "retrieval_score": 0.015625
+            }
+          ],
+          "citations": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "quote": "Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users."
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032522,
+              "quote": "Our access policy requires all user access, including contractors, to be reviewed annually."
+            }
+          ],
+          "review_note": "A policy target does not prove implementation. The two-year contractor cycle is an explicit frequency gap; inspect both sources before deciding."
+        },
+        {
+          "id": "BUYER-08",
+          "short_label": "Evidence gap",
+          "question": "Are remote employee workstations protected?",
+          "assessment": {
+            "requirement_id": "BUYER-08",
+            "status": "missing",
+            "evidence_quote": "Remote employee workstation safeguards: no response supplied.",
+            "reason": "The supplier explicitly states that no response was supplied regarding remote employee workstation safeguards, indicating the required practice is absent or not provided."
+          },
+          "display_sources": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032787,
+              "excerpt": "Remote employee workstation safeguards: no response supplied.",
+              "cited": true
+            }
+          ],
+          "passages": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032787
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032258
+            },
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.031746
+            },
+            {
+              "id": "7363df3e0d296ea68e1aa18f74dd007b29e4f741e56c12f7164561fad95cdcdb",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "onflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 2",
+              "retrieval_score": 0.015625
+            }
+          ],
+          "citations": [
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.032787,
+              "quote": "Remote employee workstation safeguards: no response supplied."
+            }
+          ],
+          "review_note": "An unanswered question means insufficient evidence, not an absent practice. Under the project rubric, Unknown is the appropriate draft label."
+        },
+        {
+          "id": "BUYER-17",
+          "short_label": "Encryption",
+          "question": "Is sensitive data encrypted in transit?",
+          "assessment": {
+            "requirement_id": "BUYER-17",
+            "status": "met",
+            "evidence_quote": "Sensitive data uses TLS 1.2 or later in transit and encryption at rest.",
+            "reason": "The supplier explicitly states that sensitive data is encrypted in transit using TLS 1.2 or later, which satisfies the requirement for secure protocols."
+          },
+          "display_sources": [
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.032787,
+              "excerpt": "Sensitive data uses TLS 1.2 or later in transit and encryption at rest.",
+              "cited": true
+            }
+          ],
+          "passages": [
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.032787
+            },
+            {
+              "id": "7f49c74a15b61ca1d141ea17bd60a70dbcfdc5a57f6aac682653f6b749ac2b42",
+              "document_id": "657af8c111dcb5b15d03a5ce10cbdadce8474187832778ae1a93b73893b57174",
+              "filename": "supplier-l-questionnaire.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Supplier responses and exceptions Our operational access review covers employees annually. Contractor access is reviewed once every two years, despite the annual policy for all users. We create daily backups but have never tested restoring them. Vulnerability scans run before releases, although high-risk findings sometimes remain unresolved when a release ships. We have no implemented procedure to mitigate security risks while patches are pending. Remote employee workstation safeguards: no response supplied. These responses describe current operations and require analyst follow-up against the policy. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.016129
+            },
+            {
+              "id": "a68726a7fd7d272bf5162385a5dec0210bf7f6eb5acae489d5f0adb4971191a2",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 1,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Governance and access policy Security questions go to security@supplier-l.example. We maintain an approved information security policy and a documented incident response plan, reviewed annually. Our access policy requires all user access, including contractors, to be reviewed annually. Staff permissions use role-based access groups. Multi-factor authentication is required for employee administrator accounts; contractor administrators are exempt. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 1",
+              "retrieval_score": 0.015873
+            },
+            {
+              "id": "7363df3e0d296ea68e1aa18f74dd007b29e4f741e56c12f7164561fad95cdcdb",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "onflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack Page 2",
+              "retrieval_score": 0.015625
+            }
+          ],
+          "citations": [
+            {
+              "id": "0cfe461f01820d9580ab2ccfe42d335cbda6960e251c5fbe858ca07d573665c4",
+              "document_id": "aa9856dba2a6869774493d3ac24d8ccd0edc2a6ce289f400b4203745e3dce589",
+              "filename": "supplier-l-security-policy.pdf",
+              "page": 2,
+              "mode": "native",
+              "text": "SUPPLIER SECURITY EVIDENCE | FICTIONAL TRAINING SAMPLE Fictional Supplier L Application and data security Software dependencies are inventoried and scanned, and repository changes require approval. SAML single sign-on is supported for both users and administrators. Audit logs contain login, logout, action and timestamp fields but do not record source IP addresses. Inactive sessions end automatically after 20 minutes. Version-controlled system configuration baselines are checked during deployment. Tenant authorization checks isolate customer data under our documented architecture. Sensitive data uses TLS 1.2 or later in transit and encryption at rest. Private production networks are segmented from untrusted public networks. Third parties that host customer data receive a security assessment before use. Development fixture. Statements may conflict across documents. Human review is required; no certification or verified compliance is claimed. Fictional Supplier L | Local RAG evidence pack",
+              "retrieval_score": 0.032787,
+              "quote": "Sensitive data uses TLS 1.2 or later in transit and encryption at rest."
+            }
+          ],
+          "review_note": ""
+        }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "label": "Assessment rules",
+      "text": "# Assessment rules \u2014 public sample\n\nThese are reviewer instructions, not supplier evidence. Use the application's four-status rubric and exact source citations.\n\n- An unanswered question means Unknown; it does not establish that a control is absent.\n- Distinguish a policy requirement from evidence of current implementation. If operations explicitly describe an existing practice with insufficient frequency or coverage, assess the stated operational gap as Partly met. A policy target alone does not prove the practice occurs.\n- Treat contradictory factual statements as unresolved. Do not invent missing supplier facts.\n- Preserve source quotes and let the analyst accept, correct or request evidence.\n"
+    },
+    {
+      "label": "Project memory",
+      "text": "# Project memory \u2014 public fictional demonstration\n\nThe earlier RAG-only development run confused \"no response supplied\" with an absent practice. Check that distinction in the next demonstration.\n\nThe access-review example also needs a distinction between an annual policy target and an operational two-year contractor cycle. Keep both source passages visible.\n\nThese are project lessons for the prototype, not new facts about a supplier or independent validation. Never carry a previous supplier's conclusions into a new evidence pack. Final risk indicators require the analyst's explicit decisions.\n"
+    }
+  ]
+}

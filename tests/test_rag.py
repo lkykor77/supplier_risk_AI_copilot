@@ -246,7 +246,7 @@ class RAGTests(unittest.TestCase):
             "knowledge": [],
             "memory": [],
         }
-        with patch("rag.load_context", return_value=context):
+        with patch("rag.load_context", return_value=(context, [])):
             result = self.store.assess(self.case["id"], with_vault=True)
         payload = next(p for e, p in self.calls if e == "/chat/completions")
         self.assertIn("PRIVATE_GUIDANCE_MARKER", payload["messages"][0]["content"])
@@ -260,6 +260,33 @@ class RAGTests(unittest.TestCase):
                 (self.root / "rag" / self.case["id"]).glob("assessment-run-*.json")
             ).read_text(),
         )
+
+    def test_real_vault_loader_and_curated_sample_scope(self):
+        vault = self.root / "sample-vault"
+        vault.mkdir()
+        (vault / "rules.md").write_text("Treat unanswered questions as unknown.")
+        (vault / "memory.md").write_text("Keep contractor scope visible.")
+        self.config.update(
+            vault_path=str(vault),
+            rule_notes=["rules.md"],
+            knowledge_notes=[],
+            memory_notes=["memory.md"],
+        )
+        self.store.add(
+            self.case["id"], document("The supplier reviews all user access annually.")
+        )
+        result = self.store.assess(
+            self.case["id"], with_vault=True, question_ids=["BUYER-03"]
+        )
+        path = next((self.root / "rag" / self.case["id"]).glob("assessment-run-*.json"))
+        report = json.loads(path.read_text())
+        self.assertEqual(
+            report["context_counts"], {"rules": 1, "knowledge": 0, "memory": 1}
+        )
+        self.assertEqual(report["context_mode"], "selected-vault-notes")
+        self.assertEqual(len(report["suppliers"][0]["assessments"]), 1)
+        with self.assertRaises(ValueError):
+            self.store.assess(self.case["id"], question_ids=["BUYER-03", "BUYER-03"])
 
     def test_case_path_and_unknown_questions_are_rejected(self):
         for ident in ["../.env", "x", "", None]:

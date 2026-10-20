@@ -6,7 +6,7 @@ A supplier may send a questionnaire, an access policy and operational exceptions
 
 1. Start LM Studio's local server and load your Open Weight LLM. For hybrid search, also make a local embedding model available. The tested embedding model is `text-embedding-nomic-embed-text-v1.5` (768 dimensions).
 2. Run `python3 review_app.py --port 8501` and open http://127.0.0.1:8501/.
-3. Expand **Supplier Evidence Search · local RAG**. Enter a supplier name and the embedding model's exact ID. Clear that field to create an explicitly keyword-only pack. The optional `embedding_model` field in private `.local-config.json` supplies the initial selection.
+3. Choose **Assess a supplier**, then expand **Supplier Evidence Search · local RAG**. Enter a supplier name and the embedding model's exact ID. Clear that field to create an explicitly keyword-only pack. The optional `embedding_model` field in private `.local-config.json` supplies the initial selection.
 4. Create the pack and add PDFs belonging to that supplier. Native text, scans and mixed PDFs reuse the existing local PDF/OCR extraction. Open originals and inspect OCR/reading order. Document names, source pages and content hashes are retained.
 5. Choose a question and **Retrieve evidence**. Inspect passages from the different documents, especially exceptions and contradictory claims.
 6. Confirm supplier ownership and extraction review. Optionally select Obsidian rules, then **Generate 20 cited suggestions for human review**. This makes sequential local requests and may take several minutes. Failed citation validation stops the run; partial results do not enter the review catalog.
@@ -71,4 +71,12 @@ The [saved fictional local run](../reports/rag-fictional-development-run.json) c
 
 The initial generation attempt was rejected for a nonverbatim quote. Layout whitespace is now normalized before indexing and the prompt explicitly requires exact substrings; a subsequent complete run passed all citation checks. OCR words are not rewritten, and fabricated words/IDs remain rejected. These checks do not establish that the conclusions follow from the quotes.
 
-Run `python3 helpers/build_rag_demo.py` after the fictional generation to rebuild the static example. The builder checks that the run has no vault context and every cited source belongs to the two included fictional PDFs. The public demo shows all 20 saved suggestions and all their retrieved passages, not live inference.
+Run `python3 helpers/run_showcase_context.py` to generate the curated three-question combined sample using only the public sample vault, then `python3 helpers/build_showcase.py` to build the clean static example. The builder checks public note hashes/context counts and that every source belongs to the two included fictional PDFs. The clean public showcase presents three selected questions and their retrieved passages, with a combined rules/memory run and a RAG-only comparison. The full 20-question saved run remains available in the analyst workspace.
+
+## Clean showcase and combined context sample
+
+The local app opens on Showcase. Operational controls are in Assess a supplier; the pipeline and context-note details are in Engineering details. Only one fictional question is visible at a time. Two short source excerpts replace the default full-text dump; complete retrieval records remain expandable. Showcase actions are in-memory practice decisions, separate from real review records.
+
+The [three-question context run](../reports/rag-showcase-context-run.json) actually loaded [one public rules note and one public memory note](../examples/obsidian-vault/). It returned Partly met for the contractor-review gap, Unknown for the unanswered workstation question and Met for the stated transit encryption. These were selected development examples with deliberately relevant guidance, not a fresh benchmark or evidence of general improvement. The earlier RAG-only outputs remain unchanged. No personal vault content was used or published.
+
+The context loader returns both context and source metadata. The RAG integration now unpacks that return correctly; a test exercises real allowlisted Markdown loading instead of replacing the loader with a differently shaped mock. Context counts are recorded in new RAG reports. The curated CLI sample uses three questions; the analyst action still assesses all 20 by default.

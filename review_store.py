@@ -102,6 +102,7 @@ class ReviewStore:
         report = snapshot["report"]
         return {"id": run_id, "model": report["model"], "dataset": report["dataset"],
                 "supplier_name": report.get("rag", {}).get("supplier_name"),
+                "context_origin": report.get("showcase_context", {}).get("kind"),
                 "context_mode": report.get("context_mode", "original-frozen-prompt"),
                 "created_at": report["created_at"], "count": sum(len(s["assessments"]) for s in report["suppliers"])}
 

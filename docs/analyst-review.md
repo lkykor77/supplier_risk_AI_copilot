@@ -63,3 +63,7 @@ This makes six fresh local model requests using the same selected Obsidian rules
 ## Provisional scores
 
 The local app shows a provisional score for every supplier using only its saved AI suggestions, including separate suggested control-gap points and unresolved-evidence points. These draft indicators do not create or modify human decisions. The final indicator remains gated until every question for the selected supplier has a human decision. Correcting an assessment changes the final indicator; the provisional score continues to represent the original saved AI suggestions.
+
+## Workspace views
+
+The root URL opens on **Showcase**, a public fictional sample with a genuine local RAG + sample Obsidian rules/memory run. Use **Assess a supplier** for the existing review controls, uploads, evidence search and human risk decisions. The original 30-assessment vault-enabled development run remains the initial analyst selection. **Engineering details** keeps pipeline, context notes and limits out of the default sample. Demo decisions never modify real review records.

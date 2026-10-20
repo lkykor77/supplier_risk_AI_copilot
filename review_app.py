@@ -48,8 +48,12 @@ def make_handler(store: ReviewStore):
             route = urllib.parse.urlsplit(self.path)
             try:
                 assets = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
-                          "/styles.css": ("styles.css", "text/css"), "/rag.js": ("rag.js", "text/javascript")}
-                if route.path in {"/risk_ui.js", "/framework_view.js"}:
+                          "/styles.css": ("styles.css", "text/css"), "/rag.js": ("rag.js", "text/javascript"), "/workspace_views.js": ("workspace_views.js", "text/javascript")}
+                if route.path in {"/showcase_view.js", "/showcase_view.css"}:
+                    self.send((ROOT / route.path.lstrip("/")).read_bytes(), mime="text/css" if route.path.endswith(".css") else "text/javascript")
+                elif route.path == "/showcase-data.json":
+                    self.send((ROOT / "showcase/showcase-data.json").read_bytes())
+                elif route.path in {"/risk_ui.js", "/framework_view.js"}:
                     self.send((ROOT / route.path.lstrip("/")).read_bytes(), mime="text/javascript")
                 elif route.path in assets:
                     filename, mime = assets[route.path]

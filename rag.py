@@ -342,7 +342,7 @@ class EvidenceStore:
             ),
         }
 
-    def assess(self, case_id, with_vault=False, reviewer=None):
+    def assess(self, case_id, with_vault=False, reviewer=None, question_ids=None):
         """Generate all 20 suggestions, then publish an immutable human-review run.
 
         Failed/partial generations never enter the review catalog. Retrieval results
@@ -353,8 +353,20 @@ class EvidenceStore:
             if not case["documents"]:
                 raise ValueError("Add at least one supplier document first.")
             requirements = pdf_requirements()
+            if question_ids is not None:
+                available = {r["id"] for r in requirements}
+                if (
+                    not isinstance(question_ids, list)
+                    or not question_ids
+                    or len(set(question_ids)) != len(question_ids)
+                    or any(q not in available for q in question_ids)
+                ):
+                    raise ValueError("Invalid curated showcase questions.")
+                requirements = [r for r in requirements if r["id"] in question_ids]
             config = self.config_reader()
-            context = load_context(config) if with_vault else None
+            context, context_sources = (
+                load_context(config) if with_vault else (None, [])
+            )
             supplier = {"id": "rag-" + case_id, "name": case["name"], "answers": {}}
             rows = []
             provenance = {}
@@ -474,6 +486,14 @@ class EvidenceStore:
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "context_mode": (
                     "selected-vault-notes" if context else "local-retrieved-evidence"
+                ),
+                "context_counts": (
+                    {
+                        group: len(context[group])
+                        for group in ("rules", "knowledge", "memory")
+                    }
+                    if context
+                    else {"rules": 0, "knowledge": 0, "memory": 0}
                 ),
                 "source_review": (
                     {

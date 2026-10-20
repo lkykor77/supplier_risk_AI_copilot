@@ -16,7 +16,7 @@ The public demo uses fictional suppliers and saved AI results. The full applicat
 | --- | --- |
 | Understand the business decision | Supplier information security risk problem statement, analyst pain points, stakeholder handoffs and a [proposed customer pilot](docs/customer-deployment-plan.md) |
 | Turn fragmented data into a pipeline | Document extraction/OCR → checked answers → requirements → structured assessments → human decisions → risk summary, with source references |
-| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 63 automated tests |
+| Build and analyze code | Python API, JavaScript application, Swift/Node PDF helpers, validation, revision checks, failure analysis and 64 automated tests |
 | Build a local AI harness | Custom Python orchestration of prompts, allowlisted Obsidian context, loopback LM Studio requests, structured-output parsing and evidence validation |
 | Make a deployment choice for confidential evidence | On-device PDF/OCR and Open Weight AI model inference; local records; no document upload to a cloud AI service or cloud fallback in the local workflow |
 | Exercise product judgment | Explicit PDF confirmation, visible model errors, separate reviewer decisions, unknown-evidence handling and critical-supplier follow-up |
@@ -185,6 +185,14 @@ The [problem statement](docs/problem-statement.md) defines the operational quest
 
 The five benchmark criteria are fictional security questions. Local PDF intake adds 15 HECVAT-inspired security questions; these expanded criteria have not been benchmarked. Related framework references are displayed separately as topic alignments, with explicit limits. The [reference guide](docs/framework-references.md) documents the topic associations and their limits. Some framework outcomes concern the buyer's own processes and cannot be assessed from supplier answers alone.
 
+## A clear demonstration, with a working analyst app behind it
+
+![Clean local showcase with separate purpose explanations for RAG and Obsidian](docs/screenshots/local-showcase-home.png)
+
+The local browser now opens on **Showcase**: a concise explanation of RAG and Obsidian, one fictional supplier, two page-cited excerpts and a reviewable model result. **Assess a supplier** contains uploads, retrieval, saved runs, real analyst decisions and risk scoring. **Engineering details** explains the pipeline, public sample rules/memory and evaluation limits.
+
+The default sample genuinely combines an Open Weight LLM, local hybrid retrieval, one public Obsidian rules note and one public project-memory note. It reads those notes; it does not claim to write new memory automatically. The included [sample vault](examples/obsidian-vault/) is separate from the user's private vault. Demo decisions are temporary practice actions and do not alter real assessment records.
+
 ## Local RAG: supplier evidence across documents
 
 ![Local RAG data flow and human review boundary](docs/diagrams/local-rag.png)
@@ -195,7 +203,7 @@ The Python pipeline combines BM25 with optional local embedding retrieval, store
 
 ![Saved local RAG suggestion and cited supplier passage](docs/screenshots/local-rag-evidence.png)
 
-Try the [fictional two-document evidence pack](examples/rag/) and follow the [local RAG setup, architecture and evaluation guide](docs/local-rag.md). The first live retrieval check found all seven expected source-page references across six small development queries with both methods; this is not evidence of general accuracy or hybrid-search superiority. The public demo presents all 20 saved fictional RAG suggestions and their sources, including a flagged Missing/Unknown model error; private uploads and inference run locally.
+Try the [fictional two-document evidence pack](examples/rag/) and follow the [local RAG setup, architecture and evaluation guide](docs/local-rag.md). The first live retrieval check found all seven expected source-page references across six small development queries with both methods; this is not evidence of general accuracy or hybrid-search superiority. The clean showcase opens on a curated three-question run that actually used local RAG plus a public sample Obsidian rules note and memory note. A RAG-only comparison preserves the earlier model error. The full 20-question assessment remains in the analyst workspace; private uploads and inference run locally.
 
 ## Implementation milestones
 

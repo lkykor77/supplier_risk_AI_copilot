@@ -12,9 +12,9 @@ async function api(url, payload) {
 async function refresh() {
   try {
     const catalog=await api('/api/runs'), previous=$('runSelect').value;
-    catalog.sort((a,b)=>Number(b.context_mode==='selected-vault-notes')-Number(a.context_mode==='selected-vault-notes'));
+    catalog.sort((a,b)=>Number(b.dataset==='development'&&b.count===30)-Number(a.dataset==='development'&&a.count===30)||Number(b.context_mode==='selected-vault-notes')-Number(a.context_mode==='selected-vault-notes'));
     $('runSelect').replaceChildren();
-    for(const item of catalog) { const option=node('option','',`${modelName(item.model)}${item.context_mode==='selected-vault-notes'?' · Obsidian rules & memory':''} · ${item.dataset}${item.supplier_name?" · "+item.supplier_name:""} · ${item.count} assessments`); option.value=item.id; $('runSelect').append(option); }
+    for(const item of catalog) { const option=node('option','',`${modelName(item.model)}${item.context_mode==='selected-vault-notes'?(item.context_origin==='public-sample-obsidian-vault'?' · sample Obsidian rules & memory':' · Obsidian rules & memory'):''} · ${item.dataset}${item.supplier_name?" · "+item.supplier_name:""} · ${item.count} assessments`); option.value=item.id; $('runSelect').append(option); }
     if(!catalog.length){run=null; $('cards').replaceChildren(node('div','empty','No completed reports yet. Run an assessor, then refresh.')); return;}
     if(catalog.some(item=>item.id===previous))$('runSelect').value=previous;
     await loadRun();
@@ -44,7 +44,7 @@ function render() {
   RiskView.renderProvisional($('provisionalResult'),run.suppliers,selectedSupplier);
   RiskView.render($('riskResult'),risk);$('riskResult').querySelector('h3').textContent='Final weighted questionnaire risk indicator · human review';$('supplierClass').value=risk.supplier_class;
   $('classNotice').textContent=`Classification changes recorded: ${(run.classification_events||[]).filter(e=>e.supplier_id===supplier.id).length}.`;
-  $('runMeta').textContent=`${modelName(run.meta.model)} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?'Obsidian rules & memory used when generated':run.meta.dataset==='rag'?'Local RAG · retrieved supplier evidence · no Obsidian context':'Original assessment prompt · no Obsidian context'}`;
+  $('runMeta').textContent=`${modelName(run.meta.model)} · ${run.meta.dataset} · ${run.meta.context_mode==='selected-vault-notes'?(run.meta.context_origin==='public-sample-obsidian-vault'?'Public sample Obsidian rules & memory used':'Selected Obsidian rules & memory used when generated'):run.meta.dataset==='rag'?'Local RAG · retrieved supplier evidence · no Obsidian context':'Original assessment prompt · no Obsidian context'}`;
   $('reviewProgress').textContent=`${run.reviewed_count} / ${run.meta.count} reviewed`;
   $('progress').max=run.meta.count; $('progress').value=run.reviewed_count;
   $('cards').replaceChildren();
